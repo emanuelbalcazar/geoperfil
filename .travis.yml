@@ -4,6 +4,7 @@ node_js:
   - 8
 
 env:
+  global:
   - HOST=127.0.0.1
   - PORT=3333
   - NODE_ENV=development

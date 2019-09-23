@@ -15,6 +15,7 @@ class BaseExtractor {
         let options = config.options;
         options.qs = eq;
         let googleResults = await request(options);
+        console.log(googleResults)
         return googleResults.items;
     }
 
@@ -48,7 +49,7 @@ class BaseExtractor {
                 if (elements.length > 0) {
                     let newItem = data;
                     let allText = elements.map(elem => {
-                        return elem.text.trim();
+                        return elem.innerText.trim();
                     });
 
                     newItem.fullText = allText.join('\n');

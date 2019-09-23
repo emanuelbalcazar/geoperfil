@@ -17,18 +17,18 @@
 const Route = use('Route')
 const ExtractorManager = use( 'ExtractorManager')
 
-Route.get('/', async() => {
-    var Extractor = Factory.getExtractor('elchubut')
+Route.get('/', async({response}) => {
+    var Extractor = ExtractorManager.getExtractor('elchubut')
     var links = await Extractor.search( {
-        q: 'graduados + colacion',
-        siteSearch: 'www.elchubut.com.ar',
-        cx: '014877350526488021429:xgeqnqdzetg',
-        key:'AIzaSyA34VP0DASFc1eqRbNug3_yil1rrsRzCC0',
+        q: 'graduados AND colacion',
+        siteSearch: 'https://www.diariojornada.com.ar',
+        cx: '014476054167817262143:wqkzor3tqfp',
+        key:'AIzaSyAZdtNoA5CAjWgbl9_R-Jslo2QACtPYrS0',
         siteSearchFilter: 'i'
     })
     var filtered = Extractor.filter(links);
     var htmls = await Extractor.extract( filtered )
-    var body = Extractor.selector( htmls, ['.notapage_cuerpo p', '.news-amp-body']  )
+    var body = Extractor.applySelectors( htmls, ['.td-post-content p']  )
 
-    return body
+    return response.json(body)
 });

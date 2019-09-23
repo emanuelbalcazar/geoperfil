@@ -11,14 +11,15 @@ class ExtractorManager {
     /**
      * Instance a new extractor
      * @param extractorName
-     * @returns a new extractor or error
+     * @returns BaseExtractor extractor or error
      */
     getExtractor(extractorName) {
         try {
             let extractor = require('./' + extractorName);
             return extractor;
         } catch (e) {
-            throw new Error("No se encontro un extractor con el nombre: " + extractorName);
+            let defaultExtractor = require('./baseExtractor/BaseExtractor');
+            return new defaultExtractor();
         }
     }
 

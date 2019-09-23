@@ -18,7 +18,7 @@ const providers = [
     '@adonisjs/cors/providers/CorsProvider',
     '@adonisjs/lucid/providers/LucidProvider',
     'adonis-scheduler/providers/SchedulerProvider',
-    path.join(__dirname, '..', 'providers', 'ExtractorProvider')
+    path.join(__dirname, '..', 'providers', 'extractors','ExtractorProvider')
 ]
 
 /*

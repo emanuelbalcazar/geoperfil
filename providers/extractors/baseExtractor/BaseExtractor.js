@@ -1,4 +1,4 @@
-var config = require('./config')
+var config = require('../config')
 var request = require('request-promise');
 var parse = require('node-html-parser')
 
@@ -7,7 +7,7 @@ class BaseExtractor {
     constructor() {}
 
     async search( eq ) {
-        var options = {
+        let options = {
             method: 'GET',
             uri: 'https://www.googleapis.com/customsearch/v1',
             qs: eq,
@@ -17,12 +17,17 @@ class BaseExtractor {
             json: true // Automatically parses the JSON string in the response
         };
 
-        var result = await request( options )
+        let result = await request(options);
         return result.items
     }
 
-    async extract( items ) {
-        var htmls = []
+    filter(items){
+        console.log('Filter del BaseExtractor')
+        return items
+    }
+
+    async extract(items) {
+        let htmls = [];
         for (const item of items) {
             let newItem = item;
             newItem.html = await request.get( { uri: item.link } ).catch( error => {
@@ -33,24 +38,31 @@ class BaseExtractor {
         return htmls
     }
 
-    selector( htmls, selectors ) {
-        var result = []
+    selector(htmls, selectors) {
+        let articles = [];
         for (const data of htmls) {
-            const root = parse.parse( data.html )
+            const root = parse.parse( data.html );
 
             for (const selector of selectors) {
-                var elements = root.querySelectorAll( selector )
+                let elements = root.querySelectorAll(selector);
 
                 if (elements.length > 0) {
                     let newItem = data;
-                    var allText = elements.map(elem => { return elem.text})
-                    newItem.fullText = allText.join('\n')
-                    result.push(newItem)
+                    let allText = elements.map(elem => {
+                        return elem.text
+                    });
+                    newItem.fullText = allText.join('\n');
+                    articles.push(newItem)
                 }
-            }            
+            }
         }
-        return result
+        return articles
     }
+
+    save(articles){
+        return articles
+    }
+
 }
 
 module.exports = BaseExtractor

@@ -15,9 +15,10 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-const Extractor = use( 'BaseExtractor')
+const Factory = use( 'ExtractorFactory')
 
 Route.get('/', async() => {
+    var Extractor = Factory.getExtractor('elchubut')
     var links = await Extractor.search( {
         q: 'graduados + colacion',
         siteSearch: 'www.elchubut.com.ar',
@@ -25,8 +26,9 @@ Route.get('/', async() => {
         key:'AIzaSyA34VP0DASFc1eqRbNug3_yil1rrsRzCC0',
         siteSearchFilter: 'i'
     })
-    var htmls = await Extractor.extract( links )
+    var filtered = Extractor.filter(links);
+    var htmls = await Extractor.extract( filtered )
     var body = Extractor.selector( htmls, ['.notapage_cuerpo p', '.news-amp-body']  )
-    
+
     return body
 });

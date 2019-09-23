@@ -12,9 +12,9 @@ class ExtractorProvider extends ServiceProvider {
    */
   register () {
     //
-    this.app.singleton('BaseExtractor', () => {
+    this.app.singleton('ExtractorFactory', () => {
         //const Config = this.app.use('Adonis/Src/Config')
-        return new (require('./extractors/BaseExtractor'))
+        return new (require('./ExtractorFactory'))
       })
   }
 

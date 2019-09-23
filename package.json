@@ -26,8 +26,10 @@
         "@adonisjs/lucid": "^6.1.3",
         "@adonisjs/vow": "^1.0.17",
         "adonis-scheduler": "git+https://github.com/danilopolani/adonis-scheduler.git",
+        "node-html-parser": "^1.1.16",
         "pg": "^7.12.1",
-        "request": "^2.88.0"
+        "request": "^2.88.0",
+        "request-promise": "^4.2.4"
     },
     "devDependencies": {},
     "autoload": {

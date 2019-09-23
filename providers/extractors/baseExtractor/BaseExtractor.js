@@ -2,6 +2,7 @@ var config = require('../config')
 var request = require('request-promise');
 var parse = require('node-html-parser')
 
+
 class BaseExtractor {
 
     constructor() {}

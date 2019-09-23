@@ -15,7 +15,7 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-const Factory = use( 'ExtractorFactory')
+const ExtractorManager = use( 'ExtractorManager')
 
 Route.get('/', async() => {
     var Extractor = Factory.getExtractor('elchubut')

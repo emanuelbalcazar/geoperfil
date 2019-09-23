@@ -1,7 +1,6 @@
-exports.ecuacion1 = {
-    q: 'graduados + colacion',
-    siteSearch: 'www.elchubut.com.ar',
-    cx: '014877350526488021429:xgeqnqdzetg',
-    key:'AIzaSyA34VP0DASFc1eqRbNug3_yil1rrsRzCC0',
-    siteSearchFilter: 'i'
-}
+// google custom search http configuration.
+exports.options = {
+    method: 'GET',
+    uri: 'https://www.googleapis.com/customsearch/v1',
+    json: true // automatically parses the JSON string in the response
+};

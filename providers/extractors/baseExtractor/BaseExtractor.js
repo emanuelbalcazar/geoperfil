@@ -1,47 +1,46 @@
-var config = require('../config')
-var request = require('request-promise');
-var parse = require('node-html-parser')
+const request = require('request-promise');
+const parse = require('node-html-parser');
+const config = require('../config');
 
+/**
+ * Base extractor, all extractors must extend from this.
+ */
 class BaseExtractor {
 
-    constructor() {}
-
-    async search( eq ) {
-        let options = {
-            method: 'GET',
-            uri: 'https://www.googleapis.com/customsearch/v1',
-            qs: eq,
-            headers: {
-                'User-Agent': 'Request-Promise'
-            },
-            json: true // Automatically parses the JSON string in the response
-        };
-
-        let result = await request(options);
-        return result.items
+    constructor() {
+        // void
     }
 
-    filter(items){
-        console.log('Filter del BaseExtractor')
-        return items
+    async search(eq) {
+        let options = config.options;
+        options.qs = eq;
+        let googleResults = await request(options);
+        return googleResults.items;
+    }
+
+    filter(items) {
+        return items;
     }
 
     async extract(items) {
-        let htmls = [];
+        let allHtml = [];
+
         for (const item of items) {
             let newItem = item;
-            newItem.html = await request.get( { uri: item.link } ).catch( error => {
-                console.log( error )
+            newItem.html = await request.get({uri: item.link}).catch(error => {
+                throw new Error(error);
             });
-            htmls.push(newItem)
+            allHtml.push(newItem)
         }
-        return htmls
+
+        return allHtml;
     }
 
-    selector(htmls, selectors) {
+    applySelectors(allHtml, selectors) {
         let articles = [];
-        for (const data of htmls) {
-            const root = parse.parse( data.html );
+
+        for (const data of allHtml) {
+            const root = parse.parse(data.html);
 
             for (const selector of selectors) {
                 let elements = root.querySelectorAll(selector);
@@ -49,20 +48,21 @@ class BaseExtractor {
                 if (elements.length > 0) {
                     let newItem = data;
                     let allText = elements.map(elem => {
-                        return elem.text
+                        return elem.text.trim();
                     });
+
                     newItem.fullText = allText.join('\n');
-                    articles.push(newItem)
+                    articles.push(newItem);
                 }
             }
         }
-        return articles
+        return articles;
     }
 
-    save(articles){
-        return articles
+    save(articles) {
+        return articles;
     }
 
 }
 
-module.exports = BaseExtractor
+module.exports = BaseExtractor;

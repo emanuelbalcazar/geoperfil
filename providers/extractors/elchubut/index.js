@@ -1,15 +1,10 @@
-var BaseExtractor = require('../baseExtractor/BaseExtractor');
+const BaseExtractor = require('../baseExtractor/BaseExtractor');
 
-class ExtractorElChubut extends BaseExtractor{
-     constructor(){
-         super();
-     }
+class ExtractorElChubut extends BaseExtractor {
 
-     filter(items) {
-         console.log('Filter ExtractorElChubut');
-         return items;
-     }
-
+    constructor() {
+        super();
+    }
 }
 
 module.exports = new ExtractorElChubut();

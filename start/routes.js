@@ -17,8 +17,5 @@
 const Route = use('Route')
 
 Route.get('/', () => {
-    let factory = use('CrawlerFactory');
-    let crawler = factory.getCrawler('chubut');
-
-    return { name: crawler.name }
+    return { name: 'chubut' }
 });

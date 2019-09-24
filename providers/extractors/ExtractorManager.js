@@ -24,7 +24,7 @@ class ExtractorManager {
     }
 
     /**
-     * Run a extractor
+     * Run an extractor and save the extracted content.
      * @param extractorName name of extractor
      * @param equation search equation
      * @param selectors
@@ -40,6 +40,24 @@ class ExtractorManager {
         const saved = extractor.save(body);
 
         return saved;
+    }
+
+    /**
+     * Test an extractor without saving the content obtained.
+     * @param extractorName
+     * @param equation
+     * @param selectors
+     * @returns {Promise<*[]>}
+     */
+    async test(extractorName, equation, selectors) {
+        const extractor = this.getExtractor(extractorName);
+
+        const links = await extractor.search(equation);
+        const filtered = extractor.filter(links);
+        const allHtml = await extractor.extract(filtered);
+        const body = extractor.applySelectors(allHtml, selectors);
+
+        return body;
     }
 }
 

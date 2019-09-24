@@ -49,7 +49,7 @@ class BaseExtractor {
                 if (elements.length > 0) {
                     let newItem = data;
                     let allText = elements.map(elem => {
-                        return elem.innerText.trim();
+                        return elem.innerText;
                     });
 
                     newItem.fullText = allText.join('\n');

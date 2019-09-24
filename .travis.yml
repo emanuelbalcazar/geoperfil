@@ -2,3 +2,8 @@ language: node_js
 
 node_js:
   - 8
+
+notifications:
+    slack:
+        rooms:
+            - proyecto-geoperfil:IvuMxA5RM4Bv7bTKfbprMqIA#repositorio

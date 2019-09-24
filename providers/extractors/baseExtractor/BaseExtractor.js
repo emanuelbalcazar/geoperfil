@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const parse = require('node-html-parser');
-const config = require('../config');
+const config = require('../Configuration');
 
 /**
  * Base extractor, all extractors must extend from this.

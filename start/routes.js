@@ -18,17 +18,9 @@ const Route = use('Route')
 const ExtractorManager = use( 'ExtractorManager')
 
 Route.get('/', async({response}) => {
-    var Extractor = ExtractorManager.getExtractor('elchubut')
-    var links = await Extractor.search( {
-        q: 'graduados AND colacion',
-        siteSearch: 'https://www.diariojornada.com.ar',
-        cx: '014476054167817262143:wqkzor3tqfp',
-        key:'AIzaSyAZdtNoA5CAjWgbl9_R-Jslo2QACtPYrS0',
-        siteSearchFilter: 'i'
-    })
-    var filtered = Extractor.filter(links);
-    var htmls = await Extractor.extract( filtered )
-    var body = Extractor.applySelectors( htmls, ['.td-post-content p']  )
 
-    return response.json(body)
+    const Model = use('App/Models/Equation')
+    return await Model.query().with('selectors').fetch()
 });
+
+Route.post('/pepe', 'ExtractorController.extract')

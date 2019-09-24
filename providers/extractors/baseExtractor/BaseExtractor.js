@@ -29,7 +29,6 @@ class BaseExtractor {
         let cleanItems = googleResults.items.map(({title, link, snippet}) => ({
             title, link, snippet
         }));
-
         return cleanItems;
     }
 
@@ -60,7 +59,6 @@ class BaseExtractor {
 
             allHtml.push(newItem);
         }
-
         return allHtml;
     }
 
@@ -77,8 +75,7 @@ class BaseExtractor {
             const root = parse.parse(data.html);
 
             for (const selector of selectors) {
-                let elements = root.querySelectorAll(selector);
-
+                let elements = root.querySelectorAll(String(selector));
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
                     let newItem = data;
@@ -94,7 +91,7 @@ class BaseExtractor {
                 }
             }
         }
-
+        console.log(articles)
         return articles;
     }
 

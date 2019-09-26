@@ -22,13 +22,12 @@ class BaseExtractor {
         let options = config.options;
         options.qs = equation;
 
-        let googleResults = await request(options).catch(error => {
-            throw new Error(error);
-        });
+        let googleResults = await request(options);
 
-        let cleanItems = googleResults.items.map(({title, link, snippet}) => ({
+        let cleanItems = googleResults.items.map(({ title, link, snippet }) => ({
             title, link, snippet
         }));
+
         return cleanItems;
     }
 
@@ -52,13 +51,10 @@ class BaseExtractor {
 
         for (const item of items) {
             let newItem = item;
-
-            newItem.html = await request.get({uri: item.link}).catch(error => {
-                throw new Error(error);
-            });
-
+            newItem.html = await request.get({ uri: item.link });
             allHtml.push(newItem);
         }
+
         return allHtml;
     }
 
@@ -91,7 +87,7 @@ class BaseExtractor {
                 }
             }
         }
-        console.log(articles)
+
         return articles;
     }
 

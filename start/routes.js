@@ -14,13 +14,19 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
-const ExtractorManager = use( 'ExtractorManager')
+const Route = use('Route');
+const ExtractorManager = use('ExtractorManager');
 
-Route.get('/', async({response}) => {
-
+Route.get('/', async ({ response }) => {
     const Model = use('App/Models/Equation')
     return await Model.query().with('selectors').fetch()
 });
 
-Route.post('/pepe', 'ExtractorController.extract')
+// routes with prefix 'api'
+Route.group(() => {
+
+    Route.post('/extractors/run', 'ExtractorController.extract');
+
+    Route.post('/extractors/test', 'ExtractorController.test');
+
+}).prefix('api');

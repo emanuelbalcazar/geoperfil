@@ -4,18 +4,18 @@
 const Schema = use('Schema')
 
 class SelectorSchema extends Schema {
-  up () {
-    this.create('selectors', (table) => {
-      table.increments()
-        table.string('selector', 100).notNullable()
-        table.integer('equation_id').references('id').inTable('equations')
+    up() {
+        this.create('selectors', (table) => {
+            table.increments()
+            table.string('selector', 100).notNullable()
+            table.integer('equation_id').references('id').inTable('equations')
 
-    })
-  }
+        })
+    }
 
-  down () {
-    this.drop('selectors')
-  }
+    down() {
+        this.drop('selectors')
+    }
 }
 
 module.exports = SelectorSchema

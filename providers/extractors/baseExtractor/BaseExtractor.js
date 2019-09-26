@@ -11,6 +11,10 @@ class BaseExtractor {
         // void
     }
 
+    get name() {
+        return 'BaseExtractor';
+    }
+
     /**
      * Run a google search with a search equation.
      * @param equation

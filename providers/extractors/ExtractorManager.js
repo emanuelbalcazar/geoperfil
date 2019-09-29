@@ -37,7 +37,7 @@ class ExtractorManager {
         const filtered = extractor.filter(links);
         const allHtml = await extractor.extract(filtered);
         const body = extractor.applySelectors(allHtml, selectors);
-        const saved = extractor.save(body);
+        const saved = await extractor.save(body);
 
         return saved;
     }

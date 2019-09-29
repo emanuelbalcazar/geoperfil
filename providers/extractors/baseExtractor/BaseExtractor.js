@@ -1,6 +1,7 @@
 const request = require('request-promise');
 const parse = require('node-html-parser');
 const config = require('../Configuration');
+const Article = use('App/Models/Article');
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -28,8 +29,8 @@ class BaseExtractor {
 
         let googleResults = await request(options);
 
-        let cleanItems = googleResults.items.map(({ title, link, snippet }) => ({
-            title, link, snippet
+        let cleanItems = googleResults.items.map(({ title, link, displayLink, snippet }) => ({
+            title, link, displayLink, snippet
         }));
 
         return cleanItems;
@@ -84,8 +85,7 @@ class BaseExtractor {
                         return elem.text || elem.innerText;
                     });
 
-                    newItem.date = new Date();
-                    newItem.fullText = text.join('\n').trim();
+                    newItem.text = text.join('\n').trim();
                     delete newItem.html; // I delete the attribute because it is no longer necessary.
                     articles.push(newItem);
                 }
@@ -101,8 +101,15 @@ class BaseExtractor {
      * @returns {*}
      * TODO: implement
      */
-    save(articles) {
-        return articles;
+    async save(articles) {
+        let result = [];
+
+        for (const article of articles) {
+            let record = await  Article.create(article);
+            result.push(record);
+        }
+
+        return result;
     }
 }
 

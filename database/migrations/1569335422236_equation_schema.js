@@ -9,8 +9,7 @@ class EquationSchema extends Schema {
             table.increments()
             table.string('q', 100).notNullable()
             table.string('siteSearch', 200).notNullable()
-            table.string('siteSearchFilter', 200).notNullable()
-
+            table.string('siteSearchFilter', 200).notNullable().defaultTo('i')
         })
     }
 

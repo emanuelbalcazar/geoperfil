@@ -18,15 +18,15 @@ const Route = use('Route');
 const ExtractorManager = use('ExtractorManager');
 
 Route.get('/', async ({ response }) => {
-    const Model = use('App/Models/Equation')
-    return await Model.query().with('selectors').fetch()
+    return 'Proyecto Geoperfil';
 });
 
 // routes with prefix 'api'
 Route.group(() => {
 
-    Route.post('/extractors/run', 'ExtractorController.extract');
+    Route.resource('/equations', 'EquationController');
 
+    Route.post('/extractors/run', 'ExtractorController.extract');
     Route.post('/extractors/test', 'ExtractorController.test');
 
 }).prefix('api');

@@ -1,12 +1,10 @@
 module.exports.equation1 = {
-    "extractor":"elchubut",
+    "extractor":"diariojornada",
     "eq":{
         "q": "graduados + colacion",
-        "siteSearch": "https://www.elchubut.com.ar",
+        "siteSearch": "https://www.diariojornada.com.ar/",
         "cx": "014630729015948810570:xhbqbuvpi2g",
         "key":"AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ",
-        "siteSearchFilter": "i"
-
-    },
-    "selectors":[".notapage_cuerpo p", ".news-amp-body"]
+        "siteSearchFilter": "i"},
+    "selectors":["#bloque_superior p"]
 }

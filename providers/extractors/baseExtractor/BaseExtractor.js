@@ -29,7 +29,7 @@ class BaseExtractor {
 
         let googleResults = await request(options);
 
-        let cleanItems = googleResults.items.map(({ title, link, displayLink, snippet }) => ({
+        let cleanItems = googleResults.items.map(({title, link, displayLink, snippet}) => ({
             title, link, displayLink, snippet
         }));
 
@@ -53,10 +53,12 @@ class BaseExtractor {
      */
     async extract(items) {
         let allHtml = [];
+        let options = config.options;
 
         for (const item of items) {
             let newItem = item;
-            newItem.html = await request.get({ uri: item.link });
+            options.uri = item.link;
+            newItem.html = await request.get(options);
             allHtml.push(newItem);
         }
 
@@ -76,7 +78,7 @@ class BaseExtractor {
             const root = parse.parse(data.html);
 
             for (const selector of selectors) {
-                let elements = root.querySelectorAll(String(selector));
+                let elements = root.querySelectorAll(selector);
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
                     let newItem = data;
@@ -105,7 +107,7 @@ class BaseExtractor {
         let result = [];
 
         for (const article of articles) {
-            let record = await  Article.create(article);
+            let record = await Article.create(article);
             result.push(record);
         }
 

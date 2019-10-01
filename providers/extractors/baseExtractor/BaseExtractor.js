@@ -1,10 +1,8 @@
-const request = require('request-promise');
 const axios = require("axios");
 const parse = require('node-html-parser');
 const config = require('../Configuration');
 const Article = use('App/Models/Article');
 const querystring = require('querystring');
-
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -27,28 +25,9 @@ class BaseExtractor {
      * @returns Retrieve results for a particular search
      */
     async search(equation) {
-        let options = config.options;
-        options.qs = equation;
+        const URL = config.options.uri + querystring.stringify(equation);
 
-        let parameters = querystring.stringify(equation)
-
-        //request
-        const  url = 'https://www.googleapis.com/customsearch/v1?'.concat(parameters);
-
-        const getData = async url => {
-            try {
-                const response = await axios.get(url);
-                const data = response.data;
-                console.log(data);
-                return data;
-            } catch (error) {
-                console.log(error)
-            }
-
-        };
-        //fin req
-
-        let googleResults = await getData(url);
+        let googleResults = await getData(URL);
 
         return googleResults.items.map(({title, link, displayLink, snippet}) => ({
             title, link, displayLink, snippet
@@ -72,12 +51,10 @@ class BaseExtractor {
      */
     async extract(items) {
         let allHtml = [];
-        let options = config.options;
 
         for (const item of items) {
             let newItem = item;
-            options.uri = item.link;
-            newItem.html = await request.get(options);
+            newItem.html = await getData(item.link);
             allHtml.push(newItem);
         }
 
@@ -103,13 +80,11 @@ class BaseExtractor {
                 let elements = root.querySelectorAll(selector);
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
-
                     let text = elements.map(elem => {
                         return elem.text || elem.innerText;
                     });
 
                     newItem.text += text.join('\n').trim();
-
                 }
             }
             articles.push(newItem);
@@ -135,5 +110,11 @@ class BaseExtractor {
         return result;
     }
 }
+
+const getData = async url => {
+    const response = await axios.get(url);
+    const data = response.data;
+    return data;
+};
 
 module.exports = BaseExtractor;

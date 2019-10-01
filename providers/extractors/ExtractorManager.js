@@ -51,11 +51,10 @@ class ExtractorManager {
      */
     async test(extractorName, equation, selectors) {
         const extractor = this.getExtractor(extractorName);
-
         const links = await extractor.search(equation);
-        const filtered = extractor.filter(links);
+        const filtered = await extractor.filter(links);
         const allHtml = await extractor.extract(filtered);
-        const body = extractor.applySelectors(allHtml, selectors);
+        const body = await extractor.applySelectors(allHtml, selectors);
 
         return body;
     }

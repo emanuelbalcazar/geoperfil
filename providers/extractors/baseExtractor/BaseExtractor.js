@@ -40,7 +40,7 @@ class BaseExtractor {
      * @returns {*}
      * TODO: implement
      */
-    filter(items) {
+    async filter(items) {
         return items;
     }
 
@@ -67,7 +67,7 @@ class BaseExtractor {
      * @param selectors
      * @returns {[]}
      */
-    applySelectors(allHtml, selectors) {
+    async applySelectors(allHtml, selectors) {
         let articles = [];
 
         for (const data of allHtml) {
@@ -99,7 +99,6 @@ class BaseExtractor {
      * Save content obtained from google and processed with selectors.
      * @param array of articles
      * @returns {*}
-     * TODO: implement
      */
     async save(articles) {
         let result = [];

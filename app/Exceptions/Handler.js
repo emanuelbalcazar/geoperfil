@@ -18,9 +18,9 @@ class ExceptionHandler extends BaseExceptionHandler {
      * @param  {Object} options.request
      * @param  {Object} options.response
      *
-     * @return {void}
+     * @return {Mixed}
      */
-    async handle(error, { request, response }) {
+    handle(error, { request, response }) {
         let errorObject = {
             name: error.name,
             message: error.message,

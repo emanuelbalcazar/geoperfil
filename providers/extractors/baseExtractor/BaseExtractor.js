@@ -1,7 +1,10 @@
 const request = require('request-promise');
+const axios = require("axios");
 const parse = require('node-html-parser');
 const config = require('../Configuration');
 const Article = use('App/Models/Article');
+const querystring = require('querystring');
+
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -27,13 +30,29 @@ class BaseExtractor {
         let options = config.options;
         options.qs = equation;
 
-        let googleResults = await request(options);
+        let parameters = querystring.stringify(equation)
 
-        let cleanItems = googleResults.items.map(({title, link, displayLink, snippet}) => ({
+        //request
+        const  url = 'https://www.googleapis.com/customsearch/v1?'.concat(parameters);
+
+        const getData = async url => {
+            try {
+                const response = await axios.get(url);
+                const data = response.data;
+                console.log(data);
+                return data;
+            } catch (error) {
+                console.log(error)
+            }
+
+        };
+        //fin req
+
+        let googleResults = await getData(url);
+
+        return googleResults.items.map(({title, link, displayLink, snippet}) => ({
             title, link, displayLink, snippet
         }));
-
-        return cleanItems;
     }
 
     /**
@@ -77,9 +96,9 @@ class BaseExtractor {
         for (const data of allHtml) {
             const root = parse.parse(data.html);
             let newItem = data;
-            delete newItem.html; // I delete the attribute because it is no longer necessary. 
+            delete newItem.html; // I delete the attribute because it is no longer necessary.
             newItem.text = '';
-            
+
             for (const selector of selectors) {
                 let elements = root.querySelectorAll(selector);
                 // if there are elements, I get the text.
@@ -90,7 +109,7 @@ class BaseExtractor {
                     });
 
                     newItem.text += text.join('\n').trim();
-                    
+
                 }
             }
             articles.push(newItem);

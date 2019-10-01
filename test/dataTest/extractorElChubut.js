@@ -4,7 +4,7 @@ module.exports.equation1 = {
         "q": "graduados + colacion",
         "siteSearch": "https://www.elchubut.com.ar",
         "cx": "014630729015948810570:xhbqbuvpi2g",
-        "key":"AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ",
+        "key":"AIzaSyAZdtNoA5CAjWgbl9_R-Jslo2QACtPYrS0",
         "siteSearchFilter": "i"
 
     },

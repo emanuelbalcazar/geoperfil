@@ -87,7 +87,9 @@ class BaseExtractor {
                     newItem.text += text.join('\n').trim();
                 }
             }
-            articles.push(newItem);
+
+            if (newItem.text.length > 0)
+                articles.push(newItem);
         }
 
         return articles;

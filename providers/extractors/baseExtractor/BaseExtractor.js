@@ -76,22 +76,24 @@ class BaseExtractor {
 
         for (const data of allHtml) {
             const root = parse.parse(data.html);
-
+            let newItem = data;
+            delete newItem.html; // I delete the attribute because it is no longer necessary. 
+            newItem.text = '';
+            
             for (const selector of selectors) {
                 let elements = root.querySelectorAll(selector);
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
-                    let newItem = data;
 
                     let text = elements.map(elem => {
                         return elem.text || elem.innerText;
                     });
 
-                    newItem.text = text.join('\n').trim();
-                    delete newItem.html; // I delete the attribute because it is no longer necessary.
-                    articles.push(newItem);
+                    newItem.text += text.join('\n').trim();
+                    
                 }
             }
+            articles.push(newItem);
         }
 
         return articles;

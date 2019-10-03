@@ -8,4 +8,4 @@ module.exports.equation1 = {
         "siteSearchFilter": "i"
     },
     "selectors":["#bloque_superior p"]
-}
+};

@@ -26,6 +26,8 @@ Route.group(() => {
 
     Route.resource('/equations', 'EquationController');
 
+    Route.resource('/selectors', 'SelectorController');
+
     Route.post('/extractors/run', 'ExtractorController.extract');
     Route.post('/extractors/test', 'ExtractorController.test');
 

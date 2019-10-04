@@ -1,11 +1,11 @@
-module.exports.equation1 = {
-    "extractor":"diariojornada",
+module.exports.equationDiarioCronica = {
+    "extractor":"cronica",
     "eq":{
         "q": "graduados OR colacion",
-        "siteSearch": "https://www.diariojornada.com.ar/",
+        "siteSearch": "http://diariocronica.com.ar",
         "cx": "014630729015948810570:xhbqbuvpi2g",
         "key":"AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ",
         "siteSearchFilter": "i"
     },
-    "selectors":["#bloque_superior p"]
+    "selectors":[".td-post-content p"]
 };

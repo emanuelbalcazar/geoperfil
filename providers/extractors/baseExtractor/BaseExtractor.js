@@ -97,8 +97,8 @@ class BaseExtractor {
 
     /**
      * Save content obtained from google and processed with selectors.
-     * @param array of articles
      * @returns {*}
+     * @param articles
      */
     async save(articles) {
         let result = [];

@@ -25,11 +25,27 @@ class BaseExtractor {
      * @returns Retrieve results for a particular search
      */
     async search(equation) {
-        const URL = config.options.uri + querystring.stringify(equation);
+        let googleResults = [];
+        let startIndex = 1;
+        let hasNextPage = true;
+        let currentPage = 1;
 
-        let googleResults = await getData(URL);
+        while (currentPage <= equation.limit && hasNextPage){
+            equation.start = startIndex;
+            let URL = config.options.uri + querystring.stringify(equation);
+            let result = await getData(URL);
+            googleResults = googleResults.concat(result.items)
 
-        return googleResults.items.map(({title, link, displayLink, snippet}) => ({
+            hasNextPage = !!(result.queries && result.queries.nextPage);
+
+            if (hasNextPage){
+                startIndex = result.queries.nextPage[0].startIndex;
+            }
+
+            currentPage++;
+        }
+
+        return googleResults.map(({title, link, displayLink, snippet}) => ({
             title, link, displayLink, snippet
         }));
     }

@@ -48,6 +48,11 @@ class EquationController {
      */
     async store({request, response}) {
         let equation = request.post();
+        let eq = await Equation.query().where( {q: equation.q, siteSearch: equation.siteSearch }).fetch()
+        if (eq.rows.length > 0) {
+            response.conflict({code: 409, message: 'Ecuacion ya existe'})
+            return
+        }
         let record = await Equation.create(equation);
         response.json(record);
     }

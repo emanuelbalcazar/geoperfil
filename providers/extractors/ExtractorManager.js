@@ -55,7 +55,6 @@ class ExtractorManager {
         const filtered = await extractor.filter(links);
         const allHtml = await extractor.crawl(filtered);
         const body = await extractor.scraping(allHtml, selectors);
-
         return body;
     }
 }

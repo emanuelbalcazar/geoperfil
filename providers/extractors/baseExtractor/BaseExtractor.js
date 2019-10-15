@@ -49,7 +49,7 @@ class BaseExtractor {
      * @param items
      * @returns array of objects that includes the html.
      */
-    async extract(items) {
+    async crawl(items) {
         let allHtml = [];
 
         for (const item of items) {
@@ -67,7 +67,7 @@ class BaseExtractor {
      * @param selectors
      * @returns {[]}
      */
-    async applySelectors(allHtml, selectors) {
+    async scraping(allHtml, selectors) {
         let articles = [];
 
         for (const data of allHtml) {

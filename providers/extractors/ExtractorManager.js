@@ -35,8 +35,8 @@ class ExtractorManager {
 
         const links = await extractor.search(equation);
         const filtered = await extractor.filter(links);
-        const allHtml = await extractor.extract(filtered);
-        const body = await extractor.applySelectors(allHtml, selectors);
+        const allHtml = await extractor.crawl(filtered);
+        const body = await extractor.scraping(allHtml, selectors);
         const saved = await extractor.save(body);
 
         return saved;
@@ -53,8 +53,8 @@ class ExtractorManager {
         const extractor = this.getExtractor(extractorName);
         const links = await extractor.search(equation);
         const filtered = await extractor.filter(links);
-        const allHtml = await extractor.extract(filtered);
-        const body = await extractor.applySelectors(allHtml, selectors);
+        const allHtml = await extractor.crawl(filtered);
+        const body = await extractor.scraping(allHtml, selectors);
 
         return body;
     }

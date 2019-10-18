@@ -19,7 +19,7 @@ class EquationController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async index({request, response, view}) {
+    async index({ request, response, view }) {
         let params = request.all();
         let equations = await Equation.query().with('selectors').paginate(params.page, params.perPage);
         response.json(equations);
@@ -34,7 +34,7 @@ class EquationController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async create({request, response, view}) {
+    async create({ request, response, view }) {
 
     }
 
@@ -46,13 +46,15 @@ class EquationController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async store({request, response}) {
+    async store({ request, response }) {
         let equation = request.post();
-        let eq = await Equation.query().where( {q: equation.q, siteSearch: equation.siteSearch }).fetch()
+        let eq = await Equation.query().where({ q: equation.q, siteSearch: equation.siteSearch }).fetch()
+
         if (eq.rows.length > 0) {
-            response.conflict({code: 409, message: 'Ecuacion ya existe'})
+            response.conflict({ code: 409, message: 'Ecuacion ya existe' })
             return
         }
+
         let record = await Equation.create(equation);
         response.json(record);
     }
@@ -66,7 +68,7 @@ class EquationController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async show({params, request, response, view}) {
+    async show({ params, request, response, view }) {
         let equation = await Equation.query().where('id', params.id).with('selectors').first();
         response.json(equation);
     }
@@ -80,7 +82,7 @@ class EquationController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async edit({params, request, response, view}) {
+    async edit({ params, request, response, view }) {
     }
 
     /**
@@ -91,7 +93,7 @@ class EquationController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async update({params, request, response}) {
+    async update({ params, request, response }) {
     }
 
     /**
@@ -102,7 +104,7 @@ class EquationController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async destroy({params, request, response}) {
+    async destroy({ params, request, response }) {
     }
 }
 

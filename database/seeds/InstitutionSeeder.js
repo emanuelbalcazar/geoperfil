@@ -20,15 +20,21 @@ const Csv = require('csvtojson')
 const FILEPATH = __dirname + '/files/institutions.csv';
 
 class InstitutionSeeder {
-    async run() {
 
+    async run() {
         let institutions = await Csv().fromFile(FILEPATH);
+        let count = 0;
 
         for (const institution of institutions) {
-            let record = await Institution.create(institution);
+            let exists = await Institution.query().where(institution).getCount();
+
+            if (exists == 0) {
+                await Institution.create(institution);
+                count++;
+            }
         }
 
-        Logger.info('[Seeder] - Carga de Instituciones a la base de datos completada.');
+        Logger.info(`[Seeder] - Se cargaron ${count} instituciones`);
     }
 }
 

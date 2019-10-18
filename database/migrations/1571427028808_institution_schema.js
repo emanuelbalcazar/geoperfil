@@ -9,6 +9,7 @@ class InstitutionSchema extends Schema {
             table.increments();
             table.string('acronym', 150);
             table.string('name', 250);
+            table.string('site', 250);
         })
     }
 

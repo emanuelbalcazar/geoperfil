@@ -9,7 +9,6 @@ class SelectorSchema extends Schema {
             table.increments()
             table.string('selector', 100).notNullable()
             table.integer('equation_id').references('id').inTable('equations')
-
         })
     }
 

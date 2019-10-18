@@ -11,8 +11,6 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-const Factory = use('Factory')
-const Config = use('Config')
 const Institution = use('App/Models/Institution')
 const Logger = use('Logger')
 const Csv = require('csvtojson')

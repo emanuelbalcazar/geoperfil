@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| InstitutionUnpsjbSeeder
+| InstitutionUtnSeeder
 |--------------------------------------------------------------------------
 |
 | Make use of the Factory instance to seed database with dummy data or
@@ -12,10 +12,10 @@
 const Institution = use('App/Models/Institution')
 const csv = require('csvtojson')
 
-const INSTITUTION_FILE = __dirname + '/files/unpsjb/unpsjb.csv';
-const CAMPUS_FILE = __dirname + '/files/unpsjb/unpsjb-campus.csv';
+const INSTITUTION_FILE = __dirname + '/files/utn/utn.csv';
+const CAMPUS_FILE = __dirname + '/files/utn/utn-campus.csv';
 
-class InstitutionUnpsjbSeeder {
+class InstitutionUtnSeeder {
 
     async run() {
         let institution = await csv().fromFile(INSTITUTION_FILE);
@@ -26,4 +26,4 @@ class InstitutionUnpsjbSeeder {
     }
 }
 
-module.exports = InstitutionUnpsjbSeeder
+module.exports = InstitutionUtnSeeder

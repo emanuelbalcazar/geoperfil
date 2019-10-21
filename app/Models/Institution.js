@@ -13,7 +13,7 @@ class Institution extends Model {
         return null;
     }
 
-    has () {
+    campus() {
         return this.hasMany('App/Models/Campus')
     }
 

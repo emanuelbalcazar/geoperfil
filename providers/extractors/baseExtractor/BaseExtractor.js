@@ -29,23 +29,25 @@ class BaseExtractor {
         let startIndex = 1;
         let hasNextPage = true;
         let currentPage = 1;
+        const DEFAULT_LIMIT = 1;
 
-        while (currentPage <= equation.limit && hasNextPage){
-            equation.start = startIndex;
+        equation.start = startIndex;
+        equation.limit = equation.limit || DEFAULT_LIMIT;
+
+        while (currentPage <= equation.limit && hasNextPage) {
             let URL = config.options.uri + querystring.stringify(equation);
             let result = await getData(URL);
             googleResults = googleResults.concat(result.items)
-
             hasNextPage = !!(result.queries && result.queries.nextPage);
 
-            if (hasNextPage){
+            if (hasNextPage) {
                 startIndex = result.queries.nextPage[0].startIndex;
             }
 
             currentPage++;
         }
 
-        return googleResults.map(({title, link, displayLink, snippet}) => ({
+        return googleResults.map(({ title, link, displayLink, snippet }) => ({
             title, link, displayLink, snippet
         }));
     }

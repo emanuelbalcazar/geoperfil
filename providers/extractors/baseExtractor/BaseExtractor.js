@@ -1,8 +1,8 @@
 const axios = require("axios");
 const parse = require('node-html-parser');
 const config = require('../Configuration');
-const Article = use('App/Models/Article');
 const querystring = require('querystring');
+const Article = use('App/Models/Article');
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -29,20 +29,19 @@ class BaseExtractor {
         let startIndex = 1;
         let hasNextPage = true;
         let currentPage = 1;
-        const DEFAULT_LIMIT = 1;
-
-        equation.start = startIndex;
-        equation.limit = equation.limit || DEFAULT_LIMIT;
+        equation.limit = equation.limit || 1;
 
         while (currentPage <= equation.limit && hasNextPage) {
-            let URL = config.options.uri + querystring.stringify(equation);
+            equation.start = startIndex;
+
+            let URL = config.options.uri + querystring.stringify(config.options.credentials) + '&' + querystring.stringify(equation);
             let result = await getData(URL);
+
             googleResults = googleResults.concat(result.items)
             hasNextPage = !!(result.queries && result.queries.nextPage);
 
-            if (hasNextPage) {
+            if (hasNextPage)
                 startIndex = result.queries.nextPage[0].startIndex;
-            }
 
             currentPage++;
         }

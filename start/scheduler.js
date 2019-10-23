@@ -1,2 +1,2 @@
-const Scheduler = use('Scheduler')
-Scheduler.run()
+const Scheduler = require('../app/Tasks/Scheduler');
+Scheduler.run();

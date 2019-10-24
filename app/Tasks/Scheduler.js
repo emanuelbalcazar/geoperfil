@@ -1,63 +1,71 @@
 'use strict'
 
 const Equation = use('App/Models/Equation')
+const Scheduler = use('App/Models/Scheduler')
 const ExtractorManager = use('ExtractorManager');
-const scheduler = require('node-schedule');
+const Logger = use('Logger');
+const nodeScheduler = require('node-schedule');
 
-let nextDay = '*/5 * * * * *';
-let nextMonth = '*/10 * * * * *';
-const GOOGLE_LIMIT = 5;
+//let nextDay = '*/5 * * * * *';
+//let nextMonth = '*/10 * * * * *';
 
+const GOOGLE_REQUEST_LIMIT = 5;
 
-class Scheduler {
+class SchedulerTask {
 
-    constructor() {
+    constructor(name) {
         this.job = {};
+        this.name = name;
+    }
+
+    async configure() {
+        this.dailyExecution = false // se deduce de la cantidad de ecuaciones sin ejecutar
+        this.requestCount = 0;
+        this.nextDay = await Scheduler.getNextDay(this.name);
+        this.nextMonth = await Scheduler.getNextMonth(this.name);
+        this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;
+    }
+
+    async reset() {
+        await Scheduler.setDailyExecution(this.name, false);
+        await Scheduler.setRequestCount(this.name, 0);
     }
 
     async run() {
-        this.job = scheduler.scheduleJob(nextMonth, async (fireDate) => {
-            let requestCount = 0;
+        this.job = nodeScheduler.scheduleJob(this.currentSchedule, async (fireDate) => {
+            Logger.info('[Scheduler] - Iniciando tarea en tiempo: ' + fireDate);
             let index = 0;
-            let replanificarPorDia = false
+            let equations = await Equation.getNotCurrentlyExecuted();
+            this.dailyExecution = (equations.length > 0) ? true : false;
+            Logger.info('[Scheduler] - Cantidad de ecuaciones sin ejecutar: ' + equations.length);
 
-            console.log('Ejecutando tarea en:', fireDate);
-
-            let equations = await Equation.query().with('selectors').where({ active: true }).whereNot({ lastExecution: new Date().getMonth() + 1 }).fetch()
-            equations = equations.toJSON();
-
-            while (requestCount <= GOOGLE_LIMIT && index < equations.length) {
+            while (this.requestCount <= GOOGLE_REQUEST_LIMIT && index < equations.length) {
                 let equation = equations[index];
 
-                if ((requestCount + equation.limit) <= GOOGLE_LIMIT) {
+                if ((this.requestCount + equation.limit) <= GOOGLE_REQUEST_LIMIT) {
                     //equation.selectors = equation.selectors.map(selector => selector.selector);
                     //let result = await ExtractorManager.execute('default', equation, equation.selectors);
-                    console.log('Ejecutando ecuacion', equation.id);
-                    await Equation.query().where({ id: equation.id }).update({ lastExecution: new Date().getMonth() + 1 });
-                    requestCount += equation.limit;
+                    await Equation.updateLastExecution(equation.id, new Date().getMonth() + 1);
+                    this.requestCount += equation.limit;
+                    this.dailyExecution = false;
                 } else {
-                    // avisar que hay que replanificar con una bandera
-                    replanificarPorDia = true;
+                    Logger.info('[Scheduler] - Numero de request limite alcanzado, cambiando a modo de ejecucion diaria');
+                    this.dailyExecution = true;
                 }
 
                 index++;
             }
 
-            console.log('termino el while', replanificarPorDia)
-            if (replanificarPorDia) {
-                this.job.reschedule(nextDay);
-            } else {
-                this.job.reschedule(nextMonth);
-            }
-
-            // si la bandera indica que hay que replanificar, actualizarlo para el dia siguiente
-            //this.job.reschedule(dia siguiente);
-
-            // si la bandera de replanificacion es falso
-            // ejecutar al mes siguiente
+            this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;
+            this.requestCount = 0;
+            this.job.reschedule(this.currentSchedule);
         });
+    }
+
+    async stop() {
+        this.job.cancel();
     }
 }
 
 
-module.exports = new Scheduler()
+module.exports = SchedulerTask;

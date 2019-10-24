@@ -5,16 +5,26 @@ const Model = use('Model')
 
 class Equation extends Model {
 
-    static get createdAtColumn () {
+    static get createdAtColumn() {
         return null;
     }
 
-    static get updatedAtColumn () {
+    static get updatedAtColumn() {
         return null;
     }
 
-    selectors () {
+    selectors() {
         return this.hasMany('App/Models/Selector')
+    }
+
+    static async getNotCurrentlyExecuted() {
+        let equations = await this.query().with('selectors').where({ active: true }).whereNot({ lastExecution: new Date().getMonth() + 1 }).fetch();
+        return equations.toJSON();
+    }
+
+    static async updateLastExecution(id, lastExecution) {
+        let updated = await this.query().where({ id: id }).update({ lastExecution: lastExecution });
+        return updated;
     }
 }
 

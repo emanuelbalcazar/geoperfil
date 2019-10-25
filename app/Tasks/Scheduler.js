@@ -41,6 +41,7 @@ class SchedulerTask {
         this.job = nodeScheduler.scheduleJob(this.currentSchedule, async (fireDate) => {
             let index = 0;
             let equations = await Equation.getNotCurrentlyExecuted();
+            // si hay ecuaciones sin ejecutar, asumo que ejecutara todos los dias
             this.dailyExecution = (equations.length > 0) ? true : false;
 
             Logger.info('[Scheduler] - Cantidad de ecuaciones sin ejecutar: ' + equations.length);
@@ -48,6 +49,7 @@ class SchedulerTask {
             while (this.requestCount <= GOOGLE_REQUEST_LIMIT && index < equations.length) {
                 let equation = equations[index];
 
+                // si la ecuacion no supera el limite, la ejecuto y actualizo su ultima ejecucion
                 if ((this.requestCount + equation.limit) <= GOOGLE_REQUEST_LIMIT) {
                     //equation.selectors = equation.selectors.map(selector => selector.selector);
                     //let result = await ExtractorManager.execute('default', equation, equation.selectors);
@@ -64,7 +66,7 @@ class SchedulerTask {
             this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;
             console.log(this.currentSchedule)
             this.requestCount = 0;
-            this.job.reschedule(this.currentSchedule);
+            this.job.reschedule(this.currentSchedule);  // se replanifica el scheduler
         });
     }
 

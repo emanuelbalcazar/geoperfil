@@ -12,6 +12,20 @@ class Campus extends Model {
     static get updatedAtColumn () {
         return null;
     }
+
+    static boot() {
+
+        super.boot()
+
+        /**
+         * A hook to hash the user password before saving
+         * it to the database.
+         */
+        this.addHook('beforeSave', async (userInstance) => {
+
+        })
+    }
+
 }
 
 module.exports = Campus

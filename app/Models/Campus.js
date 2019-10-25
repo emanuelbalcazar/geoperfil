@@ -13,9 +13,9 @@ class Campus extends Model {
         return null;
     }
 
-    career() {
+    /* career() {
         return this.hasMany('App/Models/Career')
-    }
+    } */
 
 }
 

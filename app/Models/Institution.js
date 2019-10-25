@@ -16,9 +16,9 @@ class Institution extends Model {
     campus() {
         return this.hasMany('App/Models/Campus')
     }
-    career() {
+    /* career() {
         return this.manyThrough('App/Models/Career')
-    }
+    } */
 }
 
 module.exports = Institution

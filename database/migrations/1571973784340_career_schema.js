@@ -8,9 +8,7 @@ class CareerSchema extends Schema {
     this.table('careers', (table) => {
       table.increments()
       table.string('name', 250)
-      table.string('duration', 30)
-      table.integer('campus_id').references('id').inTable('campus')
-    })
+      table.string('duration', 25)    })
   }
 
   down () {

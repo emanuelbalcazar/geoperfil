@@ -10,6 +10,7 @@
 |
 */
 const Institution = use('App/Models/Institution');
+const Career = use('App/Models/Career');
 const csv = require('csvtojson');
 const fs = require('fs');
 const Logger = use('Logger');
@@ -27,17 +28,31 @@ class InstitutionSeeder {
             for (const file of institutionsFiles) {
                 let institution = await csv().fromFile(INSTITUTIONS_FILES + file);
                 let campus = await csv().fromFile(CAMPUS_FILES + file);
-                let careers = await csv().fromFile(CAREERS_FILES + file);
                 let count = await Institution.query().where(institution[0]).getCount();
 
                 if (count == 0) {
                     let instance = await Institution.create(institution[0]);
                     await instance.campus().createMany(campus);
-                    await instance.career().createMany(careers);
                 }
             }
 
             Logger.info('[Seeder] - Se cargaron las instituciones correctamente');
+        }
+        
+        if (isDirectory(CAREERS_FILES)){
+            let careersFiles = getDirectories(CAREERS_FILES);
+            
+            for (const file of careersFiles) {
+                let career = await csv().fromFile(CAREERS_FILES + file);
+                let count = await Career.query().where(career[0]).getCount();
+                
+                if (count == 0) {
+                    let instance = await Career.create(carrer[0]);
+                }
+
+            }
+
+            Logger.info('[Seeder] - Se cargaron las carreras correctamente');
         }
     }
 }

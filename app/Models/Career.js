@@ -4,14 +4,6 @@
 const Model = use('Model')
 
 class Career extends Model {
-
-    static get createdAtColumn () {
-        return null;
-    }
-
-    static get updatedAtColumn () {
-        return null;
-    }
     
 }
 

@@ -12,11 +12,6 @@ class Campus extends Model {
     static get updatedAtColumn () {
         return null;
     }
-
-    /* career() {
-        return this.hasMany('App/Models/Career')
-    } */
-
 }
 
 module.exports = Campus

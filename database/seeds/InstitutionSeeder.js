@@ -11,8 +11,8 @@
 */
 const Institution = use('App/Models/Institution');
 const csv = require('csvtojson');
-const fs = require('fs');
 const Logger = use('Logger');
+const Helper = use('App/Helper/Utils')
 
 const INSTITUTIONS_FILES = __dirname + '/files/institutions/';
 const CAMPUS_FILES = __dirname + '/files/campus/';
@@ -20,8 +20,8 @@ const CAMPUS_FILES = __dirname + '/files/campus/';
 class InstitutionSeeder {
 
     async run() {
-        if (isDirectory(INSTITUTIONS_FILES)) {
-            let institutionsFiles = getDirectories(INSTITUTIONS_FILES);
+        if (Helper.isDirectory(INSTITUTIONS_FILES)) {
+            let institutionsFiles = Helper.getDirectories(INSTITUTIONS_FILES);
 
             for (const file of institutionsFiles) {
                 let institution = await csv().fromFile(INSTITUTIONS_FILES + file);
@@ -38,9 +38,5 @@ class InstitutionSeeder {
         }
     }
 }
-
-const isDirectory = source => fs.lstatSync(source).isDirectory();
-
-const getDirectories = source => fs.readdirSync(source);
 
 module.exports = InstitutionSeeder

@@ -28,6 +28,9 @@ Route.group(() => {
 
     Route.resource('/selectors', 'SelectorController');
 
+    Route.resource('/institutions', 'InstitutionController');
+
+
     Route.post('/extractors/run', 'ExtractorController.extract');
     Route.post('/extractors/test', 'ExtractorController.test');
 

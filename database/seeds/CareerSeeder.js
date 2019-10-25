@@ -11,19 +11,17 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-const Factory = use('Factory')
-
 const Career = use('App/Models/Career');
-const fs = require('fs');
 const csv = require('csvtojson');
 const Logger = use('Logger');
+const Helper = use('App/Helper/Utils')
 
 const CAREERS_FILES = __dirname + '/files/careers/';
 
 class CareerSeeder {
     async run() {
-        if (isDirectory(CAREERS_FILES)) {
-            let careersFiles = getDirectories(CAREERS_FILES);
+        if (Helper.isDirectory(CAREERS_FILES)) {
+            let careersFiles = Helper.getDirectories(CAREERS_FILES);
 
             for (const file of careersFiles) {
                 let career = await csv().fromFile(CAREERS_FILES + file);
@@ -39,9 +37,5 @@ class CareerSeeder {
         }
     }
 }
-
-const isDirectory = source => fs.lstatSync(source).isDirectory();
-
-const getDirectories = source => fs.readdirSync(source);
 
 module.exports = CareerSeeder

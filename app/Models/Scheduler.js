@@ -38,7 +38,7 @@ class Scheduler extends Model {
     }
 
     static async setRequestCount(name, count) {
-        return await this.query().where('name', name).update({ requestCount: 0 });
+        return await this.query().where('name', name).update({ requestCount: count });
     }
 
     static async getDailyExecution(name) {

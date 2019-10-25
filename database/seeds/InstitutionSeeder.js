@@ -16,6 +16,7 @@ const Logger = use('Logger');
 
 const INSTITUTIONS_FILES = __dirname + '/files/institutions/';
 const CAMPUS_FILES = __dirname + '/files/campus/';
+const CAREERS_FILES = __dirname + '/files/careers/';
 
 class InstitutionSeeder {
 
@@ -26,11 +27,13 @@ class InstitutionSeeder {
             for (const file of institutionsFiles) {
                 let institution = await csv().fromFile(INSTITUTIONS_FILES + file);
                 let campus = await csv().fromFile(CAMPUS_FILES + file);
+                let careers = await csv().fromFile(CAREERS_FILES + file);
                 let count = await Institution.query().where(institution[0]).getCount();
 
                 if (count == 0) {
                     let instance = await Institution.create(institution[0]);
                     await instance.campus().createMany(campus);
+                    await instance.career().createMany(careers);
                 }
             }
 

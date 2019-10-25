@@ -13,6 +13,10 @@ class Campus extends Model {
         return null;
     }
 
+    career() {
+        return this.hasMany('App/Models/Career')
+    }
+
 }
 
 module.exports = Campus

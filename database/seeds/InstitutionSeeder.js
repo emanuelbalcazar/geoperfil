@@ -10,14 +10,12 @@
 |
 */
 const Institution = use('App/Models/Institution');
-const Career = use('App/Models/Career');
 const csv = require('csvtojson');
 const fs = require('fs');
 const Logger = use('Logger');
 
 const INSTITUTIONS_FILES = __dirname + '/files/institutions/';
 const CAMPUS_FILES = __dirname + '/files/campus/';
-const CAREERS_FILES = __dirname + '/files/careers/';
 
 class InstitutionSeeder {
 
@@ -37,22 +35,6 @@ class InstitutionSeeder {
             }
 
             Logger.info('[Seeder] - Se cargaron las instituciones correctamente');
-        }
-        
-        if (isDirectory(CAREERS_FILES)){
-            let careersFiles = getDirectories(CAREERS_FILES);
-            
-            for (const file of careersFiles) {
-                let career = await csv().fromFile(CAREERS_FILES + file);
-                let count = await Career.query().where(career[0]).getCount();
-                
-                if (count == 0) {
-                    let instance = await Career.create(carrer[0]);
-                }
-
-            }
-
-            Logger.info('[Seeder] - Se cargaron las carreras correctamente');
         }
     }
 }

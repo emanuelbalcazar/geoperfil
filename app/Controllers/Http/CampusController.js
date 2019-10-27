@@ -4,16 +4,15 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Equation = use('App/Models/Equation');
-const Selector = use('App/Models/Selector')
+const Campus = use('App/Models/Campus');
 
 /**
- * Resourceful controller for interacting with equations
+ * Resourceful controller for interacting with campuses
  */
-class EquationController {
+class CampusController {
     /**
-     * Show a list of all equations.
-     * GET equations
+     * Show a list of all campuses.
+     * GET campuses
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -22,13 +21,16 @@ class EquationController {
      */
     async index({ request, response, view }) {
         let params = request.all();
-        let equations = await Equation.query().with('selectors').paginate(params.page, params.perPage);
-        response.json(equations);
+        params.columnName = params.columnName || 'name';
+        params.columnValue = params.columnValue || '';
+
+        let campuses = await Campus.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        return campuses;
     }
 
     /**
-     * Render a form to be used for creating a new equation.
-     * GET equations/create
+     * Render a form to be used for creating a new campus.
+     * GET campuses/create
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -36,33 +38,22 @@ class EquationController {
      * @param {View} ctx.view
      */
     async create({ request, response, view }) {
-
     }
 
     /**
-     * Create/save a new equation.
-     * POST equations
+     * Create/save a new campus.
+     * POST campuses
      *
      * @param {object} ctx
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
-        let equation = request.post();
-        let eq = await Equation.query().where({ q: equation.q, siteSearch: equation.siteSearch }).fetch()
-
-        if (eq.rows.length > 0) {
-            response.conflict({ code: 409, message: 'Ecuacion ya existe' })
-            return
-        }
-
-        let record = await Equation.create(equation);
-        response.json(record);
     }
 
     /**
-     * Display a single equation.
-     * GET equations/:id
+     * Display a single campus.
+     * GET campuses/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -70,13 +61,13 @@ class EquationController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
-        let equation = await Equation.query().where('id', params.id).with('selectors').first();
-        response.json(equation);
+        let campus = await Campus.find(params.id);
+        return response.json(campus);
     }
 
     /**
-     * Render a form to update an existing equation.
-     * GET equations/:id/edit
+     * Render a form to update an existing campus.
+     * GET campuses/:id/edit
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -87,29 +78,30 @@ class EquationController {
     }
 
     /**
-     * Update equation details.
-     * PUT or PATCH equations/:id
+     * Update campus details.
+     * PUT or PATCH campuses/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let campusUpdated = await Campus.query().where('id', params.id).update(request.all());
+        return campusUpdated;
     }
 
     /**
-     * Delete a equation with id.
-     * DELETE equations/:id
+     * Delete a campus with id.
+     * DELETE campuses/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
     async destroy({ params, request, response }) {
-        let selectors = await Selector.query().where('equation_id', params.id).delete();
-        let equation = await Equation.query().where('id', params.id).delete();
-        return equation;
+        let campus = await Campus.query().where('id', params.id).delete();
+        return campus;
     }
 }
 
-module.exports = EquationController
+module.exports = CampusController

@@ -23,9 +23,9 @@ class InstitutionController {
     async index({ request, response, view }) {
         let params = request.all();
         params.columnName = params.columnName || 'name';
-        params.value = params.value || '';
+        params.columnValue = params.columnValue || '';
 
-        let institutions = await Institution.query().with('campus').where(params.columnName, 'ILIKE', `%${params.value}%`).paginate(params.page, params.perPage);
+        let institutions = await Institution.query().with('campus').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
 
         response.json(institutions);
     }

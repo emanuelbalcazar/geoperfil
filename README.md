@@ -22,6 +22,16 @@ Instalar dependencias dentro del proyecto:
 npm install
 ```
 
+Ejecutar las migraciones con:
+```
+adonis migration:run
+```
+
+Ejecutar los seeders con:
+```
+adonis seed
+```
+
 Desplegar el servidor con:
 ```
 adonis serve

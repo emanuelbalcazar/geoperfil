@@ -1,8 +1,8 @@
 const axios = require("axios");
 const parse = require('node-html-parser');
 const config = require('../Configuration');
-const Article = use('App/Models/Article');
 const querystring = require('querystring');
+const Article = use('App/Models/Article');
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -25,11 +25,28 @@ class BaseExtractor {
      * @returns Retrieve results for a particular search
      */
     async search(equation) {
-        const URL = config.options.uri + querystring.stringify(equation);
+        let googleResults = [];
+        let startIndex = 1;
+        let hasNextPage = true;
+        let currentPage = 1;
+        equation.limit = equation.limit || 1;
 
-        let googleResults = await getData(URL);
+        while (currentPage <= equation.limit && hasNextPage) {
+            equation.start = startIndex;
 
-        return googleResults.items.map(({title, link, displayLink, snippet}) => ({
+            let URL = config.options.uri + querystring.stringify(config.options.credentials) + '&' + querystring.stringify(equation);
+            let result = await getData(URL);
+
+            googleResults = googleResults.concat(result.items)
+            hasNextPage = !!(result.queries && result.queries.nextPage);
+
+            if (hasNextPage)
+                startIndex = result.queries.nextPage[0].startIndex;
+
+            currentPage++;
+        }
+
+        return googleResults.map(({ title, link, displayLink, snippet }) => ({
             title, link, displayLink, snippet
         }));
     }
@@ -49,7 +66,7 @@ class BaseExtractor {
      * @param items
      * @returns array of objects that includes the html.
      */
-    async extract(items) {
+    async crawl(items) {
         let allHtml = [];
 
         for (const item of items) {
@@ -67,7 +84,7 @@ class BaseExtractor {
      * @param selectors
      * @returns {[]}
      */
-    async applySelectors(allHtml, selectors) {
+    async scraping(allHtml, selectors) {
         let articles = [];
 
         for (const data of allHtml) {

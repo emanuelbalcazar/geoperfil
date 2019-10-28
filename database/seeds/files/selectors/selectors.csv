@@ -1,0 +1,11 @@
+selector,equation_id
+.td-post-content p,1
+.post-content p,2
+#bloque_superior p,3
+.notapage_cuerpo p,4
+.news-amp-body,4
+.interiorCopete,5
+.cuerpo.clearfix,5
+.article-body p,6
+.post-single p,7
+.tm-article-content p,8

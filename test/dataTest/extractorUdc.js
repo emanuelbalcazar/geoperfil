@@ -5,7 +5,8 @@ module.exports.equationUdc = {
         "siteSearch": "http://udc.edu.ar",
         "cx": "014630729015948810570:xhbqbuvpi2g",
         "key":"AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ",
-        "siteSearchFilter": "i"
+        "siteSearchFilter": "i",
+        "limit": 1
     },
     "selectors":[".post-single p"]
 };

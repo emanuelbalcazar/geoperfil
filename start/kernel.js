@@ -59,5 +59,3 @@ Server
   .registerNamed(namedMiddleware)
   .use(serverMiddleware)
 
-const Scheduler = use('Adonis/Addons/Scheduler')
-//Scheduler.run()

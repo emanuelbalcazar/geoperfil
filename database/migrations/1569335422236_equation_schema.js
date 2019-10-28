@@ -10,6 +10,9 @@ class EquationSchema extends Schema {
             table.string('q', 100).notNullable()
             table.string('siteSearch', 200).notNullable()
             table.string('siteSearchFilter', 200).notNullable().defaultTo('i')
+            table.integer('limit').defaultTo( 1 )
+            table.integer('lastExecution').defaultTo(0)
+            table.boolean('active').defaultTo( true )
         })
     }
 

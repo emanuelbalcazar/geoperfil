@@ -24,15 +24,15 @@ test('Test cantidad de resultados obtenidos de google.', async ({ assert }) => {
 
 test('Test HTML obtenido a partir de los links de google. ', async ({ assert }) => {
     let links = await extractor.search(equation.eq);
-    let htmls = await extractor.extract(links);
+    let htmls = await extractor.crawl(links);
     assert.isArray(htmls);
     assert.equal(10, htmls.length);
 }).timeout(0);
 
 test('Test texto obtenido luego de aplicar los selectores en el html. ', async ({ assert }) => {
     let links = await extractor.search(equation.eq);
-    let htmls = await extractor.extract(links);
-    let texts = await extractor.applySelectors(htmls, equation.selectors);
+    let htmls = await extractor.crawl(links);
+    let texts = await extractor.scraping(htmls, equation.selectors);
     assert.isArray(texts);
     assert.equal(10, texts.length);
     assert.isString(texts[0].text);

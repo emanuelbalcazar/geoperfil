@@ -6,11 +6,11 @@ const Logger = use('Logger')
 class Test extends Task {
 
     static get schedule() {
-        return '*/3 * * * * *'
+        return '*/1 * * * *'
     }
 
     async handle() {
-        Logger.info('Task Test handle 3 seconds')
+        //Logger.info('Task Test handle 3 seconds')
     }
 }
 

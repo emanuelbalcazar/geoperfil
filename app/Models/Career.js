@@ -4,12 +4,16 @@
 const Model = use('Model')
 
 class Career extends Model {
-    static get createdAtColumn () {
+    static get createdAtColumn() {
         return null;
     }
 
-    static get updatedAtColumn () {
+    static get updatedAtColumn() {
         return null;
+    }
+
+    campuses() {
+        return this.belongsToMany('App/Models/Campus').pivotTable('campus_careers')
     }
 }
 

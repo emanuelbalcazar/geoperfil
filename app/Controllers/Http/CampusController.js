@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Campus = use('App/Models/Campus');
+const CampusCareer = use('App/Models/CampusCareer');
 
 /**
  * Resourceful controller for interacting with campuses
@@ -49,6 +50,20 @@ class CampusController {
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
+        let campus = request.post();
+        let careers = campus.careers;
+
+        delete campus.careers;
+
+        let count = await Campus.query().where({ name: campus.name, address: campus.address }).getCount();
+
+        if (count > 0)
+            return response.conflict({ code: 409, message: 'La sede ya existe' });
+
+        let instance = await Campus.create(campus);
+        instance = instance.careers().createMany(careers);
+
+        response.json(instance);
     }
 
     /**
@@ -61,7 +76,7 @@ class CampusController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
-        let campus = await Campus.find(params.id);
+        let campus = await Campus.query().with('careers').where('id', params.id).fetch();
         return response.json(campus);
     }
 
@@ -99,6 +114,7 @@ class CampusController {
      * @param {Response} ctx.response
      */
     async destroy({ params, request, response }) {
+        let campusCareer = await CampusCareer.query().where('campus_id', params.id).delete();
         let campus = await Campus.query().where('id', params.id).delete();
         return campus;
     }

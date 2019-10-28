@@ -60,10 +60,10 @@ class CampusController {
         if (count > 0)
             return response.conflict({ code: 409, message: 'La sede ya existe' });
 
-        let instance = await Campus.create(campus);
-        instance = instance.careers().createMany(careers);
+        let campusInstance = await Campus.create(campus);
+        let careersInstance = campusInstance.careers().createMany(careers);
 
-        response.json(instance);
+        response.json(campusInstance);
     }
 
     /**
@@ -102,7 +102,7 @@ class CampusController {
      */
     async update({ params, request, response }) {
         let campusUpdated = await Campus.query().where('id', params.id).update(request.all());
-        return campusUpdated;
+        return response.json(campusUpdated);
     }
 
     /**
@@ -116,7 +116,7 @@ class CampusController {
     async destroy({ params, request, response }) {
         let campusCareer = await CampusCareer.query().where('campus_id', params.id).delete();
         let campus = await Campus.query().where('id', params.id).delete();
-        return campus;
+        return response.json(campus);
     }
 }
 

@@ -27,7 +27,7 @@ class InstitutionController {
 
         let institutions = await Institution.query().with('campus').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
 
-        response.json(institutions);
+        return response.json(institutions);
     }
 
     /**

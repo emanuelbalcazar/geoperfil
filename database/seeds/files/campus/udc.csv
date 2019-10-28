@@ -1,5 +1,5 @@
-name,address,modality,latitude,longitude
-UDC Rawson,"Lewis Jones 248, Rawson",classroom,0,0
-UDC Esquel,"Av. Holdich 960, Esquel",classroom,0,0
-UDC Gaiman,"Centro Arturo Roberts, Gaiman", classroom,0,0
-UDC Madryn,"Leandro N. Alem 1573, Madryn", classroom,0,0
+id,name,address,modality,latitude,longitude
+10,UDC Rawson,"Lewis Jones 248, Rawson",classroom,0,0
+11,UDC Esquel,"Av. Holdich 960, Esquel",classroom,0,0
+12,UDC Gaiman,"Centro Arturo Roberts, Gaiman", classroom,0,0
+13,UDC Madryn,"Leandro N. Alem 1573, Madryn", classroom,0,0

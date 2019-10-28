@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Campus extends Model {
 
-    static get createdAtColumn () {
+    static get createdAtColumn() {
         return null;
     }
 
-    static get updatedAtColumn () {
+    static get updatedAtColumn() {
         return null;
     }
 
@@ -25,6 +25,14 @@ class Campus extends Model {
 
         })
     }
+
+     /*Relation campus-careers*/
+    careers() {
+        return this.belongsToMany('App/Models/Career')
+                   //.pivotTable('campus_careers')
+                   .withPivot(['dictates'])
+
+    } 
 
 }
 

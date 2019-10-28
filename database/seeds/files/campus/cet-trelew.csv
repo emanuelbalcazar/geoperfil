@@ -1,2 +1,2 @@
-id,name,address,modality,latitude,longitude
-1,Centro de Estudios Trelew,"Carrasco N° 250, Trelew",classroom,0,0
+id,name,address,city,modality,latitude,longitude
+1,Centro de Estudios Trelew,Carrasco 250, Trelew,classroom,0,0

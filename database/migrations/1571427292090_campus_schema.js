@@ -9,6 +9,7 @@ class CampusSchema extends Schema {
             table.increments()
             table.string('name', 250)
             table.string('address', 250)
+            table.string('city',100 )
             table.enu('modality', ['classroom', 'virtual'])
             table.decimal('latitude')
             table.decimal('longitude')

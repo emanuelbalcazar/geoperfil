@@ -1,2 +1,2 @@
-id,name,address,modality,latitude,longitude
-4,Instituto Superior de Educacion Tecnologica,"Dirección: Gales 270, Trelew, Chubut, Argentina",classroom,0,0
+id,name,address,city,modality,latitude,longitude
+4,Instituto Superior de Educacion Tecnologica,Avenida Gales 270, Trelew,classroom,0,0

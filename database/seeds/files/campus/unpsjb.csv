@@ -1,5 +1,5 @@
-id,name,address,modality,latitude,longitude
-14,Comodoro Rivadavia,Ciudad Universitaria – Comodoro Rivadavia KM4,classroom,0,0
-15,Esquel,Ruta Nacional 259 Km. 4 - (9200) Esquel - Chubut,classroom,0,0
-16,Puerto Madryn,Boul. Almirante Brown 3700 -  (9120) Puerto Madryn - Chubut,classroom,0,0
-17,Trelew,Belgrano y 9 de Julio -  (9100) Trelew - Chubut,classroom,0,0
+id,name,address,city,modality,latitude,longitude
+14,Comodoro Rivadavia, Ciudad Universitaria Km 4,Comodoro Rivadavia,classroom,0,0
+15,Esquel,Ruta Nacional 259 Km 4 ,Esquel,classroom,0,0
+16,Puerto Madryn,Boulevard Almirante Brown 3700, Puerto Madryn,classroom,0,0
+17,Trelew,Belgrano y 9 de Julio,Trelew,classroom,0,0

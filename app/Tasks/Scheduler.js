@@ -7,7 +7,7 @@ const Logger = use('Logger');
 const nodeScheduler = require('node-schedule');
 
 // TODO get from database
-const GOOGLE_REQUEST_LIMIT = 5;
+const GOOGLE_REQUEST_LIMIT = 4;
 
 class SchedulerTask {
 
@@ -26,7 +26,7 @@ class SchedulerTask {
      * @memberof SchedulerTask
      */
     async configure() {
-        this.dailyExecution = false;
+        this.dailyExecution = true;
         this.requestCount = 0;
         this.nextDay = await Scheduler.getNextDay(this.name);
         this.nextMonth = await Scheduler.getNextMonth(this.name);
@@ -57,9 +57,15 @@ class SchedulerTask {
                     delete equation.selectors;
                     Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando ecuacion de id: ${equation.id}`)
 
-                    let result = await ExtractorManager.execute('default', equation, selectors);
+                    //await sleep(5000);
+
                     await Equation.updateLastExecution(equation.id, new Date().getMonth() + 1);
+                    let result = await ExtractorManager.execute('default', equation, selectors);
+
+                    console.log('termino de ejecutar la ecuacion', equation.id);
+
                     this.requestCount += equation.limit;
+                    await Scheduler.setRequestCount(this.name, this.requestCount);
                 } else {
                     Logger.info(`[Scheduler][${this.currentSchedule}] - Limite de cantida de request alcanzada, request realizados: ${this.requestCount}`);
                     this.dailyExecution = true;
@@ -81,6 +87,12 @@ class SchedulerTask {
     async stop() {
         this.job.cancel();
     }
+}
+
+function sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
 }
 
 module.exports = SchedulerTask;

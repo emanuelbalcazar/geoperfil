@@ -8,5 +8,5 @@ async function start() {
     await scheduler.run();
 }
 
-//start();
+start();
 

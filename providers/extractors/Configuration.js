@@ -2,7 +2,7 @@
 exports.options = {
     uri: 'https://www.googleapis.com/customsearch/v1?',
     credentials: {
-        cx: '014630729015948810570:xhbqbuvpi2g',
-        key: 'AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ'
+        cx: '014476054167817262143:lutm5sdcv0y',
+        key: 'AIzaSyAZdtNoA5CAjWgbl9_R-Jslo2QACtPYrS0'
     }
 };

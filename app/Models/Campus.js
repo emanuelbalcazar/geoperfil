@@ -24,13 +24,14 @@ class Campus extends Model {
          * A hook
          */
         this.addHook('beforeSave', async (campusInstance) => {
-            /* let URL = uri + '&street="' + campusInstance.address + '"&city="' + campusInstance.city + '"';
+            let URL = uri + '&street="' + campusInstance.address + '"&city="' + campusInstance.city + '"';
             const response = await axios.get(URL);
             const data = response.data;
+
             if (data[0]) {
                 campusInstance.latitude = data[0].lat;
                 campusInstance.longitude = data[0].lon;
-            } */
+            }
         })
     }
 

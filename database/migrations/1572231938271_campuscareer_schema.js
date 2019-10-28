@@ -9,8 +9,6 @@ class CampuscareerSchema extends Schema {
       table.increments()
       table.integer('campus_id').references('id').inTable('campuses')
       table.integer('career_id').references('id').inTable('careers')
-      table.timestamps()
-
     })
   }
 

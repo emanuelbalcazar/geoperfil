@@ -61,7 +61,7 @@ class CampusController {
             return response.conflict({ code: 409, message: 'La sede ya existe' });
 
         let campusInstance = await Campus.create(campus);
-        let careersInstance = campusInstance.careers().createMany(careers);
+        let careersInstance = await campusInstance.careers().createMany(careers);
 
         response.json(campusInstance);
     }

@@ -8,7 +8,7 @@ class InstitutionSchema extends Schema {
         this.create('institutions', (table) => {
             table.increments();
             table.string('acronym', 150);
-            table.string('name', 250);
+            table.string('name', 250).notNullable().unique()
             table.string('site', 250);
         })
     }

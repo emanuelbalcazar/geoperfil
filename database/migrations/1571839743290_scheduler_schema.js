@@ -7,7 +7,7 @@ class SchedulerSchema extends Schema {
     up() {
         this.create('schedulers', (table) => {
             table.increments()
-            table.string('name').unique();
+            table.string('name').notNullable().unique()
             table.string('currentSchedule').defaultTo('*/10 * * * * *')
             table.integer('requestCount').defaultTo(0)
             table.string('nextMonth').defaultTo('*/10 * * * * *')

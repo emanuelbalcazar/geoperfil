@@ -32,7 +32,6 @@ const providers = [
 */
 const aceProviders = [
     '@adonisjs/lucid/providers/MigrationsProvider',
-    'adonis-scheduler/providers/CommandsProvider',
     '@adonisjs/vow/providers/VowProvider'
 ]
 

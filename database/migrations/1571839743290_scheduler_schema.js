@@ -14,6 +14,7 @@ class SchedulerSchema extends Schema {
             table.string('nextDay').defaultTo('*/5 * * * * *');
             table.boolean('dailyExecution').defaultTo(false);
             table.integer('requestLimit').defaultTo(100);
+            table.boolean('active').defaultTo(true);
         })
     }
 

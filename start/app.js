@@ -18,7 +18,6 @@ const providers = [
     '@adonisjs/bodyparser/providers/BodyParserProvider',
     '@adonisjs/cors/providers/CorsProvider',
     '@adonisjs/lucid/providers/LucidProvider',
-    'adonis-scheduler/providers/SchedulerProvider',
     path.join(__dirname, '..', 'providers', 'extractors', 'ExtractorManagerProvider')
 ]
 
@@ -50,7 +49,7 @@ const aceProviders = [
 |
 */
 const aliases = {
-    Scheduler: 'Adonis/Addons/Scheduler'
+
 }
 
 /*

@@ -6,9 +6,6 @@ const ExtractorManager = use('ExtractorManager');
 const Logger = use('Logger');
 const nodeScheduler = require('node-schedule');
 
-// TODO get from database
-const GOOGLE_REQUEST_LIMIT = 4;
-
 class SchedulerTask {
 
     /**
@@ -30,6 +27,7 @@ class SchedulerTask {
         this.requestCount = 0;
         this.nextDay = await Scheduler.getNextDay(this.name);
         this.nextMonth = await Scheduler.getNextMonth(this.name);
+        this.requestLimit = await Scheduler.getRequestLimit(this.name);
         this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;
     }
 
@@ -48,26 +46,25 @@ class SchedulerTask {
 
             Logger.info(`[Scheduler][${this.currentSchedule}] - Cantidad de ecuaciones sin ejecutar: ${equations.length}`);
 
-            while (this.requestCount <= GOOGLE_REQUEST_LIMIT && index < equations.length) {
+            while (this.requestCount <= this.requestLimit && index < equations.length) {
                 let equation = equations[index];
 
                 // si la ecuacion no supera el limite, la ejecuto y actualizo su ultima ejecucion
-                if ((this.requestCount + equation.limit) <= GOOGLE_REQUEST_LIMIT) {
+                if ((this.requestCount + equation.limit) <= this.requestLimit) {
                     let selectors = equation.selectors.map(selector => selector.selector);
                     delete equation.selectors;
-                    Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando ecuacion de id: ${equation.id}`)
-
-                    //await sleep(5000);
+                    Logger.info(`[Scheduler][${this.currentSchedule} - ${new Date()}] - Ejecutando ecuacion de id: ${equation.id}`)
 
                     await Equation.updateLastExecution(equation.id, new Date().getMonth() + 1);
                     let result = await ExtractorManager.execute('default', equation, selectors);
 
-                    console.log('termino de ejecutar la ecuacion', equation.id);
+                    Logger.info(`[Scheduler][${this.currentSchedule} - ${new Date()}] - Termino de ejecutar la ecuacion de id: ${equation.id}`)
 
                     this.requestCount += equation.limit;
                     await Scheduler.setRequestCount(this.name, this.requestCount);
+
                 } else {
-                    Logger.info(`[Scheduler][${this.currentSchedule}] - Limite de cantida de request alcanzada, request realizados: ${this.requestCount}`);
+                    Logger.info(`[Scheduler][${this.currentSchedule}] - Limite de cantidad de request alcanzada, request realizados: ${this.requestCount}`);
                     this.dailyExecution = true;
                 }
 
@@ -87,12 +84,6 @@ class SchedulerTask {
     async stop() {
         this.job.cancel();
     }
-}
-
-function sleep(ms){
-    return new Promise(resolve=>{
-        setTimeout(resolve,ms)
-    })
 }
 
 module.exports = SchedulerTask;

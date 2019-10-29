@@ -49,6 +49,11 @@ class Scheduler extends Model {
     static async setDailyExecution(name, dailyExecutionStatus) {
         return await this.query().where('name', name).update({ dailyExecution: dailyExecutionStatus });
     }
+
+    static async getRequestLimit(name) {
+        let record = await this.query().select('requestLimit').where('name', name).first();
+        return record.toJSON().requestLimit;
+    }
 }
 
 module.exports = Scheduler

@@ -42,3 +42,29 @@ o desplegar en modo desarrollo:
 ```
 adonis serve --dev
 ```
+
+## FrontEnd
+
+La interfaz web se encuentra dentro de la carpeta de `frontend` y se levanta aparte del servidor backend adonis.
+El frontend utiliza el template base de [vuestic-admin](https://github.com/epicmaxco/vuestic-admin)
+
+Para desplegar hay que:
+
+Moverse a la carpeta frontend:
+
+```
+cd frontend
+```
+
+Instalar las dependencias:
+
+```
+npm install
+```
+
+Levantar el frontend con:
+
+```
+npm run serve
+```
+

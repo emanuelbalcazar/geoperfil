@@ -64,3 +64,9 @@ package-lock.json
 
 # jetbrains ide
 .idea
+
+# vs code config
+.vscode
+
+# node modules frontend
+./frontend/node_modules

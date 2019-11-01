@@ -70,3 +70,5 @@ package-lock.json
 
 # node modules frontend
 ./frontend/node_modules
+
+./frontend/dist

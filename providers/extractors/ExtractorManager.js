@@ -6,20 +6,22 @@
 class ExtractorManager {
 
     constructor() {
+
     }
 
     /**
      * Instance a new extractor
      * @param extractorName
-     * @returns BaseExtractor extractor or error
+     * @param equation to execute
+     * @returns extractor instance or error
      */
     getExtractor(extractorName) {
         try {
-            let extractor = require('./' + extractorName);
-            return extractor;
+            let Extractor = require('./' + extractorName);
+            return new Extractor();
         } catch (e) {
-            let defaultExtractor = require('./baseExtractor/BaseExtractor');
-            return new defaultExtractor();
+            let BaseExtractor = require('./baseExtractor/BaseExtractor');
+            return new BaseExtractor();
         }
     }
 
@@ -34,10 +36,10 @@ class ExtractorManager {
         const extractor = this.getExtractor(extractorName);
 
         const links = await extractor.search(equation);
-        const filtered = await extractor.filter(links);
+        const filtered = await extractor.filter(links, equation);
         const allHtml = await extractor.crawl(filtered);
         const body = await extractor.scraping(allHtml, selectors);
-        const saved = await extractor.save(body);
+        const saved = await extractor.save(body, equation);
 
         return saved;
     }
@@ -51,10 +53,12 @@ class ExtractorManager {
      */
     async test(extractorName, equation, selectors) {
         const extractor = this.getExtractor(extractorName);
+
         const links = await extractor.search(equation);
-        const filtered = await extractor.filter(links);
+        const filtered = await extractor.filter(links, equation);
         const allHtml = await extractor.crawl(filtered);
         const body = await extractor.scraping(allHtml, selectors);
+
         return body;
     }
 }

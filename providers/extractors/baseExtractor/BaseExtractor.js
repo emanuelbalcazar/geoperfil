@@ -57,7 +57,7 @@ class BaseExtractor {
      * @returns {*}
      * TODO: implement
      */
-    async filter(items) {
+    async filter(items, equation) {
         return items;
     }
 
@@ -117,7 +117,7 @@ class BaseExtractor {
      * @returns {*}
      * @param articles
      */
-    async save(articles) {
+    async save(articles, equation) {
         let result = [];
 
         for (const article of articles) {

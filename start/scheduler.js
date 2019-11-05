@@ -1,4 +1,4 @@
-const SchedulerTask = require('../app/Tasks/Scheduler');
+const SchedulerTask = require('../app/Tasks/SchedulerTask');
 const Scheduler = use('App/Models/Scheduler');
 const Logger = use('Logger');
 const DEFAULT_SCHEDULER = 'scheduler';

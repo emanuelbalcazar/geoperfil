@@ -1,2 +1,2 @@
 name,currentSchedule,requestCount,nextMonth,nextDay,dailyExecution,requestLimit,active
-scheduler, */10 * * * *,0,*/10 * * * *,*/5 * * * *,false,100,true
+scheduler, */10 * * * *,0,*/10 * * * *,*/5 * * * *,true,100,true

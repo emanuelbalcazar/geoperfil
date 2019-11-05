@@ -1,9 +1,9 @@
-id,q,siteSearch,siteSearchFilter,limit,lastExecution,active
+id,q,siteSearch,siteSearchFilter,start,lastExecution,active
 1,graduados OR colacion,http://diariocronica.com.ar,i,1,0,true
-2,graduados OR colacion,https://www.eldiariodemadryn.com,i,4,0,true
-3,graduados OR colacion,https://www.diariojornada.com.ar/,i,4,0,true
-4,graduados OR colacion,https://www.elchubut.com.ar,i,4,0,true
-5,graduados OR colacion,https://www.elpatagonico.com,i,4,0,true
-6,colacion,http://www.madryn.unp.edu.ar/,i,4,0,true
-7,graduados OR colacion,http://udc.edu.ar,i,4,0,true
-8,graduados OR colacion,http://www.unp.edu.ar/,i,4,0,true
+2,graduados OR colacion,https://www.eldiariodemadryn.com,i,1,0,true
+3,graduados OR colacion,https://www.diariojornada.com.ar/,i,1,0,true
+4,graduados OR colacion,https://www.elchubut.com.ar,i,1,0,true
+5,graduados OR colacion,https://www.elpatagonico.com,i,1,0,true
+6,colacion,http://www.madryn.unp.edu.ar/,i,1,0,true
+7,graduados OR colacion,http://udc.edu.ar,i,1,0,true
+8,graduados OR colacion,http://www.unp.edu.ar/,i,1,0,true

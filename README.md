@@ -9,6 +9,7 @@ Proyecto de investigación realizado por los alumnos de la UNPSJB PM.
 - [NodeJS 10.x](https://nodejs.org/es/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [AdonisJS](https://adonisjs.com/)
+- [Vue Cli](https://cli.vuejs.org/guide/installation.html)
 
 ## Despliegue
 

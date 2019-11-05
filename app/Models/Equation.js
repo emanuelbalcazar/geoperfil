@@ -26,6 +26,11 @@ class Equation extends Model {
         let updated = await this.query().where({ id: id }).update({ lastExecution: lastExecution });
         return updated;
     }
+
+    static async updateStartIndex(id, start) {
+        let updated = await this.query().where({ id: id }).update({ start: start });
+        return updated;
+    }
 }
 
 module.exports = Equation

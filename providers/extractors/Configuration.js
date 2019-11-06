@@ -20,7 +20,7 @@ const Martin = {
 
 exports.options = {
     uri: 'https://www.googleapis.com/customsearch/v1?',
-    credentials: Ema
+    credentials: GeoPerfil
 };
 
 exports.RESULTS_PER_PAGE = 10;

@@ -9,7 +9,7 @@ async function start() {
     let active = await Scheduler.isActive(DEFAULT_SCHEDULER);
 
     if (active) {
-        Logger.info('Iniciando planificador...');
+        Logger.info('Iniciando el planificador...');
         await scheduler.configure();
         await scheduler.run();
     }

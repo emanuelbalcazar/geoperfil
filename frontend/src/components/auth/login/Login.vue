@@ -48,8 +48,8 @@ export default {
   },
   methods: {
     onsubmit() {
-      this.emailErrors = this.email ? [] : ["Email is required"];
-      this.passwordErrors = this.password ? [] : ["Password is required"];
+      this.emailErrors = this.email ? [] : ["Email es requerido"];
+      this.passwordErrors = this.password ? [] : ["Contraseña es requerida"];
       if (!this.formReady) {
         return;
       }

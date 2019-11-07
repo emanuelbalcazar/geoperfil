@@ -13,7 +13,8 @@ class ArticleSchema extends Schema {
             table.string('displayLink', 800);
             table.string('snippet', 800);
             table.text('text', 'longtext');
-            table.timestamps();
+            table.datetime('datepublished');
+            table.datetime('datemodified');
         })
     }
 

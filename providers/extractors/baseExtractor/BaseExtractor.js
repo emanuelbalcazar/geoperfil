@@ -39,9 +39,17 @@ class BaseExtractor {
         if (hasNextPage)
             googleResults.nextIndex = result.queries.nextPage[0].startIndex;
 
-        googleResults.items.map(({ title, link, displayLink, snippet }) => ({
-            title, link, displayLink, snippet
-        }));
+        // get specific attributes from google results.
+        googleResults.items = googleResults.items.map(item => {
+            return {
+                title: item.title,
+                link: item.link,
+                displayLink: item.displayLink,
+                snippet: item.snippet,
+                datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
+                datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
+            }
+        });
 
         return googleResults;
     }
@@ -108,7 +116,7 @@ class BaseExtractor {
 
         googleResults.items = articles;
 
-        return articles;
+        return googleResults;
     }
 
     /**

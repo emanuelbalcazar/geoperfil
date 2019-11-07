@@ -55,11 +55,11 @@ class ExtractorManager {
         const extractor = this.getExtractor(extractorName);
 
         const links = await extractor.search(equation);
-        /* const filtered = await extractor.filter(links, equation);
+        const filtered = await extractor.filter(links, equation);
         const allHtml = await extractor.crawl(filtered);
-        const body = await extractor.scraping(allHtml, selectors); */
+        const body = await extractor.scraping(allHtml, selectors);
 
-        return links;
+        return body;
     }
 }
 

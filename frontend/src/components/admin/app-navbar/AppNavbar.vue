@@ -6,10 +6,6 @@
     </template>
 
     <div class="app-navbar__actions row flex-nowrap align--center">
-      <color-dropdown class="va-navbar__item" />
-      <message-dropdown class="va-navbar__item" />
-      <notification-dropdown class="va-navbar__item" />
-
       <language-dropdown class="va-navbar__item" />
       <profile-dropdown class="va-navbar__item">
         <span>{{userName}}</span>
@@ -23,10 +19,7 @@ import VaIconVuestic from "vuestic-ui/src/components/vuestic-components/va-icon/
 import HeaderSelector from "./components/HeaderSelector";
 import LanguageDropdown from "./components/dropdowns/LanguageDropdown";
 import ProfileDropdown from "./components/dropdowns/ProfileDropdown";
-import NotificationDropdown from "./components/dropdowns/NotificationDropdown";
-import MessageDropdown from "./components/dropdowns/MessageDropdown";
 import SettingsDropdown from "./components/dropdowns/SettingsDropdown";
-import ColorDropdown from "./components/dropdowns/ColorDropdown";
 
 export default {
   name: "app-navbar",

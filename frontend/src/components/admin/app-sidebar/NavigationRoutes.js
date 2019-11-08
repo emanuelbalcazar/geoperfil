@@ -1,29 +1,29 @@
 export const navigationRoutes = {
     root: {
         name: '/',
-        displayName: 'navigationRoutes.home',
+        displayName: 'navigationRoutes.home'
     },
     routes: [
         {
             name: 'dashboard',
             displayName: 'menu.dashboard',
             meta: {
-                iconClass: 'vuestic-iconset-dashboard',
-            },
+                iconClass: 'vuestic-iconset-dashboard'
+            }
         },
         {
             name: 'maps',
             displayName: 'menu.maps',
             meta: {
-                iconClass: 'vuestic-iconset-maps',
+                iconClass: 'vuestic-iconset-maps'
             },
             disabled: true,
             children: [
                 {
                     name: 'leaflet-maps',
-                    displayName: 'Leaflet Maps',
+                    displayName: 'Leaflet Maps'
                 }
-            ],
+            ]
         }
         /* {
             name: 'statistics',

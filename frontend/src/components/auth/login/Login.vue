@@ -36,7 +36,6 @@ export default {
     return {
       email: "",
       password: "",
-      keepLoggedIn: false,
       emailErrors: [],
       passwordErrors: []
     };
@@ -50,9 +49,11 @@ export default {
     onsubmit() {
       this.emailErrors = this.email ? [] : ["Email es requerido"];
       this.passwordErrors = this.password ? [] : ["Contraseña es requerida"];
+
       if (!this.formReady) {
         return;
       }
+
       this.$router.push({ name: "dashboard" });
     }
   }

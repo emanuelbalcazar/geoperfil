@@ -2,7 +2,7 @@
   <va-navbar class="app-navbar">
     <header-selector slot="selector" :minimized.sync="minimizedProxy" />
     <template slot="logo">
-      <p class="display-5" style="color:white">GeoVerduleria</p>
+      <p class="display-5" style="color:white">GeoPerfil</p>
     </template>
 
     <div class="app-navbar__actions row flex-nowrap align--center">
@@ -32,11 +32,8 @@ export default {
   name: "app-navbar",
   components: {
     SettingsDropdown,
-    ColorDropdown,
     VaIconVuestic,
     HeaderSelector,
-    MessageDropdown,
-    NotificationDropdown,
     LanguageDropdown,
     ProfileDropdown
   },

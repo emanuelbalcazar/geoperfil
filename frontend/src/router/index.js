@@ -381,7 +381,7 @@ export default new Router({
                             component: () => import('../components/pages/404-pages/404PagesPage'),
                         },
                     ],
-                },
+                }
             ],
         }
     ]

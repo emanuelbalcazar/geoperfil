@@ -2,7 +2,7 @@
   <div class="auth-layout row align-content--center">
     <div class="flex xs12 pa-3 flex-center">
       <router-link class="py-5 flex-center" to="/">
-        <p class="display-1" style="color:white">GeoVerduleria</p>
+        <p class="display-1" style="color:white">Acceder a GeoPerfil</p>
       </router-link>
     </div>
 

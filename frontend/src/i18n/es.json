@@ -6,7 +6,7 @@
     "email": "Email",
     "login": "Iniciar sesión",
     "password": "Contraseña",
-    "recover_password": "Olvide mi contraseña porque tengo alzheimer",
+    "recover_password": "Olvide mi contraseña",
     "sign_up": "Registrarme",
     "termsOfUse": "Los terminos de uso",
     "reset_password": "Restablecer contraseña"

@@ -1,30 +1,35 @@
 <template>
-  <div class="leaflet-map fill-height">
-  </div>
+  <div class="leaflet-map fill-height"></div>
 </template>
 
 <script>
-import 'leaflet-map'
-import * as Leaflet from 'leaflet'
+import "leaflet-map";
+import * as Leaflet from "leaflet";
 
 export default {
-  name: 'leaflet-map',
+  name: "leaflet-map",
 
-  mounted () {
+  mounted() {
     //    L.Icon.Default.imagePath = 'assets/vendor/leaflet' TODO: make it work with webpack
-    Leaflet.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.0.3/dist/images'
+    Leaflet.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.0.3/dist/images";
 
-    let map = Leaflet.map(this.$el).setView([51.505, -0.09], 13)
+    let map = Leaflet.map(this.$el).setView([-43.54854811091286, -1148.818359375], 6);
 
-    Leaflet.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map)
+    map.on("click", function(e) {
+        console.log(e.latlng.lat, e.latlng.lng);
+    });
 
-    Leaflet.marker([51.5, -0.09]).addTo(map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup()
-  },
-}
+    Leaflet.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    Leaflet.marker([-43.54854811091286, -1148.818359375])
+      .addTo(map)
+      .bindPopup("Marcador personalizado lince")
+      .openPopup();
+  }
+};
 </script>
 
 <style lang="scss">

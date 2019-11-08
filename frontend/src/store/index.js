@@ -3,20 +3,23 @@ import Vuex from 'vuex'
 import VuexI18n from 'vuex-i18n' // load vuex i18n module
 import app from './modules/app'
 
-import * as getters from './getters'
-
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  strict: true, // process.env.NODE_ENV !== 'production',
-  getters,
-  modules: {
-    app,
-  },
-  state: {},
-  mutations: {},
-})
+    strict: true, // process.env.NODE_ENV !== 'production',
+    getters: {
+        config: state => state.app.config,
+        palette: state => state.app.config.palette,
+        isLoading: state => state.app.isLoading,
+        getUser: state => state.app.auth.user
+    },
+    modules: {
+        app,
+    },
+    state: {},
+    mutations: {}
+});
 
-Vue.use(VuexI18n.plugin, store)
+Vue.use(VuexI18n.plugin, store);
 
-export default store
+export default store;

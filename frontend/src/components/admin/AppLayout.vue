@@ -1,14 +1,7 @@
 <template>
-  <va-page-layout
-    @toggleSidebar="toggleSidebar"
-    :mobileWidth="mobileWidth"
-  >
-    <app-navbar
-      :minimized.sync="minimized"
-    />
-    <app-sidebar
-      :minimized="minimized"
-    />
+  <va-page-layout @toggleSidebar="toggleSidebar" :mobileWidth="mobileWidth">
+    <app-navbar :minimized.sync="minimized" />
+    <app-sidebar :minimized="minimized" />
     <main
       slot="content"
       id="content"
@@ -16,53 +9,51 @@
       :class="{'app-layout__main--full-width-sidebar': !minimized}"
       role="main"
     >
-      <router-view/>
+      <router-view />
     </main>
   </va-page-layout>
 </template>
 
 <script>
-import VaPageLayout from './VaPageLayout'
-import AppNavbar from './app-navbar/AppNavbar'
-import AppSidebar from './app-sidebar/AppSidebar'
-import { mapGetters } from 'vuex'
-import AppTopbar from './app-topbar/AppTopbar'
+import VaPageLayout from "./VaPageLayout";
+import AppNavbar from "./app-navbar/AppNavbar";
+import AppSidebar from "./app-sidebar/AppSidebar";
+import { mapGetters } from "vuex";
+import AppTopbar from "./app-topbar/AppTopbar";
 
 export default {
-  name: 'app-layout',
+  name: "app-layout",
   components: {
     AppTopbar,
     VaPageLayout,
     AppNavbar,
-    AppSidebar,
+    AppSidebar
   },
-  data () {
+  data() {
     return {
       minimized: false,
-      mobileWidth: 767,
-    }
+      mobileWidth: 767
+    };
   },
   computed: {
-    ...mapGetters([
-      'isLoading',
-    ]),
+    ...mapGetters(["isLoading"])
   },
   methods: {
-    toggleSidebar (minimized) {
-      this.minimized = minimized
-    },
-  },
-}
+    toggleSidebar(minimized) {
+      this.minimized = minimized;
+    }
+  }
+};
 </script>
 
 <style lang="scss">
-  .app-layout {
-    &__main {
-      &--full-width-sidebar {
-        @include media-breakpoint-down(xs) {
-          display: none;
-        }
+.app-layout {
+  &__main {
+    &--full-width-sidebar {
+      @include media-breakpoint-down(xs) {
+        display: none;
       }
     }
   }
+}
 </style>

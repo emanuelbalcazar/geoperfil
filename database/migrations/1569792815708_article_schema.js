@@ -9,7 +9,7 @@ class ArticleSchema extends Schema {
         this.create('articles', (table) => {
             table.increments();
             table.string('title', 300);
-            table.string('link', 800);
+            table.string('link', 800).unique();
             table.string('displayLink', 800);
             table.string('snippet', 800);
             table.text('text', 'longtext');

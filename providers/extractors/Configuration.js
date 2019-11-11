@@ -1,3 +1,4 @@
+// google cse credentials...
 const GeoPerfil = {
     cx: '014630729015948810570:xhbqbuvpi2g',
     key: 'AIzaSyBDpkeAxzpBeFsOsgen9tQkLzpfL_-SWsQ'
@@ -8,7 +9,7 @@ const Waldo = {
     key: 'AIzaSyA34VP0DASFc1eqRbNug3_yil1rrsRzCC0'
 };
 
-const Ema = {
+const Emanuel = {
     cx: '016238189032549234631:ggenliamqqu',
     key: 'AIzaSyAIAabEsSUy1PmX4FEK6kWKtgK3z7BZ0Hw'
 };
@@ -18,9 +19,11 @@ const Martin = {
     key: 'AIzaSyAZdtNoA5CAjWgbl9_R-Jslo2QACtPYrS0'
 };
 
+// module exports...
+
 exports.options = {
     uri: 'https://www.googleapis.com/customsearch/v1?',
-    credentials: GeoPerfil
+    credentials: Emanuel
 };
 
 exports.RESULTS_PER_PAGE = 10;

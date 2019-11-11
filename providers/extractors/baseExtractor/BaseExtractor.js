@@ -61,6 +61,12 @@ class BaseExtractor {
      * TODO: implement
      */
     async filter(googleResults, equation) {
+
+        googleResults.items = googleResults.items.filter(item => {
+            let count = await Article.query().where({ link: item.link }).getCount();
+            return (count == 0);
+        });
+
         return googleResults;
     }
 

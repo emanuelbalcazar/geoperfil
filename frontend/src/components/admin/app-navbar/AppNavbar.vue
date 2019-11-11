@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      userName: localStorage.getItem('username')
+      userName: localStorage.getItem('email')
     };
   },
   computed: {

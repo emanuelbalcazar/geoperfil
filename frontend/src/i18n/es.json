@@ -9,7 +9,11 @@
     "recover_password": "Olvide mi contraseña",
     "sign_up": "Registrarme",
     "termsOfUse": "Los terminos de uso",
-    "reset_password": "Restablecer contraseña"
+    "reset_password": "Restablecer contraseña",
+    "username": "Nombre de usuario",
+    "name": "Nombre",
+    "surname": "Apellido",
+    "confirmed_password": "Confirmar contraseña"
   },
   "buttons": {
     "advanced": "Iconos, Grupos, Dropdowns",

@@ -10,7 +10,11 @@
     "sign_up": "Sign Up",
     "keep_logged_in": "Keep me logged in",
     "termsOfUse": "Terms of Use.",
-    "reset_password": "Reset password"
+    "reset_password": "Reset password",
+    "username": "UserName",
+    "name": "Name",
+    "surname": "Surname",
+    "confirmed_password": "Confirmed password"
   },
   "404": {
     "title": "This page’s gone fishing.",

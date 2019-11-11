@@ -5,13 +5,14 @@ const User = use('App/Models/User');
 class AuthController {
 
     async register({ request, auth, response }) {
-        const email = request.input("email");
-        const password = request.input("password");
+        let user = request.post();
+        let count = await User.query().where({ email: user.email }).getCount();
 
-        let user = new User();
-        user.email = email;
-        user.password = password;
-        user = await user.save();
+        if (count > 0) {
+            return response.conflict({ code: 409, message: 'El email ya se encuentra registrado' });
+        }
+
+        user = await User.create(user);
         let accessToken = await auth.generate(user);
 
         return response.json({ user: user, access_token: accessToken });

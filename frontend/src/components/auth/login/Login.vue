@@ -31,7 +31,6 @@
 
 <script>
 let axios = require("axios");
-let Vue = require("vue");
 
 export default {
   name: "login",
@@ -70,7 +69,6 @@ export default {
         });
 
       localStorage.setItem("token", response.data.access_token.token);
-      localStorage.setItem("username", response.data.user.username);
       localStorage.setItem("userId", response.data.user.id);
       localStorage.setItem("email", response.data.user.email);
 

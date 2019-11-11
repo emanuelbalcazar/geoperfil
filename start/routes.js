@@ -36,4 +36,8 @@ Route.group(() => {
 
     Route.post('/extractors/test', 'ExtractorController.test');
 
+    Route.post('/auth/register', 'AuthController.register');
+
+    Route.post('/auth/login', 'AuthController.login');
+
 }).prefix('api');

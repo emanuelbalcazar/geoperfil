@@ -11,7 +11,9 @@ const store = new Vuex.Store({
         config: state => state.app.config,
         palette: state => state.app.config.palette,
         isLoading: state => state.app.isLoading,
-        getUser: state => state.app.auth.user
+        getUser: state => state.app.auth.user,
+        isAuthenticated: state => !!state.app.auth.token,
+        authStatus: state => state.app.auth.status
     },
     modules: {
         app,

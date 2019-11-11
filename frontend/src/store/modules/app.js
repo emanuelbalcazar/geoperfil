@@ -19,16 +19,14 @@ const state = {
     isLoading: true,
     auth: {
         user: '',
-        token: ''
+        token: localStorage.getItem('user-token') || '',
+        status: ''
     }
 }
 
 const mutations = {
     setLoading(state, isLoading) {
         state.isLoading = isLoading
-    },
-    isLoggedIn() {
-        return !!state.auth.token;
     }
 }
 

@@ -30,6 +30,9 @@
 </template>
 
 <script>
+let axios = require("axios");
+let Vue = require("vue");
+
 export default {
   name: "login",
   data() {
@@ -46,7 +49,7 @@ export default {
     }
   },
   methods: {
-    onsubmit() {
+    async onsubmit() {
       this.emailErrors = this.email ? [] : ["Email es requerido"];
       this.passwordErrors = this.password ? [] : ["Contraseña es requerida"];
 
@@ -54,7 +57,25 @@ export default {
         return;
       }
 
-      this.$router.push({ name: "dashboard" });
+      let response = await axios
+        .post("/api/auth/login", {
+          email: this.email,
+          password: this.password
+        })
+        .catch(error => {
+          this.logError("Usuario o contraseña invalidos", {
+            text: "¿No esta registrado?",
+            href: "signup"
+          });
+        });
+
+      localStorage.setItem("token", response.data.access_token.token);
+      localStorage.setItem("username", response.data.user.username);
+      localStorage.setItem("userId", response.data.user.id);
+      localStorage.setItem("email", response.data.user.email);
+
+      this.$router.push("dashboard");
+      this.logSuccess("Bienvenido a Geoperfil");
     }
   }
 };

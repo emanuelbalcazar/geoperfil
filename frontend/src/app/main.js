@@ -3,48 +3,57 @@ import 'es6-promise/auto'
 import 'babel-polyfill'
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import App from './App'
+
+import Vue from 'vue';
+import App from './App';
+import store from '../store/index';
+import router from '../router/index';
+import VuesticPlugin from 'vuestic-ui/src/components/vuestic-plugin';
+import VueClipboard from 'vue-clipboard2';
+import VeeValidate from 'vee-validate';
+import axios from 'axios';
+import Toasted from '../components/toast/CustomToast';
+import '../i18n/index';
 import { ColorThemePlugin } from 'vuestic-ui/src/services/ColorThemePlugin'
-import store from '../store/index'
-import router from '../router/index'
-import VuesticPlugin from 'vuestic-ui/src/components/vuestic-plugin'
-import '../i18n/index'
-import YmapPlugin from 'vue-yandex-maps'
-import VueClipboard from 'vue-clipboard2'
-import VeeValidate from 'vee-validate'
 
-import '../metrics'
 
-// NOTE: workaround for VeeValidate + vuetable-2
-Vue.use(VeeValidate, { fieldsBagName: 'formFields' })
+// VUE CONFIGURATIONS...
+// global configuration for axios.
+const port = 3333;
+axios.defaults.baseURL = location.protocol + '//' + location.hostname + ':' + port;
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'true';
 
-Vue.use(VuesticPlugin)
-Vue.use(YmapPlugin)
-Vue.use(VueClipboard)
+// VUE IMPORTS...
+Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
+Vue.use(VuesticPlugin);
+Vue.use(VueClipboard);
+Vue.mixin(Toasted);
+Vue.use(ColorThemePlugin);
 
-Vue.use(ColorThemePlugin,
-  {
-    // Add or change theme colors here
-    themes: {
-      // primary: '#f06595',
-      // blurple: '#7289DA',
-    },
-  })
-
+// ROUTER...
 router.beforeEach((to, from, next) => {
-  store.commit('setLoading', true)
-  next()
-})
+    let hasToken = !!localStorage.getItem('token');
+
+    if (to.name == 'login' && hasToken) {
+        return next({ name: 'dashboard' });
+    }
+
+    if ((to.name != 'login' && to.name != 'signup' && to.name != 'recover-password') && !hasToken) {
+        return next({ name: 'login' });
+    } else {
+        store.commit('setLoading', true)
+        return next()
+    }
+});
 
 router.afterEach((to, from) => {
-  store.commit('setLoading', false)
-})
+    store.commit('setLoading', false)
+});
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App),
-})
+    el: '#app',
+    router,
+    store,
+    render: h => h(App),
+});

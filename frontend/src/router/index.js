@@ -3,14 +3,14 @@ import Router from 'vue-router'
 import AuthLayout from '../components/auth/AuthLayout'
 import AppLayout from '../components/admin/AppLayout'
 
-Vue.use(Router)
+Vue.use(Router);
 
 const EmptyParentComponent = {
     template: '<router-view></router-view>',
 }
 
 export default new Router({
-    mode: process.env.VUE_APP_ROUTER_MODE_HISTORY === 'true' ? 'history' : 'hash',
+    mode: 'history',
     routes: [
         {
             path: '*',

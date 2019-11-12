@@ -74,6 +74,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/institutions',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-institutions',
+                    path: 'list',
+                    component: () => import('../components/institutions/List.vue')
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',

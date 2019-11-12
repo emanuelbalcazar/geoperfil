@@ -43,7 +43,7 @@ export const navigationRoutes = {
             name: 'equations',
             displayName: 'Ecuaciones',
             meta: {
-                iconClass: 'fa fa-gear',
+                iconClass: 'fa fa-search',
             },
             disabled: true,
             children: [
@@ -57,13 +57,27 @@ export const navigationRoutes = {
             name: 'careers',
             displayName: 'Carreras',
             meta: {
-                iconClass: 'fa fa-archive',
+                iconClass: 'fa fa-book  ',
             },
             disabled: true,
             children: [
                 {
                     name: 'list-careers',
                     displayName: 'Listar Carreras',
+                }
+            ],
+        },
+        {
+            name: 'institutions',
+            displayName: 'Instituciones',
+            meta: {
+                iconClass: 'fa fa-university',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-institutions',
+                    displayName: 'Listar Instituciones',
                 }
             ],
         },

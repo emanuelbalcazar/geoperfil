@@ -63,6 +63,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/careers',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-careers',
+                    path: 'list',
+                    component: () => import('../components/careers/List.vue')
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',

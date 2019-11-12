@@ -53,6 +53,20 @@ export const navigationRoutes = {
                 }
             ],
         },
+        {
+            name: 'careers',
+            displayName: 'Carreras',
+            meta: {
+                iconClass: 'vuestic-iconset-settings',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-careers',
+                    displayName: 'Listar Carreras',
+                }
+            ],
+        },
         /* {
             name: 'statistics',
             displayName: 'menu.statistics',

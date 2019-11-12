@@ -79,11 +79,10 @@ export default {
       this.nameErrors = this.name ? [] : ["Nombre requerido"];
       this.surnameErrors = this.surname ? [] : ["Apellido requerido"];
 
-      if (!this.formReady)
-        return;
+      if (!this.formReady) return;
 
       if (this.password != this.confirmedPassword)
-        return this.logError('Las contraseñas no coinciden');
+        return this.logError("Las contraseñas no coinciden");
 
       let response = await axios
         .post("/api/auth/register", {
@@ -96,7 +95,7 @@ export default {
           this.logError("El email ya se encuentra registrado");
         });
 
-      this.logSuccess('Usuario registrado con exito, inicie sesión');
+      this.logSuccess("Usuario registrado con exito, inicie sesión");
       this.$router.push({ name: "login" });
     }
   },

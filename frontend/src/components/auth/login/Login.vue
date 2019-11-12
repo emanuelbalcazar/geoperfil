@@ -73,7 +73,7 @@ export default {
       localStorage.setItem("email", response.data.user.email);
 
       this.$router.push("dashboard");
-      this.logSuccess("Bienvenido a Geoperfil");
+      this.logSuccess("Bienvenido a Geoperfil " + response.data.user.name);
     }
   }
 };

@@ -1,12 +1,12 @@
 <template>
   <div class="auth-layout row align-content--center">
-    <div class="flex xs12 pa-3 flex-center">
-      <router-link class="py-5 flex-center" to="/">
+    <div class="flex xs12 pa-1 flex-center">
+      <router-link class="py-5 flex-center" to="/auth/login">
         <p class="display-1" style="color:white">Acceder a GeoPerfil</p>
       </router-link>
     </div>
 
-    <div class="flex xs12 pa-3">
+    <div class="flex xs12 pa-1">
       <div class="d-flex justify--center">
         <va-card class="auth-layout__card">
           <va-tabs v-model="tabIndex" center>

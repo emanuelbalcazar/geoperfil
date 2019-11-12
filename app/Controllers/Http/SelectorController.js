@@ -21,9 +21,11 @@ class SelectorController {
      * @param {View} ctx.view
      */
     async index({ request, response, view }) {
-
         let params = request.all();
-        let selectors = await Selector.query().paginate(params.page, params.perPage);
+        params.columnName = params.columnName || 'selector';
+        params.columnValue = params.columnValue || '';
+
+        let selectors = await Selector.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
         response.json(selectors);
     }
 

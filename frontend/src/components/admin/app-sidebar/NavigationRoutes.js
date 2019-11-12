@@ -24,7 +24,20 @@ export const navigationRoutes = {
                     displayName: 'Leaflet Maps'
                 }
             ]
-        }
+        },
+        {
+            name: 'selectors',
+            displayName: 'Selectores',
+            meta: {
+                iconClass: 'vuestic-iconset-files',
+            },
+            children: [
+                {
+                    name: 'list',
+                    displayName: 'Listar',
+                }
+            ],
+        },
         /* {
             name: 'statistics',
             displayName: 'menu.statistics',

@@ -42,6 +42,18 @@ export default new Router({
             ],
         },
         {
+            path: '/selectors',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list',
+                    path: 'list',
+                    component: () => import('../components/selectors/List.vue')
+                }
+            ],
+        },
+        // ================================================================================== //
+        {
             path: '/404',
             component: EmptyParentComponent,
             children: [

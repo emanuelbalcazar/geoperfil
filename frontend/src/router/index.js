@@ -46,9 +46,20 @@ export default new Router({
             component: AppLayout,
             children: [
                 {
-                    name: 'list',
+                    name: 'list-selectors',
                     path: 'list',
                     component: () => import('../components/selectors/List.vue')
+                }
+            ],
+        },
+        {
+            path: '/equations',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-equations',
+                    path: 'list',
+                    component: () => import('../components/equations/List.vue')
                 }
             ],
         },

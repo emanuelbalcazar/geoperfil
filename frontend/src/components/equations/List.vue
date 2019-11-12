@@ -25,11 +25,7 @@
       :totalPages="totalPages"
       @page-selected="readItems"
       api-mode
-    >
-      <template slot="avatar" slot-scope="props">
-        <img :src="props.rowData.avatar" class="data-table-server-pagination---avatar" />
-      </template>
-    </va-data-table>
+    ></va-data-table>
   </va-card>
 </template>
 
@@ -40,7 +36,7 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Selectores",
+        table: "Listado de Ecuaciones",
         perPage: "Por Páginas",
         search: "Buscar"
       },
@@ -61,12 +57,24 @@ export default {
           width: "20%"
         },
         {
-          name: "selector",
-          title: "Selector"
+          name: "q",
+          title: "Terminos"
         },
         {
-            name: "equation_id",
-            title: "Ecuación"
+          name: "siteSearch",
+          title: "Sitio"
+        },
+        {
+          name: "start",
+          title: "Indice"
+        },
+        {
+          name: "lastExecution",
+          title: "Ultima Ejecución"
+        },
+        {
+          name: "active",
+          title: "Activo"
         }
       ];
     }
@@ -90,7 +98,7 @@ export default {
         columnValue: this.toSearch
       };
 
-      axios.get("/api/selectors", { params }).then(response => {
+      axios.get("/api/equations", { params }).then(response => {
         this.items = response.data.data;
         this.totalPages = response.data.lastPage;
         this.loading = false;

@@ -21,7 +21,7 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'leaflet-maps',
-                    displayName: 'Leaflet Maps'
+                    displayName: 'Ver Mapa'
                 }
             ]
         },
@@ -31,10 +31,25 @@ export const navigationRoutes = {
             meta: {
                 iconClass: 'vuestic-iconset-files',
             },
+            disabled: true,
             children: [
                 {
-                    name: 'list',
-                    displayName: 'Listar',
+                    name: 'list-selectors',
+                    displayName: 'Listar Selectores',
+                }
+            ],
+        },
+        {
+            name: 'equations',
+            displayName: 'Ecuaciones',
+            meta: {
+                iconClass: 'vuestic-iconset-settings',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-equations',
+                    displayName: 'Listar Ecuaciones',
                 }
             ],
         },

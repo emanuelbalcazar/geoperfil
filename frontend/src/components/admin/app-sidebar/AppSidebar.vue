@@ -5,7 +5,7 @@
         <va-sidebar-link-group
           :key="key"
           :minimized="minimized"
-          :icon="[ 'sidebar-menu-item-icon vuestic-iconset', item.meta.iconClass ]"
+          :icon="[ 'sidebar-menu-item-icon', item.meta.iconClass ]"
           v-if="item.children"
           :title="$t(item.displayName)"
           :children="item.children"
@@ -22,7 +22,7 @@
           :key="key"
           :minimized="minimized"
           :activeByDefault="item.name === $route.name"
-          :icon="[ 'sidebar-menu-item-icon vuestic-iconset', item.meta.iconClass ]"
+          :icon="[ 'sidebar-menu-item-icon', item.meta.iconClass ]"
           :to="{ name: item.name }"
         >
           <span slot="title">{{ $t(item.displayName) }}</span>

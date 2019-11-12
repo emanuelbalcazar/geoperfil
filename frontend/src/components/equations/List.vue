@@ -30,7 +30,8 @@ export default {
       title: {
         table: "Listado de Ecuaciones",
         perPage: "Por Páginas",
-        search: "Buscar"
+        search: "Buscar por sitio",
+        noData: "No se encontraron ecuaciones."
       },
       perPage: 10,
       totalPages: 0,

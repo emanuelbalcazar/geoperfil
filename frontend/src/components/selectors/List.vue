@@ -31,7 +31,7 @@ export default {
         table: "Listado de Selectores",
         perPage: "Por Páginas",
         search: "Buscar por texto de selector",
-        noData: "No hay selectores registrados por el momento."
+        noData: "No se encontraron selectores"
       },
       perPage: 10,
       totalPages: 0,

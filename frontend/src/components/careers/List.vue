@@ -28,10 +28,10 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Selectores",
+        table: "Listado de Carreras",
         perPage: "Por Páginas",
-        search: "Buscar por texto de selector",
-        noData: "No hay carreras registradas por el momento."
+        search: "Buscar por nombre",
+        noData: "No se encontraron carreras."
       },
       perPage: 10,
       totalPages: 0,

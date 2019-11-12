@@ -8,14 +8,14 @@ export const navigationRoutes = {
             name: 'dashboard',
             displayName: 'menu.dashboard',
             meta: {
-                iconClass: 'vuestic-iconset-dashboard'
+                iconClass: 'fa fa-home'
             }
         },
         {
             name: 'maps',
             displayName: 'menu.maps',
             meta: {
-                iconClass: 'vuestic-iconset-maps'
+                iconClass: 'fa fa-map'
             },
             disabled: true,
             children: [
@@ -29,7 +29,7 @@ export const navigationRoutes = {
             name: 'selectors',
             displayName: 'Selectores',
             meta: {
-                iconClass: 'vuestic-iconset-files',
+                iconClass: 'fa fa-scissors',
             },
             disabled: true,
             children: [
@@ -43,7 +43,7 @@ export const navigationRoutes = {
             name: 'equations',
             displayName: 'Ecuaciones',
             meta: {
-                iconClass: 'vuestic-iconset-settings',
+                iconClass: 'fa fa-gear',
             },
             disabled: true,
             children: [
@@ -57,7 +57,7 @@ export const navigationRoutes = {
             name: 'careers',
             displayName: 'Carreras',
             meta: {
-                iconClass: 'vuestic-iconset-settings',
+                iconClass: 'fa fa-archive',
             },
             disabled: true,
             children: [

@@ -6,30 +6,18 @@
           <va-icon name="fa fa-search" slot="prepend" />
         </va-input>
       </div>
-
-      <div class="flex xs12 md3 offset--md3">
-        <va-select
-          v-model="perPage"
-          :label="title.perPage"
-          :options="perPageOptions"
-          @select="onPerPageChange"
-        />
-      </div>
     </div>
 
     <va-data-table
       :fields="fields"
       :data="items"
       :loading="loading"
-      :per-page="parseInt(perPage)"
+      :per-page="perPage"
       :totalPages="totalPages"
+      :no-data-label="title.noData"
       @page-selected="readItems"
       api-mode
-    >
-      <template slot="avatar" slot-scope="props">
-        <img :src="props.rowData.avatar" class="data-table-server-pagination---avatar" />
-      </template>
-    </va-data-table>
+    ></va-data-table>
   </va-card>
 </template>
 
@@ -42,9 +30,9 @@ export default {
       title: {
         table: "Listado de Selectores",
         perPage: "Por Páginas",
-        search: "Buscar"
+        search: "Buscar por texto de selector",
+        noData: "No hay selectores registrados por el momento."
       },
-      perPageOptions: ["5", "10", "15", "20"],
       perPage: 10,
       totalPages: 0,
       items: [],
@@ -65,8 +53,8 @@ export default {
           title: "Selector"
         },
         {
-            name: "equation_id",
-            title: "Ecuación"
+          name: "equation_id",
+          title: "Ecuación"
         }
       ];
     }
@@ -75,11 +63,9 @@ export default {
     this.readItems();
   },
   methods: {
-    onPerPageChange(event) {
-      console.log("onPerPageChange", event);
-    },
     search(toSearch) {
-      console.log(toSearch);
+      this.toSearch = toSearch;
+      this.readItems();
     },
     readItems(page = 1) {
       this.loading = true;

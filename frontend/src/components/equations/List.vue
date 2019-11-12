@@ -7,14 +7,6 @@
         </va-input>
       </div>
 
-      <div class="flex xs12 md3 offset--md3">
-        <va-select
-          v-model="perPage"
-          :label="title.perPage"
-          :options="perPageOptions"
-          @select="onPerPageChange"
-        />
-      </div>
     </div>
 
     <va-data-table
@@ -40,7 +32,6 @@ export default {
         perPage: "Por Páginas",
         search: "Buscar"
       },
-      perPageOptions: ["5", "10", "15", "20"],
       perPage: 10,
       totalPages: 0,
       items: [],
@@ -74,7 +65,11 @@ export default {
         },
         {
           name: "active",
-          title: "Activo"
+          title: "Activo",
+          formatter(value) {
+            console.log(value);
+            return value == "true" ? "Activo" : "Inactivo";
+          }
         }
       ];
     }
@@ -83,11 +78,9 @@ export default {
     this.readItems();
   },
   methods: {
-    onPerPageChange(event) {
-      console.log("onPerPageChange", event);
-    },
     search(toSearch) {
-      console.log(toSearch);
+      this.toSearch = toSearch;
+      this.readItems();
     },
     readItems(page = 1) {
       this.loading = true;
@@ -95,7 +88,8 @@ export default {
       const params = {
         perPage: this.perPage,
         page: page,
-        columnValue: this.toSearch
+        columnValue: this.toSearch,
+        columnName: 'siteSearch'
       };
 
       axios.get("/api/equations", { params }).then(response => {

@@ -17,7 +17,17 @@
       :no-data-label="title.noData"
       @page-selected="readItems"
       api-mode
-    ></va-data-table>
+    >
+      <template slot="actions" slot-scope="props">
+        <va-button
+          flat
+          small
+          color
+          @click="edit(props.rowData)"
+          class="ma-0"
+        >{{ $t('tables.edit') }}</va-button>
+      </template>
+    </va-data-table>
   </va-card>
 </template>
 
@@ -55,6 +65,10 @@ export default {
         {
           name: "equation_id",
           title: "Ecuación"
+        },
+        {
+          name: "__slot:actions",
+          dataClass: "text-right"
         }
       ];
     }
@@ -82,6 +96,9 @@ export default {
         this.loading = false;
         this.perPage = response.data.perPage;
       });
+    },
+    edit(selector) {
+      this.$router.push({ name: "edit-selector", params: {id: selector.id} });
     }
   }
 };

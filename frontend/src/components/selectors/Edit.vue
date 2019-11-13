@@ -37,18 +37,21 @@ export default {
   },
   methods: {
     findById(id) {
-      axios.get("/api/selectors/" + id).then(response => {
-        if (!response.data) {
-          this.logError("No existe el selector con id: " + id);
-          this.$router.push({ name: "list-selectors" });
-          return;
-        }
+      axios
+        .get("/api/selectors/" + id)
+        .then(response => {
+          if (!response.data) {
+            this.logError("No existe el selector con id: " + id);
+            this.$router.push({ name: "list-selectors" });
+            return;
+          }
 
-        this.selector = response.data.selector;
-      }).catch(err => {
+          this.selector = response.data.selector;
+        })
+        .catch(err => {
           this.logError(err);
           this.$router.push({ name: "list-selectors" });
-      });
+        });
     }
   }
 };

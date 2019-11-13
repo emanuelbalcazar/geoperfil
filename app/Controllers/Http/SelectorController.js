@@ -52,6 +52,12 @@ class SelectorController {
      */
     async store({ request, response }) {
         let selector = request.post();
+
+        let count = await Selector.query().where({ selector: selector }).getCount();
+
+        if (count > 0)
+            return response.conflict({ code: 409, message: 'El selector ya existe' })
+
         let record = await Selector.create(selector);
         response.json(record);
     }
@@ -91,7 +97,7 @@ class SelectorController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
-        let selectorUpdated = await Selector.query().where('equation_id', params.id).update(request.all());
+        let selectorUpdated = await Selector.query().where('id', params.id).update(request.all());
         return selectorUpdated;
     }
 

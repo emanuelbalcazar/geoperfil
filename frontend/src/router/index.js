@@ -53,6 +53,17 @@ export default new Router({
             ],
         },
         {
+            path: '/selectors',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'edit-selector',
+                    path: ':id',
+                    component: () => import('../components/selectors/Edit.vue')
+                }
+            ]
+        },
+        {
             path: '/equations',
             component: AppLayout,
             children: [

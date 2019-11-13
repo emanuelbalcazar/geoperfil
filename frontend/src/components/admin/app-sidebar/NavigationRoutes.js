@@ -35,9 +35,9 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'list-selectors',
-                    displayName: 'Listar Selectores',
+                    displayName: 'Listar Selectores'
                 }
-            ],
+            ]
         },
         {
             name: 'equations',

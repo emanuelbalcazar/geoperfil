@@ -3,15 +3,15 @@
     <div class="row">
       <div class="flex xs12">
         <va-card :title="text.title">
-          <form>
+          <form @submit.prevent="update">
             <div class="row">
               <div class="flex md6 sm6 xs12">
                 <va-input v-model="selector" placeholder="Escriba el selector" />
               </div>
             </div>
-          </form>
 
-          <va-button color="success">Guardar</va-button>
+            <va-button color="success" type="submit">Actualizar</va-button>
+          </form>
         </va-card>
       </div>
     </div>
@@ -29,6 +29,7 @@ export default {
       text: {
         title: "Editando el selector"
       },
+      id: 0,
       selector: ""
     };
   },
@@ -46,7 +47,22 @@ export default {
             return;
           }
 
+          this.id = response.data.id;
           this.selector = response.data.selector;
+        })
+        .catch(err => {
+          this.logError(err);
+          this.$router.push({ name: "list-selectors" });
+        });
+    },
+    update(event) {
+      axios
+        .put("/api/selectors/" + this.id, { selector: this.selector })
+        .then(response => {
+          if (response.data) {
+            this.logSuccess("Selector Actualizado Correctamente");
+            this.$router.push({ name: "list-selectors" });
+          }
         })
         .catch(err => {
           this.logError(err);

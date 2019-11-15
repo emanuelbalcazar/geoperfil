@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      userName: localStorage.getItem('email')
+      userName: this.$cookies.get('email')
     };
   },
   computed: {

@@ -28,10 +28,10 @@ export default {
   methods: {
     onClick(option) {
       if (option.name == "logout") {
-        localStorage.removeItem("userId");
-        localStorage.removeItem("username");
-        localStorage.removeItem("email");
-        localStorage.removeItem("token");
+        this.$cookies.remove("userId");
+        this.$cookies.remove("username");
+        this.$cookies.remove("email");
+        this.$cookies.remove("token");
         window.location.reload();
       }
     }

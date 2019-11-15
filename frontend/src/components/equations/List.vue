@@ -6,7 +6,6 @@
           <va-icon name="fa fa-search" slot="prepend" />
         </va-input>
       </div>
-
     </div>
 
     <va-data-table
@@ -17,7 +16,17 @@
       :totalPages="totalPages"
       @page-selected="readItems"
       api-mode
-    ></va-data-table>
+    >
+      <template slot="actions" slot-scope="props">
+        <va-button
+          flat
+          small
+          color
+          @click="edit(props.rowData)"
+          class="ma-0"
+        >{{ $t('tables.edit') }}</va-button>
+      </template>
+    </va-data-table>
   </va-card>
 </template>
 
@@ -65,12 +74,8 @@ export default {
           title: "Ultima Ejecución"
         },
         {
-          name: "active",
-          title: "Activo",
-          formatter(value) {
-            console.log(value);
-            return value == "true" ? "Activo" : "Inactivo";
-          }
+          name: "__slot:actions",
+          dataClass: "text-right"
         }
       ];
     }
@@ -90,7 +95,7 @@ export default {
         perPage: this.perPage,
         page: page,
         columnValue: this.toSearch,
-        columnName: 'siteSearch'
+        columnName: "siteSearch"
       };
 
       axios.get("/api/equations", { params }).then(response => {
@@ -99,6 +104,9 @@ export default {
         this.loading = false;
         this.perPage = response.data.perPage;
       });
+    },
+    edit(equation) {
+      this.$router.push({ name: "edit-equation", params: {id: equation.id} });
     }
   }
 };

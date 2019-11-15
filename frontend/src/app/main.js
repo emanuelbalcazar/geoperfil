@@ -15,7 +15,7 @@ import axios from 'axios';
 import Toasted from '../components/toast/CustomToast';
 import '../i18n/index';
 import { ColorThemePlugin } from 'vuestic-ui/src/services/ColorThemePlugin'
-
+import VueCookies from 'vue-cookies'
 
 // VUE CONFIGURATIONS...
 // global configuration for axios.
@@ -29,10 +29,14 @@ Vue.use(VuesticPlugin);
 Vue.use(VueClipboard);
 Vue.mixin(Toasted);
 Vue.use(ColorThemePlugin);
+Vue.use(VueCookies);
+
+// set default config
+VueCookies.config('2h');
 
 // ROUTER...
 router.beforeEach((to, from, next) => {
-    let hasToken = !!localStorage.getItem('token');
+    let hasToken = !!VueCookies.get('token');
 
     if (to.name == 'login' && hasToken) {
         return next({ name: 'dashboard' });

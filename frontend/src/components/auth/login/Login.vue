@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="onsubmit">
+
     <va-input
       v-model="email"
       type="email"
@@ -68,9 +69,9 @@ export default {
           });
         });
 
-      localStorage.setItem("token", response.data.access_token.token);
-      localStorage.setItem("userId", response.data.user.id);
-      localStorage.setItem("email", response.data.user.email);
+      this.$cookies.set("token", response.data.access_token.token);
+      this.$cookies.set("userId", response.data.user.id);
+      this.$cookies.set("email", response.data.user.email);
 
       this.$router.push("dashboard");
       this.logSuccess("Bienvenido a Geoperfil " + response.data.user.name);

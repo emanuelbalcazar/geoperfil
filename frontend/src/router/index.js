@@ -75,6 +75,17 @@ export default new Router({
             ],
         },
         {
+            path: '/equations',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'edit-equation',
+                    path: ':id',
+                    component: () => import('../components/equations/Edit.vue')
+                }
+            ]
+        },
+        {
             path: '/careers',
             component: AppLayout,
             children: [

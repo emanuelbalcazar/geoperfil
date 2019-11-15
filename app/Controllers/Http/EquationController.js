@@ -98,6 +98,8 @@ class EquationController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let updated = await Equation.query().where('id', params.id).update(request.all());
+        return updated;
     }
 
     /**

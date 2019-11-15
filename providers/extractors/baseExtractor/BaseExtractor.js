@@ -42,12 +42,12 @@ class BaseExtractor {
         // get specific attributes from google results.
         googleResults.items = googleResults.items.map(item => {
             return {
-                title: item.title,
+                title: item.title || 'no title',
                 link: item.link,
                 displayLink: item.displayLink,
                 snippet: item.snippet,
-                datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
-                datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
+                //datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
+                //datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
             }
         });
 
@@ -61,11 +61,15 @@ class BaseExtractor {
      * TODO: implement
      */
     async filter(googleResults, equation) {
+        let records = [];
 
-        googleResults.items = googleResults.items.filter(async item => {
-            let count = await Article.query().where({ link: item.link }).getCount();
-            return (count == 0);
-        });
+        for (const article of googleResults.items) {
+            let count = await Article.query().where({ link: article.link }).getCount();
+            if (count == 0)
+                records.push(article);
+        }
+
+        googleResults.items = records;
 
         return googleResults;
     }
@@ -140,7 +144,7 @@ class BaseExtractor {
 
         googleResults.items = result;
 
-        return result;
+        return googleResults;
     }
 }
 

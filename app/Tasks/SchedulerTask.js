@@ -60,13 +60,18 @@ class SchedulerTask {
 
                 // obtengo la proxima ecuacion a ejecutar
                 currentEquation = equations[index];
+                currentEquation.start = (startIndex > currentEquation.start) ? startIndex : currentEquation.start;
+
+                console.log('> Ejecutando la ecuacion: %s desde la pagina %s:', currentEquation.id, currentEquation.start);
 
                 // calculo la pagina actual en caso de agarrar una ecuacion ejecutada a medias.
                 currentPage = Math.ceil(currentEquation.start / this.pageLimit);
 
+                console.log('> Pagina actual', currentPage);
+
                 // si la ecuacion tiene selectores, la ejecuto (sin selectores no puede obtener texto).
                 selectors = currentEquation.selectors.map(selector => selector.selector);
-                records = await ExtractorManager.test('default', currentEquation, selectors);
+                records = await ExtractorManager.execute('default', currentEquation, selectors);
                 this.requestCount++;
 
                 // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion
@@ -78,6 +83,7 @@ class SchedulerTask {
                 } else {
                     currentPage++;
                     startIndex = Number(records.nextIndex);
+                    console.log('> Nuevo start index', startIndex);
                 }
             }
 

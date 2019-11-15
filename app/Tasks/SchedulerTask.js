@@ -60,30 +60,29 @@ class SchedulerTask {
 
                 // obtengo la proxima ecuacion a ejecutar
                 currentEquation = equations[index];
+                // si aun tengo request disponibles y debo continuar buscando, actualizo el start con el nuevo start index.
                 currentEquation.start = (startIndex > currentEquation.start) ? startIndex : currentEquation.start;
 
-                console.log('> Ejecutando la ecuacion: %s desde la pagina %s:', currentEquation.id, currentEquation.start);
+                Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando la ecuacion: ${currentEquation.id} desde la pagina ${currentEquation.start}`);
 
                 // calculo la pagina actual en caso de agarrar una ecuacion ejecutada a medias.
                 currentPage = Math.ceil(currentEquation.start / this.pageLimit);
-
-                console.log('> Pagina actual', currentPage);
 
                 // si la ecuacion tiene selectores, la ejecuto (sin selectores no puede obtener texto).
                 selectors = currentEquation.selectors.map(selector => selector.selector);
                 records = await ExtractorManager.execute('default', currentEquation, selectors);
                 this.requestCount++;
 
-                // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion
+                // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion y reinicio el start
                 // sino avanzo de pagina e incremento el indice para arrancar en la sig pagina
                 if (currentPage == records.lastPage) {
                     await Equation.updateLastExecution(currentEquation.id, new Date().getMonth() + 1);
+                    await Equation.updateStartIndex(currentEquation.id, 1);
                     index++;
                     currentPage = 1;
                 } else {
                     currentPage++;
                     startIndex = Number(records.nextIndex);
-                    console.log('> Nuevo start index', startIndex);
                 }
             }
 

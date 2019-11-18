@@ -73,6 +73,8 @@ class SchedulerTask {
                 records = await ExtractorManager.execute('default', currentEquation, selectors);
                 this.requestCount++;
 
+                Logger.info(`[Scheduler][${this.currentSchedule}] - Termino la ecuacion: ${currentEquation.id} desde la pagina ${currentEquation.start}`);
+
                 // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion y reinicio el start
                 // sino avanzo de pagina e incremento el indice para arrancar en la sig pagina
                 if (currentPage == records.lastPage) {
@@ -83,6 +85,7 @@ class SchedulerTask {
                 } else {
                     currentPage++;
                     startIndex = Number(records.nextIndex);
+                    await Equation.updateStartIndex(currentEquation.id, startIndex);
                 }
             }
 
@@ -94,6 +97,7 @@ class SchedulerTask {
             this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;
             this.requestCount = 0;
             this.job.reschedule(this.currentSchedule);  // se replanifica el scheduler
+            Logger.info(`[Scheduler][${this.currentSchedule}] - Limite de ${this.requestLimit} alcanzado, cambiando a modo ${this.currentSchedule}`);
         });
     }
 }

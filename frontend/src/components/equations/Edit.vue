@@ -14,7 +14,7 @@
               </div>
 
               <div class="flex md6 sm6 xs12">
-                <va-input label="Inicio" v-model="equation.start" :disabled="true" />
+                <va-input label="Inicio" v-model="equation.start" />
               </div>
 
               <div class="flex md6 sm6 xs12">

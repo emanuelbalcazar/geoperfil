@@ -3,6 +3,7 @@ const parse = require('node-html-parser');
 const config = require('../Configuration');
 const querystring = require('querystring');
 const Article = use('App/Models/Article');
+const EquationArticle = use('App/Models/EquationArticle');
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -64,9 +65,16 @@ class BaseExtractor {
         let records = [];
 
         for (const article of googleResults.items) {
-            let count = await Article.query().where({ link: article.link }).getCount();
-            if (count == 0)
+            let previousArticle = await Article.query().where({ link: article.link }).first();
+
+            if (previousArticle) {
+                let count = await EquationArticle.query().where({ equation_id: equation.id, article_id: previousArticle.id }).getCount();
+                if (count == 0) {
+                    await EquationArticle.create({ equation_id: equation.id, article_id: previousArticle.id });
+                }
+            } else {
                 records.push(article);
+            }
         }
 
         googleResults.items = records;
@@ -139,6 +147,7 @@ class BaseExtractor {
 
         for (const article of googleResults.items) {
             let record = await Article.create(article);
+            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id });
             result.push(record);
         }
 

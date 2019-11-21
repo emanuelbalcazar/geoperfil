@@ -24,7 +24,9 @@ class EquationSeeder {
             for (const file of equationFiles) {
                 let equations = await csv().fromFile(EQUATION_FILES + file);
                 let count = await Equation.query().where(equations[0]).getCount();
-                let instance = await Equation.createMany(equations);
+
+                if (count == 0)
+                    var instance = await Equation.createMany(equations);
             }
 
             Logger.info('[Seeder] - Se cargaron las ecuaciones de busqueda correctamente');

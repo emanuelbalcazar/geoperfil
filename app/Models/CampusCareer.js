@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class CampusCareer extends Model {
-    
+
     static get createdAtColumn() {
         return null;
     }
@@ -12,14 +12,6 @@ class CampusCareer extends Model {
     static get updatedAtColumn() {
         return null;
     }
-   
-   
-    static boot () {
-        super.boot()
-        this.addHook('beforeCreate', (campusCareer) => {
-            campusCareer.dictates = true
-        })
-      }
 }
 
 module.exports = CampusCareer

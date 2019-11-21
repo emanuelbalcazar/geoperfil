@@ -27,7 +27,7 @@ class InstitutionController {
 
         let institutions = await Institution.query().with('campus').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
 
-        response.json(institutions);
+        return response.json(institutions);
     }
 
     /**
@@ -51,6 +51,16 @@ class InstitutionController {
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
+        let institution = request.all();
+
+        let count = await Institution.query().where({ name: institution.name }).getCount();
+
+        if (count > 0)
+            return response.conflict({ code: 409, message: 'La institucion ya existe' });
+
+        let institutionInstance = await Institution.create(institution);
+
+        return response.json(institutionInstance);
     }
 
     /**

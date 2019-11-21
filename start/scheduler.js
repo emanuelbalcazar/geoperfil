@@ -1,12 +1,19 @@
-const SchedulerTask = require('../app/Tasks/Scheduler');
+const SchedulerTask = require('../app/Tasks/SchedulerTask');
+const Scheduler = use('App/Models/Scheduler');
+const Logger = use('Logger');
 const DEFAULT_SCHEDULER = 'scheduler';
 
 const scheduler = new SchedulerTask(DEFAULT_SCHEDULER);
 
 async function start() {
-    await scheduler.configure();
-    await scheduler.run();
+    let active = await Scheduler.isActive(DEFAULT_SCHEDULER);
+
+    if (active) {
+        Logger.info('Iniciando el planificador...');
+        await scheduler.configure();
+        await scheduler.run();
+    }
 }
 
-//start();
+start();
 

@@ -13,11 +13,11 @@ const path = require('path')
 */
 const providers = [
     '@adonisjs/framework/providers/AppProvider',
+    '@adonisjs/framework/providers/ViewProvider',
     '@adonisjs/auth/providers/AuthProvider',
     '@adonisjs/bodyparser/providers/BodyParserProvider',
     '@adonisjs/cors/providers/CorsProvider',
     '@adonisjs/lucid/providers/LucidProvider',
-    'adonis-scheduler/providers/SchedulerProvider',
     path.join(__dirname, '..', 'providers', 'extractors', 'ExtractorManagerProvider')
 ]
 
@@ -32,7 +32,6 @@ const providers = [
 */
 const aceProviders = [
     '@adonisjs/lucid/providers/MigrationsProvider',
-    'adonis-scheduler/providers/CommandsProvider',
     '@adonisjs/vow/providers/VowProvider'
 ]
 
@@ -49,7 +48,7 @@ const aceProviders = [
 |
 */
 const aliases = {
-    Scheduler: 'Adonis/Addons/Scheduler'
+
 }
 
 /*
@@ -60,6 +59,6 @@ const aliases = {
 | Here you store ace commands for your package
 |
 */
-const commands = []
+const commands = ['App/Commands/Config']
 
-module.exports = {providers, aceProviders, aliases, commands}
+module.exports = { providers, aceProviders, aliases, commands }

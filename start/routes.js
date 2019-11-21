@@ -32,8 +32,14 @@ Route.group(() => {
 
     Route.resource('/campuses', 'CampusController');
 
+    Route.resource('/careers', 'CareerController');
+
     Route.post('/extractors/run', 'ExtractorController.extract');
 
     Route.post('/extractors/test', 'ExtractorController.test');
+
+    Route.post('/auth/register', 'AuthController.register');
+
+    Route.post('/auth/login', 'AuthController.login');
 
 }).prefix('api');

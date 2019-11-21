@@ -3,6 +3,7 @@ const parse = require('node-html-parser');
 const config = require('../Configuration');
 const querystring = require('querystring');
 const Article = use('App/Models/Article');
+const EquationArticle = use('App/Models/EquationArticle');
 
 /**
  * Base extractor, all extractors must extend from this.
@@ -25,40 +26,60 @@ class BaseExtractor {
      * @returns Retrieve results for a particular search
      */
     async search(equation) {
-        let googleResults = [];
-        let startIndex = 1;
-        let hasNextPage = true;
-        let currentPage = 1;
-        equation.limit = equation.limit || 1;
+        let googleResults = { items: [], totalResults: 0, nextIndex: 1, lastPage: 0 };
+        let URL = config.options.uri + querystring.stringify(config.options.credentials) + '&' + querystring.stringify(equation);
+        let result = await getData(URL);
 
-        while (currentPage <= equation.limit && hasNextPage) {
-            equation.start = startIndex;
+        googleResults.items = googleResults.items.concat(result.items);
+        googleResults.totalResults = Number(result.searchInformation.totalResults);
+        googleResults.lastPage = Math.ceil(googleResults.totalResults / config.RESULTS_PER_PAGE);
+        googleResults.lastPage = (googleResults.lastPage > config.PAGE_LIMIT) ? config.PAGE_LIMIT : googleResults.lastPage;
 
-            let URL = config.options.uri + querystring.stringify(config.options.credentials) + '&' + querystring.stringify(equation);
-            let result = await getData(URL);
+        let hasNextPage = !!(result.queries && result.queries.nextPage);
 
-            googleResults = googleResults.concat(result.items)
-            hasNextPage = !!(result.queries && result.queries.nextPage);
+        if (hasNextPage)
+            googleResults.nextIndex = result.queries.nextPage[0].startIndex;
 
-            if (hasNextPage)
-                startIndex = result.queries.nextPage[0].startIndex;
+        // get specific attributes from google results.
+        googleResults.items = googleResults.items.map(item => {
+            return {
+                title: item.title || 'no title',
+                link: item.link,
+                displayLink: item.displayLink,
+                snippet: item.snippet,
+                //datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
+                //datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
+            }
+        });
 
-            currentPage++;
-        }
-
-        return googleResults.map(({ title, link, displayLink, snippet }) => ({
-            title, link, displayLink, snippet
-        }));
+        return googleResults;
     }
 
     /**
      * Filter previously visited links
-     * @param items
+     * @param googleResults
      * @returns {*}
      * TODO: implement
      */
-    async filter(items) {
-        return items;
+    async filter(googleResults, equation) {
+        let records = [];
+
+        for (const article of googleResults.items) {
+            let previousArticle = await Article.query().where({ link: article.link }).first();
+
+            if (previousArticle) {
+                let count = await EquationArticle.query().where({ equation_id: equation.id, article_id: previousArticle.id }).getCount();
+                if (count == 0) {
+                    await EquationArticle.create({ equation_id: equation.id, article_id: previousArticle.id });
+                }
+            } else {
+                records.push(article);
+            }
+        }
+
+        googleResults.items = records;
+
+        return googleResults;
     }
 
     /**
@@ -66,28 +87,30 @@ class BaseExtractor {
      * @param items
      * @returns array of objects that includes the html.
      */
-    async crawl(items) {
+    async crawl(googleResults) {
         let allHtml = [];
 
-        for (const item of items) {
+        for (const item of googleResults.items) {
             let newItem = item;
             newItem.html = await getData(item.link);
             allHtml.push(newItem);
         }
 
-        return allHtml;
+        googleResults.items = allHtml;
+
+        return googleResults;
     }
 
     /**
      * Apply selectors to get the target text.
-     * @param allHtml
+     * @param googleResults
      * @param selectors
      * @returns {[]}
      */
-    async scraping(allHtml, selectors) {
+    async scraping(googleResults, selectors) {
         let articles = [];
 
-        for (const data of allHtml) {
+        for (const data of googleResults.items) {
             const root = parse.parse(data.html);
             let newItem = data;
             delete newItem.html; // I delete the attribute because it is no longer necessary.
@@ -109,7 +132,9 @@ class BaseExtractor {
                 articles.push(newItem);
         }
 
-        return articles;
+        googleResults.items = articles;
+
+        return googleResults;
     }
 
     /**
@@ -117,20 +142,23 @@ class BaseExtractor {
      * @returns {*}
      * @param articles
      */
-    async save(articles) {
+    async save(googleResults, equation) {
         let result = [];
 
-        for (const article of articles) {
+        for (const article of googleResults.items) {
             let record = await Article.create(article);
+            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id });
             result.push(record);
         }
 
-        return result;
+        googleResults.items = result;
+
+        return googleResults;
     }
 }
 
 const getData = async url => {
-    const response = await axios.get(url);
+    const response = await axios.get(url).catch(e => console.log(e.message));
     const data = response.data;
     return data;
 };

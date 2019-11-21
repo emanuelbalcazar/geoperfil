@@ -11,8 +11,8 @@ class CampusSchema extends Schema {
             table.string('address', 250)
             table.string('city',100 )
             table.enu('modality', ['classroom', 'virtual'])
-            table.decimal('latitude')
-            table.decimal('longitude')
+            table.decimal('latitude', 10,8)
+            table.decimal('longitude', 10,8)
             table.integer('institution_id').references('id').inTable('institutions')
         });
     }

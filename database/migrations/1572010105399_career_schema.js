@@ -7,7 +7,7 @@ class CareerSchema extends Schema {
     up() {
         this.create('careers', (table) => {
             table.increments()
-            table.string('name', 250)
+            table.string('name', 250).notNullable().unique()
             table.string('duration', 25)
         })
     }

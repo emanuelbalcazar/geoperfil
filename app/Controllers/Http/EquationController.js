@@ -22,8 +22,11 @@ class EquationController {
      */
     async index({ request, response, view }) {
         let params = request.all();
-        let equations = await Equation.query().with('selectors').paginate(params.page, params.perPage);
-        response.json(equations);
+        params.columnName = params.columnName || 'siteSearch';
+        params.columnValue = params.columnValue || '';
+
+        let equations = await Equation.query().with('selectors').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        return response.json(equations);
     }
 
     /**
@@ -57,7 +60,7 @@ class EquationController {
         }
 
         let record = await Equation.create(equation);
-        response.json(record);
+        return response.json(record);
     }
 
     /**
@@ -71,7 +74,7 @@ class EquationController {
      */
     async show({ params, request, response, view }) {
         let equation = await Equation.query().where('id', params.id).with('selectors').first();
-        response.json(equation);
+        return response.json(equation);
     }
 
     /**
@@ -95,6 +98,8 @@ class EquationController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let updated = await Equation.query().where('id', params.id).update(request.all());
+        return updated;
     }
 
     /**
@@ -108,7 +113,7 @@ class EquationController {
     async destroy({ params, request, response }) {
         let selectors = await Selector.query().where('equation_id', params.id).delete();
         let equation = await Equation.query().where('id', params.id).delete();
-        return equation;
+        return response.json(equation);
     }
 }
 

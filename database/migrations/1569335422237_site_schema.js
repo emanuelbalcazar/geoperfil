@@ -8,7 +8,7 @@ class SiteSchema extends Schema {
         this.create('sites', (table) => {
             table.increments();
             table.string('site').unique();
-            table.string('description');
+            table.string('description').defaultTo('');
         });
     }
 

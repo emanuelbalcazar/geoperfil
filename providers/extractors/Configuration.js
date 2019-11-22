@@ -23,7 +23,7 @@ const Martin = {
 
 exports.options = {
     uri: 'https://www.googleapis.com/customsearch/v1?',
-    credentials: Emanuel
+    credentials: Martin
 };
 
 exports.RESULTS_PER_PAGE = 10;

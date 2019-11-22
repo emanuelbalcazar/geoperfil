@@ -1,10 +1,12 @@
 'use strict'
 
-const Equation = use('App/Models/Equation')
-const Scheduler = use('App/Models/Scheduler')
+const EquationStatus = use('App/Models/EquationStatus');
+const Scheduler = use('App/Models/Scheduler');
 const ExtractorManager = use('ExtractorManager');
 const Logger = use('Logger');
 const nodeScheduler = require('node-schedule');
+
+const Helper = require('../Helper/Utils');
 
 // amount of limit pages allowed by google.
 const PAGE_LIMIT = 10;
@@ -46,7 +48,9 @@ class SchedulerTask {
 
             Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando planificador en: ${fireDate}`);
 
-            let equations = await Equation.getNotCurrentlyExecuted();
+            let equations = await EquationStatus.getNotCurrentlyExecuted();
+            equations = Helper.convertToEquations(equations);
+
             let currentEquation = {};
             this.dailyExecution = (equations.length > 0) ? true : false;
 
@@ -60,17 +64,17 @@ class SchedulerTask {
 
                 // obtengo la proxima ecuacion a ejecutar
                 currentEquation = equations[index];
+
                 // si aun tengo request disponibles y debo continuar buscando, actualizo el start con el nuevo start index.
                 currentEquation.start = (startIndex > currentEquation.start) ? startIndex : currentEquation.start;
 
-                Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando la ecuacion: ${currentEquation.id} desde la pagina ${currentEquation.start}`);
+                Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando la ecuacion: ${currentEquation.id} desde el indice ${currentEquation.start}`);
 
                 // calculo la pagina actual en caso de agarrar una ecuacion ejecutada a medias.
                 currentPage = Math.ceil(currentEquation.start / this.pageLimit);
 
                 // si la ecuacion tiene selectores, la ejecuto (sin selectores no puede obtener texto).
-                selectors = currentEquation.selectors.map(selector => selector.selector);
-                records = await ExtractorManager.execute('default', currentEquation, selectors);
+                records = await ExtractorManager.execute('default', currentEquation, currentEquation.selectors);
                 this.requestCount++;
 
                 Logger.info(`[Scheduler][${this.currentSchedule}] - Termino la ecuacion: ${currentEquation.id} desde la pagina ${currentEquation.start}`);
@@ -78,21 +82,21 @@ class SchedulerTask {
                 // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion y reinicio el start
                 // sino avanzo de pagina e incremento el indice para arrancar en la sig pagina
                 if (currentPage == records.lastPage) {
-                    await Equation.updateLastExecution(currentEquation.id, new Date().getMonth() + 1);
-                    await Equation.updateStartIndex(currentEquation.id, 1);
+                    await EquationStatus.updateLastExecution(currentEquation.id, new Date().getMonth() + 1);
+                    await EquationStatus.updateStartIndex(currentEquation.id, 1);
                     index++;
                     currentPage = 1;
                     startIndex = 1;
                 } else {
                     currentPage++;
                     startIndex = Number(records.nextIndex);
-                    await Equation.updateStartIndex(currentEquation.id, startIndex);
+                    await EquationStatus.updateStartIndex(currentEquation.id, startIndex);
                 }
             }
 
             // si falto ejecutar actualizo start de la ecuacion
             if (currentPage < records.lastPage) {
-                await Equation.updateStartIndex(currentEquation.id, startIndex);
+                await EquationStatus.updateStartIndex(currentEquation.id, startIndex);
             }
 
             this.currentSchedule = (this.dailyExecution) ? this.nextDay : this.nextMonth;

@@ -13,8 +13,8 @@ class Equation extends Model {
         return null;
     }
 
-    sites() {
-        return this.hasMany('App/Models/Site');
+    status() {
+        return this.belongsTo('App/Models/EquationStatus');
     }
 
     /* relation equation-articles */
@@ -27,15 +27,6 @@ class Equation extends Model {
         return equations.toJSON();
     }
 
-    static async updateLastExecution(id, lastExecution) {
-        let updated = await this.query().where({ id: id }).update({ lastExecution: lastExecution });
-        return updated;
-    }
-
-    static async updateStartIndex(id, start) {
-        let updated = await this.query().where({ id: id }).update({ start: start });
-        return updated;
-    }
 }
 
 module.exports = Equation

@@ -9,7 +9,7 @@ class ArticleAddColumnSchema extends Schema {
             table.dropColumn('datepublished');
             table.dropColumn('datemodified');
             table.boolean('is_processed').defaultTo(false);
-            table.boolean('is_useful');
+            table.boolean('is_useful').defaultTo(true);
         })
     }
 

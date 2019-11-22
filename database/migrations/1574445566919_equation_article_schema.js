@@ -7,7 +7,7 @@ class EquationArticleSchema extends Schema {
     up() {
         this.create('equation_articles', (table) => {
             table.increments();
-            table.integer('equation_id').references('id').inTable('equations');
+            table.integer('equation_id').references('id').inTable('equation_statuses');
             table.integer('article_id').references('id').inTable('articles');
         });
     }

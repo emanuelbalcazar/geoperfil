@@ -16,6 +16,10 @@ class Site extends Model {
     selectors() {
         return this.hasMany('App/Models/Selector');
     }
+
+    status() {
+        return this.belongsTo('App/Models/EquationStatus');
+    }
 }
 
 module.exports = Site

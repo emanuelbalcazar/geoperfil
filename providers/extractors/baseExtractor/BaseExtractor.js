@@ -46,7 +46,7 @@ class BaseExtractor {
                 title: item.title || 'no title',
                 link: item.link,
                 displayLink: item.displayLink,
-                snippet: item.snippet,
+                snippet: item.snippet
                 //datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
                 //datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
             }
@@ -118,6 +118,7 @@ class BaseExtractor {
 
             for (const selector of selectors) {
                 let elements = root.querySelectorAll(selector);
+
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
                     let text = elements.map(elem => {
@@ -147,7 +148,7 @@ class BaseExtractor {
 
         for (const article of googleResults.items) {
             let record = await Article.create(article);
-            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id });
+            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id }).catch(er => console.log(er));
             result.push(record);
         }
 

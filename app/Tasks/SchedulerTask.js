@@ -82,6 +82,7 @@ class SchedulerTask {
                     await Equation.updateStartIndex(currentEquation.id, 1);
                     index++;
                     currentPage = 1;
+                    startIndex = 1;
                 } else {
                     currentPage++;
                     startIndex = Number(records.nextIndex);

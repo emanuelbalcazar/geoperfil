@@ -25,7 +25,8 @@ class EquationController {
         params.columnName = params.columnName || 'siteSearch';
         params.columnValue = params.columnValue || '';
 
-        let equations = await Equation.query().with('selectors').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        let equations = await Equation.query().with('selectors')
+            .where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
         return response.json(equations);
     }
 

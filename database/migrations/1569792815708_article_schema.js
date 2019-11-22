@@ -24,3 +24,6 @@ class ArticleSchema extends Schema {
 }
 
 module.exports = ArticleSchema
+
+
+

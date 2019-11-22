@@ -12,10 +12,6 @@ class Article extends Model {
     static get updatedAtColumn() {
         return null;
     }
-
-    articles() {
-        return this.belongsToMany('App/Models/Equation').pivotTable('equation_articles')
-    }
 }
 
 module.exports = Article

@@ -15,7 +15,7 @@ class ArticleAddColumnSchema extends Schema {
 
     down() {
         this.table('articles', (table) => {
-            table.dropColumn('is_processced');
+            table.dropColumn('is_processed');
             table.dropColumn('is_useful');
         })
     }

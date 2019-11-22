@@ -3,7 +3,7 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Selector extends Model {
+class Site extends Model {
 
     static get createdAtColumn() {
         return null;
@@ -12,6 +12,11 @@ class Selector extends Model {
     static get updatedAtColumn() {
         return null;
     }
+
+    selectors() {
+        return this.hasMany('App/Models/Selector');
+    }
+
 }
 
-module.exports = Selector
+module.exports = Site

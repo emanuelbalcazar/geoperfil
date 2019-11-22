@@ -1,4 +1,4 @@
-selector,equation_id
+selector,site_id
 .td-post-content p,1
 .post-content p,2
 #bloque_superior p,3

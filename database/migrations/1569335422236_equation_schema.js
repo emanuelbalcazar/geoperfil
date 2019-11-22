@@ -6,18 +6,14 @@ const Schema = use('Schema')
 class EquationSchema extends Schema {
     up() {
         this.create('equations', (table) => {
-            table.increments()
-            table.string('q', 100).notNullable()
-            table.string('siteSearch', 200).notNullable()
-            table.string('siteSearchFilter', 200).notNullable().defaultTo('i')
-            table.integer('start').defaultTo(1)
-            table.integer('lastExecution').defaultTo(0)
-            table.boolean('active').defaultTo(true)
-        })
+            table.increments();
+            table.string('q', 200).notNullable();
+            table.string('siteSearchFilter', 200).notNullable().defaultTo('i');
+        });
     }
 
     down() {
-        this.drop('equations')
+        this.drop('equations');
     }
 }
 

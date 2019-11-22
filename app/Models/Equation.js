@@ -13,8 +13,8 @@ class Equation extends Model {
         return null;
     }
 
-    selectors() {
-        return this.hasMany('App/Models/Selector')
+    sites() {
+        return this.hasMany('App/Models/Site');
     }
 
     /* relation equation-articles */

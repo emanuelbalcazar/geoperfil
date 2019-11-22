@@ -13,6 +13,13 @@ class EquationStatus extends Model {
         return null;
     }
 
+    equation() {
+        return this.hasOne('App/Models/Equation');
+    }
+
+    site() {
+        return this.hasOne('App/Models/Site');
+    }
 }
 
 module.exports = EquationStatus

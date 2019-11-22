@@ -16,7 +16,6 @@ class Site extends Model {
     selectors() {
         return this.hasMany('App/Models/Selector');
     }
-
 }
 
 module.exports = Site

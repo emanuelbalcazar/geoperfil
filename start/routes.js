@@ -24,7 +24,7 @@ Route.get('/', async ({ response }) => {
 // routes with prefix 'api'
 Route.group(() => {
 
-    Route.resource('/equations', 'EquationController');
+    Route.resource('/equations', 'EquationStatusController');
 
     Route.resource('/selectors', 'SelectorController');
 

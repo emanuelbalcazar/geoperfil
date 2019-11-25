@@ -110,7 +110,7 @@ class SelectorController {
      * @param {Response} ctx.response
      */
     async destroy({ params, request, response }) {
-        let selectors = await Selector.query().where('equation_id', params.id).delete();
+        let selectors = await Selector.query().where('id', params.id).delete();
         return selectors;
     }
 }

@@ -45,8 +45,7 @@ export default {
       return [
         {
           name: "id",
-          title: "ID",
-          width: "20%"
+          title: "ID"
         },
         {
           name: "name",

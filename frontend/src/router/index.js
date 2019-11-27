@@ -42,24 +42,24 @@ export default new Router({
             ],
         },
         {
-            path: '/selectors',
+            path: '/sites',
             component: AppLayout,
             children: [
                 {
-                    name: 'list-selectors',
+                    name: 'list-sites',
                     path: 'list',
-                    component: () => import('../components/selectors/List.vue')
+                    component: () => import('../components/sites/List.vue')
                 }
             ],
         },
         {
-            path: '/selectors',
+            path: '/sites',
             component: AppLayout,
             children: [
                 {
-                    name: 'edit-selector',
+                    name: 'edit-site',
                     path: ':id',
-                    component: () => import('../components/selectors/Edit.vue')
+                    component: () => import('../components/sites/Edit.vue')
                 }
             ]
         },

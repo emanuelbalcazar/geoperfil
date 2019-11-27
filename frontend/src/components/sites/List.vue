@@ -38,10 +38,10 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Selectores",
+        table: "Listado de Sitios",
         perPage: "Por Páginas",
-        search: "Buscar por texto de selector",
-        noData: "No se encontraron selectores"
+        search: "Buscar por texto de sitio",
+        noData: "No se encontraron sitios"
       },
       perPage: 10,
       totalPages: 0,
@@ -55,16 +55,15 @@ export default {
       return [
         {
           name: "id",
-          title: "ID",
-          width: "20%"
+          title: "ID"
         },
         {
-          name: "selector",
-          title: "Selector"
+          name: "site",
+          title: "Sitio"
         },
         {
-          name: "equation_id",
-          title: "Ecuación"
+          name: "description",
+          title: "Descripción"
         },
         {
           name: "__slot:actions",
@@ -90,15 +89,15 @@ export default {
         columnValue: this.toSearch
       };
 
-      axios.get("/api/selectors", { params }).then(response => {
+      axios.get("/api/sites", { params }).then(response => {
         this.items = response.data.data;
         this.totalPages = response.data.lastPage;
         this.loading = false;
         this.perPage = response.data.perPage;
       });
     },
-    edit(selector) {
-      this.$router.push({ name: "edit-selector", params: {id: selector.id} });
+    edit(site) {
+      this.$router.push({ name: "edit-site", params: { id: site.id } });
     }
   }
 };

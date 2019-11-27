@@ -5,8 +5,9 @@ const toastOptions = {
     theme: 'bubble',
     position: 'bottom-right',
     iconPack: 'fontawesome',
-    duration: 5000,
-    keepOnHover: false
+    duration: 4000,
+    keepOnHover: false,
+    closeOnSwipe: true
 }
 
 Vue.use(Toasted, toastOptions);

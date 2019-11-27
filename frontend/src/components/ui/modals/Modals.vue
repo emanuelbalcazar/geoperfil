@@ -104,7 +104,7 @@
       :title=" $t('modal.staticTitle') "
       cancelClass="none"
       :okText=" $t('modal.close') "
-      :message=" $t('modal.staticMessage') "
+      :message="body"
       noOutsideDismiss
       noEscDismiss
     />
@@ -125,6 +125,7 @@ export default {
       showBottomModal: false,
       showLeftModal: false,
       showStaticModal: false,
+      body: '<b>asdasd</b>'
     }
   },
 }

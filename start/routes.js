@@ -36,6 +36,8 @@ Route.group(() => {
 
     Route.resource('/articles','ArticleController');
 
+    Route.resource('/sites','SiteController');
+
     Route.post('/extractors/run', 'ExtractorController.extract');
 
     Route.post('/extractors/test', 'ExtractorController.test');

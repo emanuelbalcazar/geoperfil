@@ -8,7 +8,7 @@ class SelectorSchema extends Schema {
         this.create('selectors', (table) => {
             table.increments();
             table.string('selector').notNullable();
-            table.string('description');
+            table.string('description').defaultTo('');
             table.integer('site_id').references('id').inTable('sites');
         });
     }

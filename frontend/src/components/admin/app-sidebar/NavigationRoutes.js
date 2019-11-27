@@ -26,16 +26,16 @@ export const navigationRoutes = {
             ]
         },
         {
-            name: 'selectors',
-            displayName: 'Selectores',
+            name: 'sites',
+            displayName: 'Sitios',
             meta: {
-                iconClass: 'fa fa-scissors',
+                iconClass: 'fa fa-wpforms',
             },
             disabled: true,
             children: [
                 {
-                    name: 'list-selectors',
-                    displayName: 'Listar Selectores'
+                    name: 'list-sites',
+                    displayName: 'Listar Sitios'
                 }
             ]
         },

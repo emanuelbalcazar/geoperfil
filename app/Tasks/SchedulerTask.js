@@ -49,6 +49,7 @@ class SchedulerTask {
             Logger.info(`[Scheduler][${this.currentSchedule}] - Ejecutando planificador en: ${fireDate}`);
 
             let equations = await EquationStatus.getNotCurrentlyExecuted();
+
             equations = Helper.convertToEquations(equations);
 
             let currentEquation = {};

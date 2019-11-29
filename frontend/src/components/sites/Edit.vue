@@ -18,6 +18,8 @@
             </div>
 
             <va-button color="success" type="submit">Actualizar</va-button>
+
+            <va-button color="info" type="button" @click="showAddSelectorModal()">Agregar Selector</va-button>
           </form>
         </va-card>
 
@@ -30,13 +32,19 @@
             no-pagination
           >
             <template slot="actions" slot-scope="props">
-              <va-button flat small color @click="editSelector(props.rowData)" class="ma-0">Editar</va-button>
+              <va-button
+                flat
+                small
+                color
+                @click="showEditSelectorModal(props.rowData)"
+                class="ma-0"
+              >Editar</va-button>
 
               <va-button
                 flat
                 small
                 color="danger"
-                @click="removeSelector(props.rowData)"
+                @click="showRemoveSelectorModal(props.rowData)"
                 class="ma-0"
               >Borrar</va-button>
             </template>
@@ -73,6 +81,25 @@
           :noOutsideDismiss="true"
           @ok="deleteSelector"
         />
+
+        <!-- add selector -->
+        <va-modal
+          v-model="modal.showAddSelector"
+          size="large"
+          :okText="'Agregar'"
+          :cancelText="'Cancelar'"
+          title="Agregando un nuevo selector"
+          :noOutsideDismiss="true"
+          @ok="addSelector"
+        >
+          <div class="flex xs12">
+            <va-input label="Selector" v-model="selector.selector" placeholder="Selector" />
+          </div>
+
+          <div class="flex xs12">
+            <va-input label="Descripción" v-model="selector.description" placeholder="Descripción" />
+          </div>
+        </va-modal>
       </div>
     </div>
   </div>
@@ -93,10 +120,11 @@ export default {
         noData: "No se encontraron selectores."
       },
       site: { selectors: [] },
-      selector: {},
+      selector: { selector: "", description: "" },
       modal: {
         showEditSelector: false,
         showDeleteSelector: false,
+        showAddSelector: false,
         size: "medium",
         noOutsideDismiss: true
       }
@@ -124,7 +152,7 @@ export default {
     }
   },
   methods: {
-    editSelector(selector) {
+    showEditSelectorModal(selector) {
       this.selector = Object.assign({}, selector);
       this.modal.showEditSelector = true;
     },
@@ -136,7 +164,15 @@ export default {
           this.findById(this.$route.params.id);
         });
     },
-    removeSelector(selector) {
+    addSelector() {
+      let pageId = this.$route.params.id;
+
+      axios.post("/api/selectors", this.selector).then(response => {
+        this.logSuccess("Selector agregado correctamente");
+        this.findById(this.$route.params.id);
+      });
+    },
+    showRemoveSelectorModal(selector) {
       this.selector = Object.assign({}, selector);
       this.modal.showDeleteSelector = true;
     },
@@ -180,6 +216,10 @@ export default {
           this.logError(err);
           this.$router.push({ name: "list-sites" });
         });
+    },
+    showAddSelectorModal() {
+      this.selector = { selector: '', description: '', site_id: this.$route.params.id};
+      this.modal.showAddSelector = true;
     }
   }
 };

@@ -6,7 +6,6 @@
     </template>
 
     <div class="app-navbar__actions row flex-nowrap align--center">
-      <language-dropdown class="va-navbar__item" />
       <profile-dropdown class="va-navbar__item">
         <span>{{userName}}</span>
       </profile-dropdown>
@@ -17,7 +16,6 @@
 <script>
 import VaIconVuestic from "vuestic-ui/src/components/vuestic-components/va-icon/va-iconset/VaIconVuestic";
 import HeaderSelector from "./components/HeaderSelector";
-import LanguageDropdown from "./components/dropdowns/LanguageDropdown";
 import ProfileDropdown from "./components/dropdowns/ProfileDropdown";
 import SettingsDropdown from "./components/dropdowns/SettingsDropdown";
 
@@ -27,7 +25,6 @@ export default {
     SettingsDropdown,
     VaIconVuestic,
     HeaderSelector,
-    LanguageDropdown,
     ProfileDropdown
   },
   props: {

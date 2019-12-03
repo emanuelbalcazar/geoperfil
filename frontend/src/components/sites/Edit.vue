@@ -62,11 +62,11 @@
           @ok="updateSelector"
         >
           <div class="flex xs12">
-            <va-input label="Selector" v-model="selector.selector" placeholder="Selector" />
+            <va-input label="Selector" v-model="selector.selector" placeholder="selector" />
           </div>
 
           <div class="flex xs12">
-            <va-input label="Descripción" v-model="selector.description" placeholder="Descripción" />
+            <va-input label="Descripción" v-model="selector.description" placeholder="descripción" />
           </div>
         </va-modal>
 
@@ -77,7 +77,7 @@
           :okText="'Eliminar'"
           :cancelText="'Cancelar'"
           title="¿Desea elimilar el selector?"
-          message="Esta accion eliminara el selector seleccionado"
+          message="Esta accion eliminará el selector seleccionado"
           :noOutsideDismiss="true"
           @ok="deleteSelector"
         />

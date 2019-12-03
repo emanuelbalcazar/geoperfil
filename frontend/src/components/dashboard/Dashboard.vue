@@ -1,5 +1,11 @@
 <template>
-  <div class="dashboard">Bienvenido a GeoPerfil</div>
+  <va-card>
+    <div class="dashboard">Bienvenido a GeoPerfil Profesional</div>
+    <br />
+    <div class="flex md8 sm10 xs8">
+      <va-input label="Ingrese su tarjeta de credito para poder darle un mejor servicio" />
+    </div>
+  </va-card>
 </template>
 
 <script>

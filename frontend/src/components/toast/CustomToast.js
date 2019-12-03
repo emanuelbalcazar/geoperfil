@@ -5,7 +5,7 @@ const toastOptions = {
     theme: 'bubble',
     position: 'bottom-right',
     iconPack: 'fontawesome',
-    duration: 4000,
+    duration: 3000,
     keepOnHover: false,
     closeOnSwipe: true
 }

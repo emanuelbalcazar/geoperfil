@@ -6,10 +6,52 @@ export const navigationRoutes = {
     routes: [
         {
             name: 'dashboard',
-            displayName: 'menu.dashboard',
+            displayName: 'Dashboard',
             meta: {
                 iconClass: 'fa fa-home'
             }
+        },
+        {
+            name: 'careers',
+            displayName: 'Carreras',
+            meta: {
+                iconClass: 'fa fa-book  ',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-careers',
+                    displayName: 'Listar Carreras',
+                }
+            ],
+        },
+        {
+            name: 'equations',
+            displayName: 'Ecuaciones',
+            meta: {
+                iconClass: 'fa fa-search',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-equations',
+                    displayName: 'Listar Ecuaciones',
+                }
+            ],
+        },
+        {
+            name: 'institutions',
+            displayName: 'Instituciones',
+            meta: {
+                iconClass: 'fa fa-university',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-institutions',
+                    displayName: 'Listar Instituciones',
+                }
+            ],
         },
         {
             name: 'maps',
@@ -38,48 +80,6 @@ export const navigationRoutes = {
                     displayName: 'Listar Sitios'
                 }
             ]
-        },
-        {
-            name: 'equations',
-            displayName: 'Ecuaciones',
-            meta: {
-                iconClass: 'fa fa-search',
-            },
-            disabled: true,
-            children: [
-                {
-                    name: 'list-equations',
-                    displayName: 'Listar Ecuaciones',
-                }
-            ],
-        },
-        {
-            name: 'careers',
-            displayName: 'Carreras',
-            meta: {
-                iconClass: 'fa fa-book  ',
-            },
-            disabled: true,
-            children: [
-                {
-                    name: 'list-careers',
-                    displayName: 'Listar Carreras',
-                }
-            ],
-        },
-        {
-            name: 'institutions',
-            displayName: 'Instituciones',
-            meta: {
-                iconClass: 'fa fa-university',
-            },
-            disabled: true,
-            children: [
-                {
-                    name: 'list-institutions',
-                    displayName: 'Listar Instituciones',
-                }
-            ],
         },
         /* {
             name: 'statistics',

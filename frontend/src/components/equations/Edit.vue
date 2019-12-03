@@ -25,7 +25,9 @@
                 />
               </div>
 
-              <va-toggle v-model="equation.active" label="¿Activo?" small />
+              <div class="flex md6 sm6 xs6">
+                <va-toggle v-model="equation.active" label="¿Activo?" small />
+              </div>
             </div>
 
             <va-button color="success" type="submit">Actualizar</va-button>
@@ -82,7 +84,9 @@ export default {
     },
     update(event) {
       axios
-        .put("/api/equations/" + this.equation.id, { active: this.equation.active })
+        .put("/api/equations/" + this.equation.id, {
+          active: this.equation.active
+        })
         .then(response => {
           if (response.data) {
             this.logSuccess("Ecuación actualizada correctamente");

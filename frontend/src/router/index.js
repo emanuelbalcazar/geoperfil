@@ -53,13 +53,24 @@ export default new Router({
             ],
         },
         {
-            path: '/sites',
+            path: '/sites/edit',
             component: AppLayout,
             children: [
                 {
                     name: 'edit-site',
                     path: ':id',
                     component: () => import('../components/sites/Edit.vue')
+                }
+            ]
+        },
+        {
+            path: '/sites',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'new-site',
+                    path: 'new',
+                    component: () => import('../components/sites/New.vue')
                 }
             ]
         },

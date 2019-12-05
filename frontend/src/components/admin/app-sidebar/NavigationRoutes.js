@@ -76,6 +76,10 @@ export const navigationRoutes = {
             disabled: true,
             children: [
                 {
+                    name: 'new-site',
+                    displayName: 'Crear Sitio'
+                },
+                {
                     name: 'list-sites',
                     displayName: 'Listar Sitios'
                 }

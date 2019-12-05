@@ -19,23 +19,23 @@ const Helper = use('App/Helper/Utils')
 const CAMPUSCAREERS_FILES = __dirname + '/files/campuscareers/';
 
 class CampusCareerSeeder {
-  async run () {
-    if (Helper.isDirectory(CAMPUSCAREERS_FILES)) {
-      let campusCareersFiles = Helper.getDirectories(CAMPUSCAREERS_FILES);
+    async run() {
+        if (Helper.isDirectory(CAMPUSCAREERS_FILES)) {
+           /*  let campusCareersFiles = Helper.getDirectories(CAMPUSCAREERS_FILES);
 
-      for (const file of campusCareersFiles) {
-          let campusCareer = await csv().fromFile(CAMPUSCAREERS_FILES + file);
-          let count = await CampusCareer.query().where(campusCareer[0]).getCount();
+            for (const file of campusCareersFiles) {
+                let campusCareer = await csv().fromFile(CAMPUSCAREERS_FILES + file);
+                let count = await CampusCareer.query().where(campusCareer[0]).getCount();
 
-          if (count == 0) {
-              let instance = await CampusCareer.createMany(campusCareer);
-          }
+                if (count == 0) {
+                    let instance = await CampusCareer.createMany(campusCareer);
+                }
 
-      }
+            } */
 
-      Logger.info('[Seeder] - Se cargaron las relaciones entre sedes y carreras correctamente');
-  }
-  }
+            Logger.info('[Seeder] - Se cargaron las relaciones entre sedes y carreras correctamente');
+        }
+    }
 }
 
 module.exports = CampusCareerSeeder

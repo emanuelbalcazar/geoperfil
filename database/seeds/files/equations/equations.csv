@@ -1,3 +1,3 @@
-id,q,siteSearchFilter
-1,graduados OR colacion,i
-2,colacion,i
+q,siteSearchFilter
+graduados OR colacion,i
+colacion,i

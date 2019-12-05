@@ -51,7 +51,15 @@ class SiteController {
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
+        let site = request.post();
 
+        let count = await Site.query().where({ site: site }).getCount();
+
+        if (count > 0)
+            return response.conflict({ code: 409, message: 'El sitio ya existe' })
+
+        let record = await Site.create(site);
+        response.json(record);
     }
 
     /**

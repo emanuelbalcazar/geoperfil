@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| UserSeeder
+| SiteSeeder
 |--------------------------------------------------------------------------
 |
 | Make use of the Factory instance to seed database with dummy data or
@@ -10,23 +10,23 @@
 |
 */
 
-const User = use('App/Models/User');
+const Site = use('App/Models/Site');
 const csv = require('csvtojson');
 const Logger = use('Logger');
 const Helper = use('App/Helper/Utils');
 
-const USER_FILES = __dirname + '/files/users/users.csv';
+const SITE_FILE = __dirname + '/files/sites/sites.csv';
 
-class UserSeeder {
+class SiteSeeder {
     async run() {
-        let users = await csv().fromFile(USER_FILES);
+        let sites = await csv().fromFile(SITE_FILE);
 
-        for (const user of users) {
-            await User.findOrCreate(user, user);
+        for (const site of sites) {
+            await Site.findOrCreate(site, site);
         }
 
-        Logger.info('[Seeder] - Se cargaron los usuarios correctamente');
+        Logger.info('[Seeder] - Se cargaron los sitios web correctamente');
     }
 }
 
-module.exports = UserSeeder
+module.exports = SiteSeeder

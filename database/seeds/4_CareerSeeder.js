@@ -25,12 +25,11 @@ class CareerSeeder {
 
             for (const file of careersFiles) {
                 let career = await csv().fromFile(CAREERS_FILES + file);
-                let count = await Career.query().where(career[0]).getCount();
+                let count = await Career.query().where({ name: career[0].name, duration: career[0].duration }).getCount();
 
                 if (count == 0) {
-                    let instance = await Career.create(career[0]);
+                    await Career.create({ name: career[0].name, duration: career[0].duration });
                 }
-
             }
 
             Logger.info('[Seeder] - Se cargaron las carreras correctamente');

@@ -11,27 +11,24 @@
 */
 
 const EquationStatus = use('App/Models/EquationStatus');
+const Site = use('App/Models/Site');
+const Equation = use('App/Models/Equation');
+
 const csv = require('csvtojson');
 const Logger = use('Logger');
 const Helper = use('App/Helper/Utils');
 
-const EQUATION_STATUS = __dirname + '/files/equation_status/';
+const EQUATION_STATUS_FILE = __dirname + '/files/equation_status/equation_status.csv';
 
 class EquationStatusSeeder {
     async run() {
-        if (Helper.isDirectory(EQUATION_STATUS)) {
-            let equationStatusFiles = Helper.getDirectories(EQUATION_STATUS);
+        let equationStatus = await csv().fromFile(EQUATION_STATUS_FILE);
 
-            for (const file of equationStatusFiles) {
-                let status = await csv().fromFile(EQUATION_STATUS + file);
-                let count = await EquationStatus.query().where(status[0]).getCount();
+        for (const status of equationStatus) {
+            let equation = await Equation.query().where({ q: status.equation }).first();
+            let site = await Site.query().where({ site: status.site }).first();
 
-                if (count == 0) {
-                    let instance = await EquationStatus.createMany(status);
-                }
-            }
-
-            Logger.info('[Seeder] - Se cargaron los estados de las ecuaciones correctamente');
+            await EquationStatus.findOrCreate({ equation_id: equation.id, site_id: site.id }, { equation_id: equation.id, site_id: site.id, start: status.start, lastExecution: status.lastExecution, active: status.active });
         }
     }
 }

@@ -24,12 +24,17 @@ class InstitutionSeeder {
             let institutionsFiles = Helper.getDirectories(INSTITUTIONS_FILES);
 
             for (const file of institutionsFiles) {
+                // obtengo la institucion y sus sedes, los identifica por el mismo nombre de archivo
                 let institution = await csv().fromFile(INSTITUTIONS_FILES + file);
                 let campus = await csv().fromFile(CAMPUS_FILES + file);
+
                 let count = await Institution.query().where(institution[0]).getCount();
 
                 if (count == 0) {
+                    // creo la institucion
                     let instance = await Institution.create(institution[0]);
+
+                    // creo las sedes de esa institucion
                     await instance.campus().createMany(campus);
                 }
             }

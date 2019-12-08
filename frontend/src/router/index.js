@@ -118,6 +118,20 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/editor',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'medium-editor',
+                    path: 'medium',
+                    component: () => import('../components/forms/medium-editor/MediumEditor.vue'),
+                    meta: {
+                        wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Medium-Editor',
+                    },
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',
@@ -179,29 +193,7 @@ export default new Router({
                         },
                     ],
                 },
-                {
-                    name: 'forms',
-                    path: 'forms',
-                    component: EmptyParentComponent,
-                    children: [
-                        {
-                            name: 'form-elements',
-                            path: 'form-elements',
-                            component: () => import('../components/forms/form-elements/FormElements.vue'),
-                            meta: {
-                                wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-                            },
-                        },
-                        {
-                            name: 'medium-editor',
-                            path: 'medium-editor',
-                            component: () => import('../components/forms/medium-editor/MediumEditor.vue'),
-                            meta: {
-                                wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Medium-Editor',
-                            },
-                        },
-                    ],
-                },
+
                 {
                     name: 'tables',
                     path: 'tables',

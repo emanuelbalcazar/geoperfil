@@ -85,6 +85,20 @@ export const navigationRoutes = {
                 }
             ]
         },
+        {
+            name: 'editor',
+            displayName: 'Editor',
+            meta: {
+                iconClass: 'fa fa-edit',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'medium-editor',
+                    displayName: 'Editor de Entidades'
+                }
+            ]
+        },
         /* {
             name: 'statistics',
             displayName: 'menu.statistics',

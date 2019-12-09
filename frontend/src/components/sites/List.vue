@@ -134,7 +134,7 @@ export default {
           this.logSuccess(response.data.message);
         }
 
-        this.readItems()
+        this.readItems();
       });
     }
   }

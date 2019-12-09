@@ -37,6 +37,8 @@ class EquationStatusController {
      * @param {View} ctx.view
      */
     async create({ request, response, view }) {
+        let equation = request.post();
+        console.log(equation);
     }
 
     /**

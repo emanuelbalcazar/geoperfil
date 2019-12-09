@@ -86,13 +86,24 @@ export default new Router({
             ],
         },
         {
-            path: '/equations',
+            path: '/equations/edit',
             component: AppLayout,
             children: [
                 {
                     name: 'edit-equation',
                     path: ':id',
                     component: () => import('../components/equations/Edit.vue')
+                }
+            ]
+        },
+        {
+            path: '/equations',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'new-equation',
+                    path: 'new',
+                    component: () => import('../components/equations/New.vue')
                 }
             ]
         },

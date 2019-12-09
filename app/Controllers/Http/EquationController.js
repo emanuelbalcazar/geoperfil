@@ -9,6 +9,7 @@ const EquationStatus = use('App/Models/EquationStatus');
 
 /**
  * Resourceful controller for interacting with equations
+ * @deprecated
  */
 class EquationController {
     /**

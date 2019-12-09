@@ -26,6 +26,9 @@ Route.group(() => {
 
     Route.resource('/equations', 'EquationStatusController');
 
+    Route.resource('/queries', 'QueryController');
+
+
     Route.resource('/selectors', 'SelectorController');
 
     Route.resource('/institutions', 'InstitutionController');

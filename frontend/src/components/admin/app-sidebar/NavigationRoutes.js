@@ -34,6 +34,10 @@ export const navigationRoutes = {
             disabled: true,
             children: [
                 {
+                    name: 'new-equation',
+                    displayName: 'Crear Ecuación'
+                },
+                {
                     name: 'list-equations',
                     displayName: 'Listar Ecuaciones',
                 }

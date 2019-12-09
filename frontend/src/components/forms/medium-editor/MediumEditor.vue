@@ -100,13 +100,14 @@ export default {
         buttonLabels: "fontawesome",
         autoLink: true,
         toolbar: {
-          buttons: ["professional", "career", "campus"],
+          buttons: ["professional", "career", "campus", "institution"],
           separatorClass: "medium-editor__separator"
         },
         extensions: {
           professional: createCustomButton("professional", "Profesional"),
           career: createCustomButton("career", "Carrera"),
-          campus: createCustomButton("campus", "Sede")
+          campus: createCustomButton("campus", "Sede"),
+          institution: createCustomButton("institution", "Institución")
         }
       }
     };
@@ -138,5 +139,9 @@ export default {
 
 .campus {
   background-color: rgb(236, 162, 118);
+}
+
+.institution {
+  background-color: rgb(214, 89, 80);
 }
 </style>

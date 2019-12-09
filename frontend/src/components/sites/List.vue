@@ -26,8 +26,27 @@
           @click="edit(props.rowData)"
           class="ma-0"
         >{{ $t('tables.edit') }}</va-button>
+
+        <va-button
+          flat
+          small
+          color="danger"
+          @click="showRemoveSiteModal(props.rowData)"
+          class="ma-0"
+        >{{ $t('tables.delete') }}</va-button>
       </template>
     </va-data-table>
+
+    <va-modal
+      v-model="modal.showRemoveSite"
+      size="large"
+      :okText="'Eliminar'"
+      :cancelText="'Cancelar'"
+      title="¿Desea elimilar el sitio?"
+      message="Esta accion eliminará el sitio seleccionado"
+      :noOutsideDismiss="true"
+      @ok="deleteSite"
+    />
   </va-card>
 </template>
 
@@ -43,11 +62,15 @@ export default {
         search: "Buscar por texto de sitio",
         noData: "No se encontraron sitios"
       },
+      modal: {
+        showRemoveSite: false
+      },
       perPage: 10,
       totalPages: 0,
       items: [],
       loading: false,
-      toSearch: null
+      toSearch: null,
+      site: {}
     };
   },
   computed: {
@@ -98,6 +121,21 @@ export default {
     },
     edit(site) {
       this.$router.push({ name: "edit-site", params: { id: site.id } });
+    },
+    showRemoveSiteModal(site) {
+      this.site = Object.assign({}, site);
+      this.modal.showRemoveSite = true;
+    },
+    deleteSite() {
+      axios.delete("/api/sites/" + this.site.id).then(response => {
+        if (response.data.code == 500) {
+          this.logError(response.data.message);
+        } else {
+          this.logSuccess(response.data.message);
+        }
+
+        this.readItems()
+      });
     }
   }
 };

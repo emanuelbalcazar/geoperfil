@@ -7,7 +7,7 @@
             <va-medium-editor
               @initialized="handleEditorInitialization"
               :editor-options="editorOptions"
-            >{{ article.html}}</va-medium-editor>
+            ></va-medium-editor>
           </div>
         </va-card>
       </div>
@@ -161,13 +161,14 @@ export default {
     async findArticleById(id) {
       let response = await axios.get("/api/articles/" + id);
       this.article = response.data;
+      this.editor.setContent(this.article.html);
     },
     test() {
       let content = this.editor.getContent();
       let root = parser.parse(content);
 
       // get professionals
-      this.professionals = root.querySelectorAll(".professional");
+      this.professionals = root.querySelectorAll(".entity");
 
       this.professionals = this.professionals.map(e => {
         return e.text || e.innerText;

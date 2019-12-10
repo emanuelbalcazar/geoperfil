@@ -110,12 +110,12 @@ export default {
         buttonLabels: "fontawesome",
         autoLink: true,
         toolbar: {
-          buttons: ["professional", "career", "campus", "institution"],
+          buttons: ["entity", "career", "campus", "institution"],
           separatorClass: "medium-editor__separator"
         },
         extensions: {
           professional: createCustomButton(
-            "professional",
+            "entity",
             "Profesional",
             "<font><b>Profesional</b></>"
           ),
@@ -199,7 +199,7 @@ export default {
 </script>
 
 <style lang="css">
-.professional {
+.entity {
   background-color: rgb(108, 152, 248);
 }
 

@@ -98,10 +98,6 @@ export const navigationRoutes = {
             disabled: true,
             children: [
                 {
-                    name: 'medium-editor',
-                    displayName: 'Editor de Entidades'
-                },
-                {
                     name: 'list-articles',
                     displayName: 'Listar Articulos'
                 }

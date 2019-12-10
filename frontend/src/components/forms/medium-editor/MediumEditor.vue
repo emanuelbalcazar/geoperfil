@@ -90,7 +90,7 @@ export default {
           institution: createCustomButton("institution", "Institución")
         }
       },
-      article: { text: "texto kkkk", html: "" }
+      article: { text: "", html: "" }
     };
   },
   mounted() {

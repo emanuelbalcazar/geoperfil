@@ -4,16 +4,15 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const EquationStatus = use('App/Models/EquationStatus');
-
+const Article = use('App/Models/Article');
 
 /**
- * Resourceful controller for interacting with equationstatuses
+ * Resourceful controller for interacting with articles
  */
-class EquationStatusController {
+class ArticleController {
     /**
-     * Show a list of all equationstatuses.
-     * GET equationstatuses
+     * Show a list of all articles.
+     * GET articles
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -22,14 +21,17 @@ class EquationStatusController {
      */
     async index({ request, response, view }) {
         let params = request.all();
-        let equations = await EquationStatus.query().with('equation').with('site').paginate(params.page, params.perPage);
+        params.columnName = params.columnName || 'text';
+        params.columnValue = params.columnValue || '';
 
-        return response.json(equations);
+        let articles = await Article.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+
+        return response.json(articles);
     }
 
     /**
-     * Render a form to be used for creating a new equationstatus.
-     * GET equationstatuses/create
+     * Render a form to be used for creating a new article.
+     * GET articles/create
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -37,34 +39,22 @@ class EquationStatusController {
      * @param {View} ctx.view
      */
     async create({ request, response, view }) {
-        let equation = request.post();
-        console.log(equation);
     }
 
     /**
-     * Create/save a new equationstatus.
-     * POST equationstatuses
+     * Create/save a new article.
+     * POST articles
      *
      * @param {object} ctx
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
-        let equation = request.post();
-        let count = await EquationStatus.query().where({ equation_id: equation.equation_id, site_id: equation.site_id }).getCount();
-
-        if (count > 0) {
-            response.conflict({ code: 409, message: 'La ecuación ya existe' });
-            return;
-        }
-
-        let record = await EquationStatus.create(equation);
-        return response.json(record);
     }
 
     /**
-     * Display a single equationstatus.
-     * GET equationstatuses/:id
+     * Display a single article.
+     * GET articles/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -72,13 +62,13 @@ class EquationStatusController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
-        let equation = await EquationStatus.query().with('equation').with('site').where('id', params.id).first();
-        return response.json(equation);
+        let article = await Article.query().where('id', params.id).first();
+        response.json(article);
     }
 
     /**
-     * Render a form to update an existing equationstatus.
-     * GET equationstatuses/:id/edit
+     * Render a form to update an existing article.
+     * GET articles/:id/edit
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -89,8 +79,8 @@ class EquationStatusController {
     }
 
     /**
-     * Update equationstatus details.
-     * PUT or PATCH equationstatuses/:id
+     * Update article details.
+     * PUT or PATCH articles/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -100,8 +90,8 @@ class EquationStatusController {
     }
 
     /**
-     * Delete a equationstatus with id.
-     * DELETE equationstatuses/:id
+     * Delete a article with id.
+     * DELETE articles/:id
      *
      * @param {object} ctx
      * @param {Request} ctx.request
@@ -111,4 +101,4 @@ class EquationStatusController {
     }
 }
 
-module.exports = EquationStatusController
+module.exports = ArticleController

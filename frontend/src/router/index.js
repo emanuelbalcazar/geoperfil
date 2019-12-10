@@ -135,11 +135,22 @@ export default new Router({
             children: [
                 {
                     name: 'medium-editor',
-                    path: 'medium',
+                    path: ':id',
                     component: () => import('../components/forms/medium-editor/MediumEditor.vue'),
                     meta: {
                         wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Medium-Editor',
                     },
+                }
+            ],
+        },
+        {
+            path: '/articles',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-articles',
+                    path: 'list',
+                    component: () => import('../components/articles/List.vue')
                 }
             ],
         },

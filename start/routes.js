@@ -24,20 +24,19 @@ Route.get('/', async ({ response }) => {
 // routes with prefix 'api'
 Route.group(() => {
 
-    Route.resource('/equations', 'EquationStatusController');
-
-    Route.resource('/queries', 'QueryController');
-
-
-    Route.resource('/selectors', 'SelectorController');
-
-    Route.resource('/institutions', 'InstitutionController');
+    Route.resource('/articles', 'ArticleController');
 
     Route.resource('/campuses', 'CampusController');
 
     Route.resource('/careers', 'CareerController');
 
-    Route.resource('/articles','ArticleController');
+    Route.resource('/equations', 'EquationStatusController');
+
+    Route.resource('/institutions', 'InstitutionController');
+
+    Route.resource('/queries', 'QueryController');
+
+    Route.resource('/selectors', 'SelectorController');
 
     Route.resource('/sites','SiteController');
 

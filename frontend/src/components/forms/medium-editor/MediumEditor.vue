@@ -7,29 +7,7 @@
             <va-medium-editor
               @initialized="handleEditorInitialization"
               :editor-options="editorOptions"
-            >
-              <h1>Select Text To Open Editor</h1>
-
-              <p>
-                You enter into your favorite local bar looking
-                <span class="default-selection">
-                  <b>good</b>
-                </span> as hell, but you know the only
-                heads you want to turn—spicy & stylish alpha bitches — are heavily
-                fixated on the D. The hot girl talks to you, but she only wants to
-                be your best friend. Her nonthreatening and attentive best friend.
-                Receiver of sexy selfies, listener of stories. Meanwhile, you
-                attract unwanted attention from straight men, pudgy and greasy
-                moths to your emotionally distant flame.
-              </p>
-
-              <p>
-                Read the full article on
-                <a
-                  href="https://medium.com/@dorn.anna/girl-no-you-dont-2e21e826c62c"
-                >Medium</a>
-              </p>
-            </va-medium-editor>
+            >{{ article.text}}</va-medium-editor>
           </div>
         </va-card>
       </div>
@@ -38,6 +16,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 import MediumEditor from "medium-editor";
 
 import rangy from "rangy";
@@ -109,20 +89,26 @@ export default {
           campus: createCustomButton("campus", "Sede"),
           institution: createCustomButton("institution", "Institución")
         }
-      }
+      },
+      article: { text: "texto kkkk", html: "" }
     };
+  },
+  mounted() {
+    this.findArticleById(this.$route.params.id);
   },
   methods: {
     handleEditorInitialization(editor) {
       this.editor = editor;
-      this.$nextTick(() => {
-        this.highlightSampleText();
-      });
     },
 
     highlightSampleText() {
       let sampleText = document.getElementsByClassName("default-selection")[0];
       this.editor.selectElement(sampleText);
+    },
+
+    async findArticleById(id) {
+      let response = await axios.get("/api/articles/" + id);
+      this.article = response.data;
     }
   }
 };

@@ -12,6 +12,7 @@ class ArticleSchema extends Schema {
             table.string('link', 800).unique();
             table.string('displayLink', 800);
             table.string('snippet', 800);
+            table.text('html');
             table.text('text', 'longtext');
             table.datetime('datepublished');
             table.datetime('datemodified');

@@ -90,8 +90,8 @@ export const navigationRoutes = {
             ]
         },
         {
-            name: 'editor',
-            displayName: 'Editor',
+            name: 'articles',
+            displayName: 'Articulos',
             meta: {
                 iconClass: 'fa fa-edit',
             },
@@ -100,6 +100,10 @@ export const navigationRoutes = {
                 {
                     name: 'medium-editor',
                     displayName: 'Editor de Entidades'
+                },
+                {
+                    name: 'list-articles',
+                    displayName: 'Listar Articulos'
                 }
             ]
         },

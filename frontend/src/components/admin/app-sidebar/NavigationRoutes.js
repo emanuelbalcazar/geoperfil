@@ -12,6 +12,20 @@ export const navigationRoutes = {
             }
         },
         {
+            name: 'articles',
+            displayName: 'Articulos',
+            meta: {
+                iconClass: 'fa fa-edit',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-articles',
+                    displayName: 'Listar Articulos'
+                }
+            ]
+        },
+        {
             name: 'careers',
             displayName: 'Carreras',
             meta: {
@@ -89,20 +103,7 @@ export const navigationRoutes = {
                 }
             ]
         },
-        {
-            name: 'articles',
-            displayName: 'Articulos',
-            meta: {
-                iconClass: 'fa fa-edit',
-            },
-            disabled: true,
-            children: [
-                {
-                    name: 'list-articles',
-                    displayName: 'Listar Articulos'
-                }
-            ]
-        },
+
         /* {
             name: 'statistics',
             displayName: 'menu.statistics',

@@ -1,7 +1,7 @@
 <template>
   <div class="medium-editor">
     <div class="row">
-      <div class="flex md12">
+      <div class="flex md8">
         <va-card :title="$t('forms.mediumEditor.title')">
           <div class="d-flex flex-center">
             <va-medium-editor
@@ -11,12 +11,42 @@
           </div>
         </va-card>
       </div>
+
+      <div class="flex md4">
+        <va-button color="success" @click="test" type="button">Probar</va-button>
+        <br />
+
+        <ul id="example-1">
+          <b>Profesionales:</b>
+          <li v-for="item in professionals">- {{ item }}</li>
+        </ul>
+
+        <br />
+        <ul id="example-1">
+          <b>Carreras:</b>
+          <li v-for="item in careers">- {{ item }}</li>
+        </ul>
+
+        <br />
+        <ul id="example-1">
+          <b>Sedes:</b>
+          <li v-for="item in campuses">- {{ item }}</li>
+        </ul>
+        <br />
+
+        <ul id="example-1">
+          <b>Instituciones:</b>
+          <li v-for="item in institutions">- {{ item }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+
+const parser = require("node-html-parser");
 
 import MediumEditor from "medium-editor";
 
@@ -25,7 +55,7 @@ import "rangy/lib/rangy-classapplier";
 
 rangy.init();
 
-function createCustomButton(name, title) {
+function createCustomButton(name, title, innerHTML) {
   var CustomButton = MediumEditor.extensions.button.extend({
     name: name,
 
@@ -37,7 +67,7 @@ function createCustomButton(name, title) {
 
       this.button = this.document.createElement("button");
       this.button.classList.add("medium-editor-action");
-      this.button.innerHTML = title;
+      this.button.innerHTML = innerHTML;
       this.button.title = title;
 
       this.on(this.button, "click", this.handleClick.bind(this));
@@ -84,13 +114,35 @@ export default {
           separatorClass: "medium-editor__separator"
         },
         extensions: {
-          professional: createCustomButton("professional", "Profesional"),
-          career: createCustomButton("career", "Carrera"),
-          campus: createCustomButton("campus", "Sede"),
-          institution: createCustomButton("institution", "Institución")
+          professional: createCustomButton(
+            "professional",
+            "Profesional",
+            "<font><b>Profesional</b></>"
+          ),
+          career: createCustomButton(
+            "career",
+            "Carrera",
+            "<font><b>Carrera</b></>"
+          ),
+          campus: createCustomButton("campus", "Sede", "<font><b>Sede</b></>"),
+          institution: createCustomButton(
+            "institution",
+            "Institución",
+            "<font><b>Institución<b/></>"
+          )
+        },
+        placeholder: {
+          /* This example includes the default options for placeholder,
+           if nothing is passed this is what it used */
+          text: "",
+          hideOnClick: true
         }
       },
-      article: { text: "", html: "" }
+      article: { text: "", html: "" },
+      professionals: [],
+      careers: [],
+      campuses: [],
+      institutions: []
     };
   },
   mounted() {
@@ -109,6 +161,38 @@ export default {
     async findArticleById(id) {
       let response = await axios.get("/api/articles/" + id);
       this.article = response.data;
+    },
+    test() {
+      let content = this.editor.getContent();
+      let root = parser.parse(content);
+
+      // get professionals
+      this.professionals = root.querySelectorAll(".professional");
+
+      this.professionals = this.professionals.map(e => {
+        return e.text || e.innerText;
+      });
+
+      // get careers
+      this.careers = root.querySelectorAll(".career");
+
+      this.careers = this.careers.map(e => {
+        return e.text || e.innerText;
+      });
+
+      // get campuses
+      this.campuses = root.querySelectorAll(".campus");
+
+      this.campuses = this.campuses.map(e => {
+        return e.text || e.innerText;
+      });
+
+      // get institutions
+      this.institutions = root.querySelectorAll(".institution");
+
+      this.institutions = this.institutions.map(e => {
+        return e.text || e.innerText;
+      });
     }
   }
 };

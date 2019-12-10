@@ -7,7 +7,7 @@
             <va-medium-editor
               @initialized="handleEditorInitialization"
               :editor-options="editorOptions"
-            >{{ article.text}}</va-medium-editor>
+            >{{ article.html}}</va-medium-editor>
           </div>
         </va-card>
       </div>

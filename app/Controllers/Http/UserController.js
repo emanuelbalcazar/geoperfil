@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const User = use('App/Models/User');
+const Mail = use('Mail')/**/
 
 /**
  * Resourceful controller for interacting with users
@@ -93,6 +94,29 @@ class UserController {
      */
     async destroy({ params, request, response }) {
     }
+
+
+    /**
+     * Send mail for user
+     * @param {*} param0 
+     */
+    async store ({ request }) {
+        //const data = request.only(['email', 'username', 'password'])
+       // const data = request.only(['name', 'surname', 'email', 'password'])
+       // const user = await User.create(data)
+        let user = await User.findBy('id', 45);
+        await Mail.send('emails.confirm_email', user.toJSON(), (message) => {
+          message
+            .to(user.email)
+            .from('<from-email>')
+            .subject('Welcome to GeoPerfil')
+        })
+    
+        return 'Confirmacion de correo'
+      }
+
+
+
 }
 
 module.exports = UserController

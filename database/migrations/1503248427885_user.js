@@ -11,7 +11,8 @@ class UserSchema extends Schema {
             table.string('surname', 254)
             table.string('email', 254).notNullable().unique()
             table.string('password', 60).notNullable()
-            table.timestamps()
+            table.string('token') // token
+            table.timestamp('token_created_at') // date when token was created
         });
     }
 

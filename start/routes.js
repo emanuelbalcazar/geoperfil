@@ -50,5 +50,8 @@ Route.group(() => {
 
     Route.post('/user', 'UserController.store')
 
+    Route.post('/user/forgotPassword', 'ForgotPasswordController.store')
+
+
 
 }).prefix('api');

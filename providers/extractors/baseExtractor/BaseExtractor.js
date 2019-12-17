@@ -77,6 +77,11 @@ class BaseExtractor {
             }
         }
 
+        // remove links with /tag/*
+        records = records.filter(article => {
+            return (!article.link.includes('tag') || !article.link.includes('tags'));
+        });
+
         googleResults.items = records;
 
         return googleResults;

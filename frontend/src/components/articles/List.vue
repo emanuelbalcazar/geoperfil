@@ -55,10 +55,6 @@ export default {
           title: "URL"
         },
         {
-          name: "is_processed",
-          title: "¿Procesado?"
-        },
-        {
           name: "__slot:actions",
           dataClass: "text-center"
         }

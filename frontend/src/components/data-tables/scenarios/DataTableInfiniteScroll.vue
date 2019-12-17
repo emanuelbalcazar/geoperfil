@@ -1,5 +1,6 @@
 <template>
   <va-card :title="$t('tables.infiniteScroll')">
+
     <div class="data-table-infinite-scroll--container" ref="scrollable" @scroll="onScroll">
       <va-data-table
         :fields="fields"

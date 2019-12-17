@@ -13,31 +13,31 @@
       </div>
 
       <div class="flex md4">
-        <va-button color="success" @click="test" type="button">Probar</va-button>
+        <!-- <va-button color="success" @click="test" type="button">Probar</va-button>
         <br />
 
         <ul id="example-1">
           <b>Profesionales:</b>
-          <li v-for="item in professionals">- {{ item }}</li>
+          <li v-for="item in professionals">- {{ item.name }}</li>
         </ul>
 
         <br />
         <ul id="example-1">
           <b>Carreras:</b>
-          <li v-for="item in careers">- {{ item }}</li>
+          <li v-for="item in careers">- {{ item.name }}</li>
         </ul>
 
         <br />
         <ul id="example-1">
           <b>Sedes:</b>
-          <li v-for="item in campuses">- {{ item }}</li>
+          <li v-for="item in campuses">- {{ item.name }}</li>
         </ul>
         <br />
 
         <ul id="example-1">
           <b>Instituciones:</b>
-          <li v-for="item in institutions">- {{ item }}</li>
-        </ul>
+          <li v-for="item in institutions">- {{ item.name }}</li>
+        </ul>-->
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ import "rangy/lib/rangy-classapplier";
 
 rangy.init();
 
-function createCustomButton(name, title, innerHTML) {
+const createCustomButton = function(name, title, innerHTML) {
   var CustomButton = MediumEditor.extensions.button.extend({
     name: name,
 
@@ -100,13 +100,14 @@ function createCustomButton(name, title, innerHTML) {
   });
 
   return new CustomButton();
-}
+};
 
 export default {
   name: "medium-editor",
   data() {
     return {
       editorOptions: {
+        disableEditing: true,
         buttonLabels: "fontawesome",
         autoLink: true,
         toolbar: {
@@ -147,6 +148,29 @@ export default {
   },
   mounted() {
     this.findArticleById(this.$route.params.id);
+
+    /**
+     * Al hacer click sobre un elemento resaltado con la clase "entity", realiza una accion.
+     */
+    document.addEventListener(
+      "click",
+      function(e) {
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+
+        if (target.className == "entity") {
+          var text = target.textContent || target.innerText;
+          // mostrar cuadro de edicion al costado
+          console.log(text);
+        }
+      },
+      false
+    );
+  },
+  computed: {
+    fields() {
+      return [];
+    }
   },
   methods: {
     handleEditorInitialization(editor) {
@@ -163,7 +187,7 @@ export default {
       this.article = response.data;
       this.editor.setContent(this.article.html);
     },
-    test() {
+    getDataFromArticle() {
       let content = this.editor.getContent();
       let root = parser.parse(content);
 
@@ -171,29 +195,43 @@ export default {
       this.professionals = root.querySelectorAll(".entity");
 
       this.professionals = this.professionals.map(e => {
-        return e.text || e.innerText;
+        let object = { name: "" };
+        object.name = e.text || e.innerText;
+        return object;
       });
 
       // get careers
       this.careers = root.querySelectorAll(".career");
 
       this.careers = this.careers.map(e => {
-        return e.text || e.innerText;
+        let object = { name: "" };
+        object.name = e.text || e.innerText;
+        return object;
       });
 
       // get campuses
       this.campuses = root.querySelectorAll(".campus");
 
       this.campuses = this.campuses.map(e => {
-        return e.text || e.innerText;
+        let object = { name: "" };
+        object.name = e.text || e.innerText;
+        return object;
       });
 
       // get institutions
       this.institutions = root.querySelectorAll(".institution");
 
       this.institutions = this.institutions.map(e => {
-        return e.text || e.innerText;
+        let object = { name: "" };
+        object.name = e.text || e.innerText;
+        return object;
       });
+    },
+    onScroll(e) {
+      const { target } = e;
+
+      if (target.offsetHeight + target.scrollTop === target.scrollHeight) {
+      }
     }
   }
 };
@@ -201,18 +239,34 @@ export default {
 
 <style lang="css">
 .entity {
-  background-color: rgb(108, 152, 248);
+  background: color(#ffff00);
+  padding: 0.45em 0.6em;
+  margin: 0 0.25em;
+  line-height: 1;
+  border-radius: 0.35em;
 }
 
 .career {
-  background-color: rgb(172, 231, 94);
+  background: #f9ff79;
+  padding: 0.45em 0.6em;
+  margin: 0 0.25em;
+  line-height: 1;
+  border-radius: 0.35em;
 }
 
 .campus {
-  background-color: rgb(236, 162, 118);
+  background: #f9ff79;
+  padding: 0.45em 0.6em;
+  margin: 0 0.25em;
+  line-height: 1;
+  border-radius: 0.35em;
 }
 
 .institution {
-  background-color: rgb(214, 89, 80);
+  background: #f9ff79;
+  padding: 0.45em 0.6em;
+  margin: 0 0.25em;
+  line-height: 1;
+  border-radius: 0.35em;
 }
 </style>

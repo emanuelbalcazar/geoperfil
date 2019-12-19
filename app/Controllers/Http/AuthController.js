@@ -1,6 +1,8 @@
 'use strict'
 
 const User = use('App/Models/User');
+const Mail = use('Mail')/**/
+
 
 class AuthController {
 
@@ -33,6 +35,20 @@ class AuthController {
             return response.unauthorized('Usuario o contraseña invalidos.');
         }
     }
+
+    async recover({request, auth, response }) {
+        const email = request.input("email");
+        let user = await User.findBy('id', 1);
+        console.log(email)
+        await Mail.send('emails.recover', user.toJSON(), (message) => {
+            message
+              .to(email)
+              .from('<from-email>')
+              .subject('Welcome to GeoPerfil')
+          })
+    }
+
+
 }
 
 module.exports = AuthController

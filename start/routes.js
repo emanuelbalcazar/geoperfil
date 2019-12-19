@@ -48,6 +48,8 @@ Route.group(() => {
 
     Route.post('/auth/login', 'AuthController.login');
 
+    Route.post('/auth/recover', 'AuthController.recover');
+
     Route.post('/user', 'UserController.store')
 
     Route.post('/user/forgotPassword', 'ForgotPasswordController.store')

@@ -16,6 +16,8 @@
 </template>
 
 <script>
+let axios = require("axios");
+
 export default {
   name: 'recover-password',
   data () {
@@ -25,15 +27,27 @@ export default {
     }
   },
   methods: {
-    onsubmit () {
-      if (!this.email) {
-        this.emailErrors = ['Email is required']
-      } else {
-        this.$router.push('/')
-      }
+    async onsubmit () {
+      this.emailErrors = this.email ? [] : ["Email es requerido"];
+     
+      let response = await axios
+        .post("/api/auth/recover", {
+          email: this.email
+        })
+        .catch(error => {
+          this.logError("Usuario o contraseña invalidos", {
+            text: "¿No esta registrado?",
+            href: "signup"
+          });
+        });
+
+      // this.$cookies.set("token", response.data.access_token.token);
+      // this.$cookies.set("userId", response.data.user.id);
+      this.$cookies.set("email", response.data.user.email);
     },
   },
 }
+
 </script>
 
 <style lang="scss">

@@ -13,6 +13,17 @@
       </div>
 
       <div class="flex md4">
+        <!-- professional -->
+        <va-card :title="text.title" v-if="renderProfessionalCard">
+          <form @submit.prevent="save">
+            <va-input label="Nombre" v-model="selectedProfessional.name" />
+
+            <va-input label="Apellido" v-model="selectedProfessional.surname" />
+
+            <va-button color="success" type="submit">Guardar</va-button>
+          </form>
+        </va-card>
+
         <!-- <va-button color="success" @click="test" type="button">Probar</va-button>
         <br />
 
@@ -139,15 +150,22 @@ export default {
           hideOnClick: true
         }
       },
+      text: {
+        noData: "Vacio",
+        title: "Profesional Seleccionado"
+      },
       article: { text: "", html: "" },
       professionals: [],
       careers: [],
       campuses: [],
-      institutions: []
+      institutions: [],
+      selectedProfessional: { name: "", surname: "" },
+      renderProfessionalCard: false
     };
   },
   mounted() {
     this.findArticleById(this.$route.params.id);
+    var self = this;
 
     /**
      * Al hacer click sobre un elemento resaltado con la clase "entity", realiza una accion.
@@ -161,7 +179,8 @@ export default {
         if (target.className == "entity") {
           var text = target.textContent || target.innerText;
           // mostrar cuadro de edicion al costado
-          console.log(text);
+          self.selectedProfessional = { name: text };
+          self.renderProfessionalCard = true;
         }
       },
       false
@@ -169,7 +188,16 @@ export default {
   },
   computed: {
     fields() {
-      return [];
+      return [
+        {
+          name: "name",
+          title: "Nombre"
+        },
+        {
+          name: "surname",
+          title: "Apellido"
+        }
+      ];
     }
   },
   methods: {
@@ -227,11 +255,8 @@ export default {
         return object;
       });
     },
-    onScroll(e) {
-      const { target } = e;
-
-      if (target.offsetHeight + target.scrollTop === target.scrollHeight) {
-      }
+    save() {
+      console.log(this.selectedProfessional);
     }
   }
 };
@@ -247,7 +272,7 @@ export default {
 }
 
 .career {
-  background: #f9ff79;
+  background: #d16236;
   padding: 0.45em 0.6em;
   margin: 0 0.25em;
   line-height: 1;
@@ -255,7 +280,7 @@ export default {
 }
 
 .campus {
-  background: #f9ff79;
+  background: #5edd64;
   padding: 0.45em 0.6em;
   margin: 0 0.25em;
   line-height: 1;
@@ -263,7 +288,7 @@ export default {
 }
 
 .institution {
-  background: #f9ff79;
+  background: #6c74bb;
   padding: 0.45em 0.6em;
   margin: 0 0.25em;
   line-height: 1;

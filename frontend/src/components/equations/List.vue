@@ -1,24 +1,33 @@
 <template>
   <va-card :title="title.table">
-    <va-data-table
-      :fields="fields"
-      :data="items"
-      :loading="loading"
-      :per-page="parseInt(perPage)"
-      :totalPages="totalPages"
-      @page-selected="readItems"
-      api-mode
-    >
-      <template slot="actions" slot-scope="props">
-        <va-button
-          flat
-          small
-          color
-          @click="edit(props.rowData)"
-          class="ma-0"
-        >{{ $t('tables.edit') }}</va-button>
-      </template>
-    </va-data-table>
+    <div v-for="header in headers">
+      <va-accordion>
+        <va-collapse>
+          <span slot="header">{{header}}</span>
+          <div slot="body">
+            <va-data-table
+              :fields="fields"
+              :data="dataWithHeaders(header)"
+              :loading="loading"
+              :per-page="parseInt(perPage)"
+              :totalPages="totalPages"
+              @page-selected="readItems"
+              api-mode
+            >
+              <template slot="actions" slot-scope="props">
+                <va-button
+                  flat
+                  small
+                  color
+                  @click="edit(props.rowData)"
+                  class="ma-0"
+                >{{ $t('tables.edit') }}</va-button>
+              </template>
+            </va-data-table>
+          </div>
+        </va-collapse>
+      </va-accordion>
+    </div>
   </va-card>
 </template>
 
@@ -29,7 +38,7 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Ecuaciones",
+        table: "Listado de Ecuaciones (Agrupadas por consulta)",
         perPage: "Por Páginas",
         search: "Buscar por sitio",
         noData: "No se encontraron ecuaciones."
@@ -38,7 +47,8 @@ export default {
       totalPages: 0,
       items: [],
       loading: false,
-      toSearch: null
+      toSearch: null,
+      headers: []
     };
   },
   computed: {
@@ -48,10 +58,10 @@ export default {
           name: "id",
           title: "ID"
         },
-        {
+        /* {
           name: "equation.q",
           title: "Terminos"
-        },
+        }, */
         {
           name: "site.site",
           title: "Sitio"
@@ -79,6 +89,11 @@ export default {
       this.toSearch = toSearch;
       this.readItems();
     },
+    dataWithHeaders(header) {
+        return this.items.filter(eq => {
+            return (eq.equation.q === header);
+        });
+    },
     readItems(page = 1) {
       this.loading = true;
 
@@ -92,6 +107,12 @@ export default {
         this.totalPages = response.data.lastPage;
         this.loading = false;
         this.perPage = response.data.perPage;
+
+        let queries = this.items.map(eq => {
+          return eq.equation.q;
+        });
+
+        this.headers = [...new Set(queries)]; // obtengo las cabeceras de los desplegables
       });
     },
     edit(equation) {

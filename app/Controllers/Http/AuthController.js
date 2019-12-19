@@ -2,6 +2,7 @@
 
 const User = use('App/Models/User');
 const Mail = use('Mail')/**/
+const crypto = require('crypto') // crypto
 
 
 class AuthController {
@@ -38,14 +39,30 @@ class AuthController {
 
     async recover({request, auth, response }) {
         const email = request.input("email");
-        let user = await User.findBy('id', 1);
-        console.log(email)
-        await Mail.send('emails.recover', user.toJSON(), (message) => {
-            message
-              .to(email)
-              .from('<from-email>')
-              .subject('Welcome to GeoPerfil')
-          })
+        const user = await User.findByOrFail('email', email);
+         // generating token
+         const token = crypto.randomBytes(10).toString('hex');
+    
+         // registering when token was created and saving token
+         user.token_created_at = new Date();
+         user.token = token;
+   
+         // persisting data (saving)
+         await user.save();
+
+        if(user){
+            await Mail.send('emails.recover', { user, token }, (message) => {
+                message
+                .to(email)
+                .from('<from-email>')
+                .subject('Welcome to GeoPerfil')
+            })
+            return user;
+        }
+        else{
+            return response.unauthorized('Usuario o contraseña invalidos.');
+        }    
+        
     }
 
 

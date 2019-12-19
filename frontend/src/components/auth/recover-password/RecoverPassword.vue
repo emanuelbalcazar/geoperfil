@@ -10,7 +10,7 @@
       />
     </div>
     <div class="row justify--center">
-      <va-button type="submit" class="my-0">{{ $t('auth.reset_password') }}</va-button>
+      <va-button type="submit" class="my-0">{{ $t('auth.recover_password') }}</va-button>
     </div>
   </form>
 </template>
@@ -19,17 +19,17 @@
 let axios = require("axios");
 
 export default {
-  name: 'recover-password',
-  data () {
+  name: "recover-password",
+  data() {
     return {
-      email: '',
-      emailErrors: [],
-    }
+      email: "",
+      emailErrors: []
+    };
   },
   methods: {
-    async onsubmit () {
+    async onsubmit() {
       this.emailErrors = this.email ? [] : ["Email es requerido"];
-     
+
       let response = await axios
         .post("/api/auth/recover", {
           email: this.email
@@ -44,10 +44,9 @@ export default {
       // this.$cookies.set("token", response.data.access_token.token);
       // this.$cookies.set("userId", response.data.user.id);
       this.$cookies.set("email", response.data.user.email);
-    },
-  },
-}
-
+    }
+  }
+};
 </script>
 
 <style lang="scss">

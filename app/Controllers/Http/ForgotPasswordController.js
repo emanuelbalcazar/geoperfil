@@ -4,44 +4,49 @@
 const User = use('App/Models/User');
 const Mail = use('Mail') // Adonis' mail
 
-const moment = require('moment') // moment (RUN NPM INSTALL MOMENT)
-const crypto = require('crypto') // crypto
-
 class ForgotPasswordController {
 
-    async store ({ request }) {
-        try {
-          // account request password recovery
-          //const { email } = request.only(['email'])
-          const { email } = 'emanuelbalcazar13@gmail.com'
+  async update ({ request, response, params }) {
+    const tokenProvided = params.token // retrieving token in URL
+    const emailRequesting = params.email // email requesting recovery
 
-          // checking if email is registered
-          const user = await User.findBy('id', 1)
-    
-          // generating token
-          const token = crypto.randomBytes(10).toString('hex')
-    
-          // registering when token was created and saving token
-          user.token_created_at = new Date()
-          user.token = token
-    
-          // persisting data (saving)
-          await user.save()
-    
-          await Mail.send('emails.recover', { user, token }, (message) => {
-            message
-              .from('<from-email>')
-              .to(email)
-          })
-    
-          return user
-        } catch (err) {
-          console.log(err)
-        }
+    const { newPassword } = request.only(['newPassword'])
+
+    // looking for user with the registered email
+    const user = await User.findByOrFail('email', emailRequesting)
+
+    // checking if token is still the same
+    // just to make sure that the user is not using an old link
+    // after requesting the password recovery again
+    const sameToken = tokenProvided === user.token
+
+    if (!sameToken) {
+      return response
+        .status(401)
+        .send({ message: {
+          error: 'Old token provided or token already used'
+        } })
     }
 
+    // checking if token is still valid (48 hour period)
+    const tokenExpired = moment()
+      .subtract(2, 'days')
+      .isAfter(user.token_created_at)
 
+    if (tokenExpired) {
+      return response.status(401).send({ message: { error: 'Token expired' } })
+    }
 
+    // saving new password
+    user.password = newPassword
+
+    // deleting current token
+    user.token = null
+    user.token_created_at = 0
+
+    // persisting data (saving)
+    await user.save()
+  }
 }
 
 module.exports = ForgotPasswordController

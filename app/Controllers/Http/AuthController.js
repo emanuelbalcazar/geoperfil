@@ -46,7 +46,6 @@ class AuthController {
          // registering when token was created and saving token
          user.token_created_at = new Date();
          user.token = token;
-   
          // persisting data (saving)
          await user.save();
 
@@ -57,6 +56,7 @@ class AuthController {
                 .from('<from-email>')
                 .subject('Welcome to GeoPerfil')
             })
+            
             return user;
         }
         else{
@@ -64,6 +64,9 @@ class AuthController {
         }    
         
     }
+
+
+    
 
 
 }

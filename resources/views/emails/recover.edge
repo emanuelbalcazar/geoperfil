@@ -1,12 +1,13 @@
 <h1>Solicitud de recuperación de la contraseña</h1>
 <p>
-  Hola {{ user.name }}, parece que alguien solicita una recuperación de la contraseña
-  para su cuenta de correo electrónico registrada con el correo {{ user.email }}.
+  Hola {{ user.name }}, parece que has solicitado una recuperación de la contraseña
+  para su cuenta de correo electrónico registrada con el correo {{ user.email }}, tu
+  nuevo password es {{ user.password }}.
 </p>
 
 <p>
     Si fuiste tú, solo haz clic en este
-    <a href="http://127.0.0.1:3333/user/forgotPassword/{{token}}/{{user.email}}">link</a>
+    <a href="http://127.0.0.1:8080/api/auth/newpassword">link</a>
 </p>
 
 <p>

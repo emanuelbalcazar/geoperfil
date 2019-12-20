@@ -34,6 +34,8 @@ Route.group(() => {
 
     Route.resource('/institutions', 'InstitutionController');
 
+    Route.resource('/professionals', 'ProfessionalController');
+
     Route.resource('/queries', 'QueryController');
 
     Route.resource('/selectors', 'SelectorController');

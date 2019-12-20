@@ -159,13 +159,19 @@ export default {
       careers: [],
       campuses: [],
       institutions: [],
-      selectedProfessional: { name: "", surname: "" },
+      selectedProfessional: {
+        name: "",
+        surname: "",
+        article_id: this.$route.params.id
+      },
       renderProfessionalCard: false
     };
   },
   mounted() {
     this.findArticleById(this.$route.params.id);
     var self = this;
+
+    this.getDataFromArticle();
 
     /**
      * Al hacer click sobre un elemento resaltado con la clase "entity", realiza una accion.
@@ -179,8 +185,14 @@ export default {
         if (target.className == "entity") {
           var text = target.textContent || target.innerText;
           // mostrar cuadro de edicion al costado
-          self.selectedProfessional = { name: text };
+          self.selectedProfessional = {
+            name: text,
+            surname: "",
+            article_id: self.$route.params.id
+          };
           self.renderProfessionalCard = true;
+
+          self.getDataFromArticle();
         }
       },
       false
@@ -237,6 +249,8 @@ export default {
         return object;
       });
 
+      console.log(this.career);
+
       // get campuses
       this.campuses = root.querySelectorAll(".campus");
 
@@ -255,8 +269,11 @@ export default {
         return object;
       });
     },
-    save() {
-      console.log(this.selectedProfessional);
+    async save() {
+      let data = Object.assign({}, this.selectedProfessional);
+      let response = await axios.post("/api/professionals", data);
+
+      console.log(response.data);
     }
   }
 };

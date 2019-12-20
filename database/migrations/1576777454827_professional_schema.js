@@ -13,6 +13,7 @@ class ProfessionalSchema extends Schema {
       table.string('campus_name');
       table.integer('career_id').references('id').inTable('careers');
       table.integer('campus_id').references('id').inTable('campuses');
+      table.integer('article_id').references('id').inTable('articles');
     })
   }
 

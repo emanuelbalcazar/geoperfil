@@ -86,6 +86,20 @@ export const navigationRoutes = {
             ]
         },
         {
+            name: 'professionals',
+            displayName: 'Profesionales',
+            meta: {
+                iconClass: 'fa fa-address-card',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-professionals',
+                    displayName: 'Listar Profesionales'
+                }
+            ]
+        },
+        {
             name: 'sites',
             displayName: 'Sitios',
             meta: {

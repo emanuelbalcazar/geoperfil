@@ -159,6 +159,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/professionals',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-professionals',
+                    path: 'list',
+                    component: () => import('../components/professionals/List.vue')
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',

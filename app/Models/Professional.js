@@ -20,6 +20,10 @@ class Professional extends Model {
     campus() {
         return this.hasOne('App/Models/Campus');
     }
+
+    article() {
+        return this.hasOne('App/Models/Article');
+    }
 }
 
 module.exports = Professional

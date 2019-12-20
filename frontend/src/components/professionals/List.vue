@@ -18,7 +18,15 @@
       @page-selected="readItems"
       api-mode
     >
-      <template slot="actions" slot-scope="props"></template>
+      <template slot="actions" slot-scope="props">
+        <va-button
+          flat
+          small
+          color
+          @click="viewArticle(props.rowData)"
+          class="ma-0"
+        >{{ text.viewArticle }}</va-button>
+      </template>
     </va-data-table>
   </va-card>
 </template>
@@ -34,6 +42,9 @@ export default {
         perPage: "Por Páginas",
         search: "Buscar por nombre",
         noData: "No se encontraron profesionales extraidos"
+      },
+      text: {
+          viewArticle: "Ver Articulo"
       },
       modal: {
         showRemoveSite: false
@@ -60,6 +71,10 @@ export default {
         {
           name: "surname",
           title: "Apellido"
+        },
+        {
+          name: "__slot:actions",
+          dataClass: "text-right"
         }
       ];
     }
@@ -88,8 +103,8 @@ export default {
         this.perPage = response.data.perPage;
       });
     },
-    edit(site) {
-      //this.$router.push({ name: "edit-site", params: { id: site.id } });
+    viewArticle(professional) {
+      this.$router.push({ name: "medium-editor", params: { id: professional.article_id } });
     }
   }
 };

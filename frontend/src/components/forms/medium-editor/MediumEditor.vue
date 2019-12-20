@@ -2,7 +2,7 @@
   <div class="medium-editor">
     <div class="row">
       <div class="flex md8">
-        <va-card :title="$t('forms.mediumEditor.title')">
+        <va-card :title="text.editorTitle">
           <div class="d-flex flex-center">
             <va-medium-editor
               @initialized="handleEditorInitialization"
@@ -152,7 +152,8 @@ export default {
       },
       text: {
         noData: "Vacio",
-        title: "Profesional Seleccionado"
+        title: "Profesional Seleccionado",
+        editorTitle: "Editor de entidades"
       },
       article: { text: "", html: "" },
       professionals: [],
@@ -249,8 +250,6 @@ export default {
         return object;
       });
 
-      console.log(this.career);
-
       // get campuses
       this.campuses = root.querySelectorAll(".campus");
 
@@ -273,7 +272,7 @@ export default {
       let data = Object.assign({}, this.selectedProfessional);
       let response = await axios.post("/api/professionals", data);
 
-      console.log(response.data);
+      this.logSuccess("Profesional guardado")
     }
   }
 };

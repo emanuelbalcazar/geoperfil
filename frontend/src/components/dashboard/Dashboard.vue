@@ -1,16 +1,26 @@
 <template>
-  <va-card>
-    <div class="dashboard">Bienvenido a GeoPerfil Profesional</div>
-    <br />
-  </va-card>
+  <div class="dashboard">
+    Bienvenido a
+    <modal name="hello-world">hello, world!</modal>
+  </div>
 </template>
 
 <script>
 export default {
   name: "dashboard",
   components: {},
+  methods: {
+    show() {
+          this.$modal.show("hello-world", { foo: "bar" });
 
-  methods: {}
+    },
+    hide() {
+      this.$modal.hide("hello-world");
+    }
+  },
+  created() {
+    this.$modal.show("hello-world", { foo: "bar" });
+  }
 };
 </script>
 

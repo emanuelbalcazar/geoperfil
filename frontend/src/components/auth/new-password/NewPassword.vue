@@ -38,19 +38,19 @@ export default {
       this.newpasswordErrors = this.newpassword ? [] : ["Password requerido"];
      
       let response = await axios
-        .post("/api/auth/newpassword", {
+        .post("/api/auth/reset", {
           newpassword: this.newpassword
         })
         .catch(error => {
           this.logError("Password incorrecto", {
             text: "Revise",
-            href: "signup"
+            href: "new-password"
           });
         });
 
-      // this.$cookies.set("token", response.data.access_token.token);
+      this.$cookies.set("token", response.data.access_token.token);
       // this.$cookies.set("userId", response.data.user.id);
-      //this.$cookies.set("email", response.data.user.email);
+      this.$cookies.set("password", response.data.user.password);
     },
    },
 }

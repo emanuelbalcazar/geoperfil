@@ -52,7 +52,7 @@ Route.group(() => {
 
     Route.post('/auth/recover', 'AuthController.recover');
 
-    Route.post('/auth/newpassword', 'ForgotPasswordController.update');
+    Route.post('/auth/reset', 'ForgotPasswordController.update');
 
 
 

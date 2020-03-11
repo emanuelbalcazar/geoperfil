@@ -1,4 +1,5 @@
 <template>
+  <!-- EDITOR -->
   <div class="medium-editor">
     <div class="row">
       <div class="flex md8">
@@ -12,43 +13,28 @@
         </va-card>
       </div>
 
+      <!-- CARD LATERAL -->
       <div class="flex md4">
         <!-- professional -->
         <va-card :title="text.title" v-if="renderProfessionalCard">
-          <form @submit.prevent="save">
-            <va-input label="Nombre" v-model="selectedProfessional.name" />
-
-            <va-input label="Apellido" v-model="selectedProfessional.surname" />
-
-            <va-button color="success" type="submit">Guardar</va-button>
+          <form @submit.prevent="openStepByStepModal">
+            <va-input label="Nombre" v-model="selectedProfessional.name" :disabled="true" />
+            <va-button color="success" type="submit">Completar Información</va-button>
           </form>
         </va-card>
 
-        <!-- <va-button color="success" @click="test" type="button">Probar</va-button>
-        <br />
-
-        <ul id="example-1">
-          <b>Profesionales:</b>
-          <li v-for="item in professionals">- {{ item.name }}</li>
-        </ul>
-
-        <br />
-        <ul id="example-1">
-          <b>Carreras:</b>
-          <li v-for="item in careers">- {{ item.name }}</li>
-        </ul>
-
-        <br />
-        <ul id="example-1">
-          <b>Sedes:</b>
-          <li v-for="item in campuses">- {{ item.name }}</li>
-        </ul>
-        <br />
-
-        <ul id="example-1">
-          <b>Instituciones:</b>
-          <li v-for="item in institutions">- {{ item.name }}</li>
-        </ul>-->
+        <!-- MODAL -->
+        <div class="col-md-4">
+          <modal
+            name="step-by-step"
+            :adaptive="false"
+            width="50%"
+            height="65%"
+            :clickToClose="false"
+          >
+            <form-wizard :name="selectedProfessional.name" />
+          </modal>
+        </div>
       </div>
     </div>
   </div>
@@ -56,10 +42,11 @@
 
 <script>
 import axios from "axios";
+import Vue from "vue";
 
 const parser = require("node-html-parser");
-
 import MediumEditor from "medium-editor";
+import FormWizard from "../../step/FormWizard";
 
 import rangy from "rangy";
 import "rangy/lib/rangy-classapplier";
@@ -115,6 +102,9 @@ const createCustomButton = function(name, title, innerHTML) {
 
 export default {
   name: "medium-editor",
+  components: {
+    FormWizard
+  },
   data() {
     return {
       editorOptions: {
@@ -122,7 +112,7 @@ export default {
         buttonLabels: "fontawesome",
         autoLink: true,
         toolbar: {
-          buttons: ["entity", "career", "campus", "institution"],
+          buttons: ["entity"],
           separatorClass: "medium-editor__separator"
         },
         extensions: {
@@ -130,17 +120,6 @@ export default {
             "entity",
             "Profesional",
             "<font><b>Profesional</b></>"
-          ),
-          career: createCustomButton(
-            "career",
-            "Carrera",
-            "<font><b>Carrera</b></>"
-          ),
-          campus: createCustomButton("campus", "Sede", "<font><b>Sede</b></>"),
-          institution: createCustomButton(
-            "institution",
-            "Institución",
-            "<font><b>Institución<b/></>"
           )
         },
         placeholder: {
@@ -153,13 +132,10 @@ export default {
       text: {
         noData: "Vacio",
         title: "Profesional Seleccionado",
-        editorTitle: "Editor de entidades"
+        editorTitle: "Editor de entidades",
+        career: "Carrera"
       },
       article: { text: "", html: "" },
-      professionals: [],
-      careers: [],
-      campuses: [],
-      institutions: [],
       selectedProfessional: {
         name: "",
         surname: "",
@@ -170,9 +146,9 @@ export default {
   },
   mounted() {
     this.findArticleById(this.$route.params.id);
-    var self = this;
-
     this.getDataFromArticle();
+
+    var self = this;
 
     /**
      * Al hacer click sobre un elemento resaltado con la clase "entity", realiza una accion.
@@ -191,8 +167,8 @@ export default {
             surname: "",
             article_id: self.$route.params.id
           };
-          self.renderProfessionalCard = true;
 
+          self.renderProfessionalCard = true;
           self.getDataFromArticle();
         }
       },
@@ -240,39 +216,10 @@ export default {
         object.name = e.text || e.innerText;
         return object;
       });
-
-      // get careers
-      this.careers = root.querySelectorAll(".career");
-
-      this.careers = this.careers.map(e => {
-        let object = { name: "" };
-        object.name = e.text || e.innerText;
-        return object;
-      });
-
-      // get campuses
-      this.campuses = root.querySelectorAll(".campus");
-
-      this.campuses = this.campuses.map(e => {
-        let object = { name: "" };
-        object.name = e.text || e.innerText;
-        return object;
-      });
-
-      // get institutions
-      this.institutions = root.querySelectorAll(".institution");
-
-      this.institutions = this.institutions.map(e => {
-        let object = { name: "" };
-        object.name = e.text || e.innerText;
-        return object;
-      });
     },
-    async save() {
-      let data = Object.assign({}, this.selectedProfessional);
-      let response = await axios.post("/api/professionals", data);
 
-      this.logSuccess("Profesional guardado")
+    openStepByStepModal() {
+      this.$modal.show("step-by-step", { clickToClose: false });
     }
   }
 };
@@ -309,5 +256,13 @@ export default {
   margin: 0 0.25em;
   line-height: 1;
   border-radius: 0.35em;
+}
+
+/* modal styles */
+.v--modal-box {
+  padding: 0.7em 0.8em;
+  margin: 0 0.55em;
+  border-radius: 25px;
+  border-style: outset;
 }
 </style>

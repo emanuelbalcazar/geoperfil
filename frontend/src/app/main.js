@@ -17,9 +17,9 @@ import '../i18n/index';
 import { ColorThemePlugin } from 'vuestic-ui/src/services/ColorThemePlugin'
 import VueCookies from 'vue-cookies'
 
+// Dialogs
 import VModal from 'vue-js-modal'
-
-Vue.use(VModal, { dialog: true })
+Vue.use(VModal, { clickToClose: false })
 
 // VUE CONFIGURATIONS...
 // global configuration for axios.

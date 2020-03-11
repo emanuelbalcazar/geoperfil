@@ -3,10 +3,10 @@
   <div id="app">
     <form-wizard>
       <template v-slot="{formData}">
-        <tab name="Step 1" info="Your name and Email" :selected="true" :formData="formData">
+        <tab name="Step 1" info="Nombre y apellido" :selected="true" :formData="formData">
               <div id="form-step-1" >
                   <div class="field">
-                      <label class="label">Name</label>
+                      <label class="label">Nombre</label>
                       <div class="control">
                           <input class="input" name="fullname" type="text" placeholder="Text input"  v-model="formData.name" data-vv-scope="step1" v-validate="'required'">
                           <p class="help is-danger" v-show="errors.has('step1.fullname')">

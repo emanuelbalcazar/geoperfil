@@ -24,7 +24,7 @@
               <div class="container control">
                 <input
                   class="input"
-                  name="fullname"
+                  name="name"
                   type="text"
                   placeholder="Nombre"
                   v-model="formData.name"
@@ -33,7 +33,7 @@
                 />
                 <p
                   class="help is-danger"
-                  v-show="errors.has('step1.fullname')"
+                  v-show="errors.has('step1.name')"
                 >{{ errorsText.name }}</p>
               </div>
             </div>
@@ -146,7 +146,8 @@ export default {
     Tab
   },
   props: {
-    name: String
+    name: String,
+    article: String
   },
   data() {
     return {
@@ -155,7 +156,12 @@ export default {
       totalTabs: 0,
       formData: {
         name: "",
-        surname: ""
+        surname: "",
+        career_name: "",
+        career_id: 0,
+        campus_name: "",
+        campus_id: 0,
+        article_id: 0
       },
       text: {
         noData: "Vacio",
@@ -170,8 +176,8 @@ export default {
         career: "Carrera es requerido",
         campus: "Sede es requerida"
       },
-      selectedCareerFromStep: {},
-      selectedCampusFromStep: {},
+      selectedCareerFromStep: "",
+      selectedCampusFromStep: "",
       careers: [],
       campuses: []
     };
@@ -180,12 +186,24 @@ export default {
   created() {
     this.tabs = this.$children;
     this.formData.name = this.name;
+    this.formData.article_id = Number(this.article);
   },
 
   mounted() {
     this.totalTabs = this.tabs.length;
     this.getCareers();
     this.getCampuses();
+  },
+  watch: {
+    // cuando '' cambie, se ejecutará esta función
+    selectedCareerFromStep: function(career) {
+      this.formData.career_id = career.id;
+      this.formData.career_name = career.name;
+    },
+    selectedCampusFromStep: function(campus) {
+      this.formData.campus_id = campus.id;
+      this.formData.campus_name = campus.name;
+    }
   },
 
   methods: {
@@ -221,7 +239,7 @@ export default {
         .validate("step" + this.totalTabs + ".*")
         .then(valid => {
           if (valid) {
-            alert("Everything passes ! Ready to Submit", this.formData.name);
+            alert(JSON.stringify(this.formData));
           }
         });
     },

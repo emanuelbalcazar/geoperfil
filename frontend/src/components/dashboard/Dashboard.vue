@@ -1,26 +1,12 @@
 <template>
-  <div class="dashboard">
-    Bienvenido a
-    <modal name="hello-world">hello, world!</modal>
-  </div>
+  <div class="dashboard"><h1>Bienvenido a <b>GeoPerfil</b></h1></div>
 </template>
 
 <script>
 export default {
   name: "dashboard",
   components: {},
-  methods: {
-    show() {
-          this.$modal.show("hello-world", { foo: "bar" });
-
-    },
-    hide() {
-      this.$modal.hide("hello-world");
-    }
-  },
-  created() {
-    this.$modal.show("hello-world", { foo: "bar" });
-  }
+  methods: {}
 };
 </script>
 

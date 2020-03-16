@@ -119,7 +119,7 @@ export default {
           professional: createCustomButton(
             "entity",
             "Profesional",
-            "<font><b>Profesional</b></>"
+            "<font><b>Marcar como Profesional</b></>"
           )
         },
         placeholder: {

@@ -31,10 +31,7 @@
                   data-vv-scope="step1"
                   v-validate="'required'"
                 />
-                <p
-                  class="help is-danger"
-                  v-show="errors.has('step1.name')"
-                >{{ errorsText.name }}</p>
+                <p class="help is-danger" v-show="errors.has('step1.name')">{{ errorsText.name }}</p>
               </div>
             </div>
 
@@ -237,9 +234,14 @@ export default {
     submit() {
       this.$root.$validator
         .validate("step" + this.totalTabs + ".*")
-        .then(valid => {
+        .then(async valid => {
           if (valid) {
-            alert(JSON.stringify(this.formData));
+            let response = await axios.post(
+              "/api/professionals",
+              this.formData
+            );
+
+            this.logSuccess("Profesional guardado correctamente");
           }
         });
     },

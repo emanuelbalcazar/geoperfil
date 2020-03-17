@@ -1,29 +1,30 @@
 <template>
-    <div v-show="isActive"><slot></slot></div>
+  <div v-show="isActive">
+    <slot></slot>
+  </div>
 </template>
 
 
 <script>
-export default{
-    name: 'tab',
+export default {
+  name: "tab",
 
-    props: {
-        name:{required: true},
-        info:{},
-        selected: { default: false}
-    },
+  props: {
+    name: { required: true },
+    info: {},
+    selected: { default: false }
+  },
 
-    data(){
-        return{
-            isActive: false,
-            
-        }
-    },
+  data() {
+    return {
+      isActive: false
+    };
+  },
 
-    created(){
-        this.isActive = this.selected
-    },
-}
+  created() {
+    this.isActive = this.selected;
+  }
+};
 </script>
 
 

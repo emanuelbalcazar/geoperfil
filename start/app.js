@@ -20,6 +20,7 @@ const providers = [
     '@adonisjs/lucid/providers/LucidProvider',
     '@adonisjs/mail/providers/MailProvider',
     path.join(__dirname, '..', 'providers', 'extractors', 'ExtractorManagerProvider'),
+    path.join(__dirname, '..', 'providers', 'logProvider', 'LogProvider'),
 ]
 
 /*

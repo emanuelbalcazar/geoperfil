@@ -32,7 +32,7 @@
             height="65%"
             :clickToClose="false"
           >
-            <form-wizard :name="selectedProfessional.name" />
+            <form-wizard :name="selectedProfessional.name" :article="this.$route.params.id" />
           </modal>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default {
           professional: createCustomButton(
             "entity",
             "Profesional",
-            "<font><b>Profesional</b></>"
+            "<font><b>Marcar como Profesional</b></>"
           )
         },
         placeholder: {
@@ -135,16 +135,18 @@ export default {
         editorTitle: "Editor de entidades",
         career: "Carrera"
       },
-      article: { text: "", html: "" },
+      article: { text: "", html: "", article_id: 0 },
       selectedProfessional: {
         name: "",
         surname: "",
-        article_id: this.$route.params.id
+        article_id: 0
       },
       renderProfessionalCard: false
     };
   },
   mounted() {
+    this.article.article_id = this.$route.params.id;
+
     this.findArticleById(this.$route.params.id);
     this.getDataFromArticle();
 

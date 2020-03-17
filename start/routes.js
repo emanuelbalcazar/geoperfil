@@ -42,6 +42,10 @@ Route.group(() => {
 
     Route.resource('/sites','SiteController');
 
+    Route.resource('/provinces', 'ProvinceController');
+
+    Route.resource('/cities', 'CityController');
+
     Route.post('/extractors/run', 'ExtractorController.extract');
 
     Route.post('/extractors/test', 'ExtractorController.test');
@@ -53,7 +57,6 @@ Route.group(() => {
     Route.post('/auth/recover', 'AuthController.recover');
 
     Route.post('/auth/reset', 'ForgotPasswordController.update');
-
 
 
 }).prefix('api');

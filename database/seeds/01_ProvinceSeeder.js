@@ -20,17 +20,17 @@ const Logger = use('Logger');
 const PROVS_FILE = __dirname + '/files/provinces/provinces.csv';
 
 class ProvinceSeeder {
-  async run () {
-    let provinces = await csv().fromFile(PROVS_FILE);
+    async run() {
+        let provinces = await csv().fromFile(PROVS_FILE);
 
-    for (const prov of provinces) {
-        let lat = Number.parseFloat( prov.centroid_lat);
-        let lon = Number.parseFloat( prov.centroid_lon );
-        await Province.create( {name: prov.name, full_name: prov.full_name, centroid_lat: lat, centroid_lon: lon} );
+        for (const prov of provinces) {
+            let lat = Number.parseFloat(prov.centroid_lat);
+            let lon = Number.parseFloat(prov.centroid_lon);
+            await Province.findOrCreate({ name: prov.name }, { name: prov.name, full_name: prov.full_name, centroid_lat: lat, centroid_lon: lon });
+        }
+
+        Logger.info('Se cargaron las provincias correctamente', 'Seeder');
     }
-
-    Logger.info('[Seeder] - Se cargaron las provincias correctamente');
-  }
 }
 
 module.exports = ProvinceSeeder

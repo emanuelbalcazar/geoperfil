@@ -23,7 +23,7 @@ class SchedulerSeeder {
             await Scheduler.findOrCreate(scheduler, scheduler);
         }
 
-        Logger.info('[Seeder] - Se cargaron los planificadores correctamente');
+        Logger.info('Se cargaron los planificadores correctamente', 'Seeder');
     }
 }
 

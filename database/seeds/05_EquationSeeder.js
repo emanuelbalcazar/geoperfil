@@ -23,7 +23,7 @@ class EquationSeeder {
             await Equation.findOrCreate(equation, equation);
         }
 
-        Logger.info('[Seeder] - Se cargaron las ecuaciones de busqueda correctamente');
+        Logger.info('Se cargaron las ecuaciones de busqueda correctamente', 'Seeder');
     }
 }
 

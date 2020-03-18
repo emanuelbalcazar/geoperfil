@@ -32,7 +32,7 @@ class CareerSeeder {
                 }
             }
 
-            Logger.info('[Seeder] - Se cargaron las carreras correctamente');
+            Logger.info('Se cargaron las carreras correctamente', 'Seeder');
         }
     }
 }

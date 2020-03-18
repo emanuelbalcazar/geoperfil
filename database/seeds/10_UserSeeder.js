@@ -22,10 +22,10 @@ class UserSeeder {
         let users = await csv().fromFile(USER_FILES);
 
         for (const user of users) {
-            await User.findOrCreate(user, user);
+            await User.findOrCreate({email: user.email}, user);
         }
 
-        Logger.info('[Seeder] - Se cargaron los usuarios correctamente');
+        Logger.info('Se cargaron los usuarios correctamente', 'Seeder');
     }
 }
 

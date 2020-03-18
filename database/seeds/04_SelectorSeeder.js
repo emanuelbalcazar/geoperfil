@@ -27,7 +27,7 @@ class SelectorSeeder {
             await Selector.findOrCreate({ selector: selector.selector }, { selector: selector.selector, site_id: site.id });
         }
 
-        Logger.info('[Seeder] - Se cargaron los selectores correctamente');
+        Logger.info('Se cargaron los selectores correctamente', 'Seeder');
     }
 }
 

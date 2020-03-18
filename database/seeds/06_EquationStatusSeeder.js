@@ -30,6 +30,8 @@ class EquationStatusSeeder {
 
             await EquationStatus.findOrCreate({ equation_id: equation.id, site_id: site.id }, { equation_id: equation.id, site_id: site.id, start: status.start, lastExecution: status.lastExecution, active: status.active });
         }
+
+        Logger.info('Se cargaron los estados de las ecuaciones correctamente', 'Seeder');
     }
 }
 

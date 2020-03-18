@@ -13,7 +13,7 @@ const Institution = use('App/Models/Institution');
 const csv = require('csvtojson');
 const Logger = use('Logger');
 const Helper = use('App/Helper/Utils')
-const City = use( 'App/Models/City' );
+const City = use('App/Models/City');
 
 const INSTITUTIONS_FILES = __dirname + '/files/institutions/';
 const CAMPUS_FILES = __dirname + '/files/campus/';
@@ -36,22 +36,25 @@ class InstitutionSeeder {
                     let instance = await Institution.create(institution[0]);
 
                     let arrayCampus = [];
+
                     for (let camp of campus) {
-                        let city = City.query().where( {name: camp.city} );
-                        arrayCampus.push( {name: camp.name, 
-                                        address: camp.address, 
-                                       modality: camp.modality, 
-                                       latitude: camp.latitude, 
-                                      longitude: camp.longitude, 
-                                        city_id: city.id }
-                                        );
+                        let city = City.query().where({ name: camp.city });
+
+                        arrayCampus.push({
+                            name: camp.name,
+                            address: camp.address,
+                            modality: camp.modality,
+                            latitude: camp.latitude,
+                            longitude: camp.longitude,
+                            city_id: city.id
+                        });
                     }
                     // creo las sedes de esa institucion
-                    await instance.campus().createMany( arrayCampus );
+                    await instance.campus().createMany(arrayCampus);
                 }
             }
 
-            Logger.info('[Seeder] - Se cargaron las instituciones correctamente');
+            Logger.info('Se cargaron las instituciones y sus sedes correctamente', 'Seeder');
         }
     }
 }

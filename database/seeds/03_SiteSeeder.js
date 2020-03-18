@@ -25,7 +25,7 @@ class SiteSeeder {
             await Site.findOrCreate(site, site);
         }
 
-        Logger.info('[Seeder] - Se cargaron los sitios web correctamente');
+        Logger.info('Se cargaron los sitios web correctamente', 'Seeder');
     }
 }
 

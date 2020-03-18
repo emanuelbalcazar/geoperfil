@@ -177,7 +177,7 @@ export default new Router({
                 {
                     name: 'list-logs',
                     path: 'list',
-                    component: () => import('../components/logs/List.vue')
+                    component: () => import('../components/audit/List.vue')
                 }
             ],
         },

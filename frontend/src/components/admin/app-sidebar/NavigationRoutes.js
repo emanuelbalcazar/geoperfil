@@ -26,6 +26,20 @@ export const navigationRoutes = {
             ]
         },
         {
+            name: 'logs',
+            displayName: 'Auditoria',
+            meta: {
+                iconClass: 'fa fa-server',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-logs',
+                    displayName: 'Ver registros de logs',
+                }
+            ],
+        },
+        {
             name: 'careers',
             displayName: 'Carreras',
             meta: {

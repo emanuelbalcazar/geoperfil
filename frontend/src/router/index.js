@@ -170,6 +170,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/logs',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-logs',
+                    path: 'list',
+                    component: () => import('../components/logs/List.vue')
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',

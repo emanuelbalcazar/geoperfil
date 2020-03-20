@@ -28,18 +28,20 @@ class AlertService {
      * @param {Alert} alert
      * @memberof AlertService
      */
-    accept(alert) {
+    async accept(alert) {
         let resolver = this.getResolver(alert.type);
-        resolver.accept();
+        await resolver.accept();
+        return;
     }
 
     /**
      * @param {Alert} alert
      * @memberof AlertService
      */
-    reject(alert) {
+    async reject(alert) {
         let resolver = this.getResolver(alert.type);
-        resolver.reject();
+        await resolver.reject();
+        return;
     }
 }
 

@@ -10,11 +10,11 @@ class AlertResolver {
      */
     constructor() { }
 
-    accept(alert) {
+    async accept(alert) {
         throw new Error('Accept must be implemented');
     }
 
-    reject(alert) {
+    async reject(alert) {
         throw new Error('Reject must be implemented');
     }
 }

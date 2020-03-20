@@ -6,11 +6,11 @@ class NewCampusResolver extends AlertResolver {
         super();
     }
 
-    accept() {
+    async accept() {
 
     }
 
-    reject() {
+    async reject() {
 
     }
 }

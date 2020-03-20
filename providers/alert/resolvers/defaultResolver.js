@@ -15,11 +15,11 @@ class DefaultResolver extends AlertResolver {
     }
 
     accept(alert) {
-
+        console.log('aceptando alerta:', alert);
     }
 
     reject(alert) {
-
+        console.log('rechazando alerta:', alert);
     }
 }
 

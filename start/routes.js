@@ -24,6 +24,8 @@ Route.get('/', async ({ response }) => {
 // routes with prefix 'api'
 Route.group(() => {
 
+    Route.resource('/alerts', 'AlertController');
+
     Route.resource('/articles', 'ArticleController');
 
     Route.resource('/campuses', 'CampusController');
@@ -34,7 +36,7 @@ Route.group(() => {
 
     Route.resource('/institutions', 'InstitutionController');
 
-    Route.resource('/logs','LogController');
+    Route.resource('/logs', 'LogController');
 
     Route.resource('/professionals', 'ProfessionalController');
 
@@ -42,7 +44,7 @@ Route.group(() => {
 
     Route.resource('/selectors', 'SelectorController');
 
-    Route.resource('/sites','SiteController');
+    Route.resource('/sites', 'SiteController');
 
     Route.resource('/provinces', 'ProvinceController');
 
@@ -59,6 +61,8 @@ Route.group(() => {
     Route.post('/auth/recover', 'AuthController.recover');
 
     Route.post('/auth/reset', 'ForgotPasswordController.update');
+
+    Route.get('/alerts/:id/accept', 'AlertController.accept');
 
 
 }).prefix('api');

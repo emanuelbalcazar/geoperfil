@@ -9,7 +9,7 @@ class LogSchema extends Schema {
             table.increments()
             table.string('level', 100);
             table.string('module', 250)
-            table.string('message', 500);
+            table.text('message', 'longtext');
             table.datetime('timestamp');
         })
     }

@@ -1,0 +1,22 @@
+/**
+ * Alert resolver interface.
+ * @class AlertResolver
+ */
+class AlertResolver {
+
+    /**
+     * Creates an instance of AlertResolver.
+     * @memberof AlertResolver
+     */
+    constructor() { }
+
+    accept(alert) {
+        throw new Error('Accept must be implemented');
+    }
+
+    reject(alert) {
+        throw new Error('Reject must be implemented');
+    }
+}
+
+module.exports = AlertResolver;

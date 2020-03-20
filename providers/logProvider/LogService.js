@@ -11,7 +11,7 @@ class LogService {
      */
     constructor() { }
 
-    async info(message, module = '') {
+    async info(message, module = 'desconocido') {
         await Log.create({ level: 'info', message: message, module: module });
     }
 

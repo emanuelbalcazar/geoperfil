@@ -60,6 +60,10 @@ export default {
           title: "Mensaje"
         },
         {
+          name: "module",
+          title: "Modulo"
+        },
+        {
           name: "timestamp",
           title: "Fecha",
           callback: this.formatDate

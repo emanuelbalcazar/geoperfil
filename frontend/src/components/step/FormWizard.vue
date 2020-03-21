@@ -192,7 +192,6 @@ export default {
     this.getCampuses();
   },
   watch: {
-    // cuando '' cambie, se ejecutará esta función
     selectedCareerFromStep: function(career) {
       this.formData.career_id = career.id;
       this.formData.career_name = career.name;

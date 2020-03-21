@@ -19,12 +19,18 @@
         <va-card :title="text.title" v-if="renderProfessionalCard">
           <form @submit.prevent="openStepByStepModal">
             <va-input label="Nombre" v-model="selectedProfessional.name" :disabled="true" />
-            <va-button color="success" type="submit">Completar Información</va-button>
+            <va-button color="success" type="submit">Completar información</va-button>
           </form>
+
+          <va-button
+            color="info"
+            type="submit"
+            @click="openSuggestionsModal"
+          >Sugerir información</va-button>
         </va-card>
 
         <!-- MODAL -->
-        <div class="col-md-4">
+        <div class="col-md-6">
           <modal
             name="step-by-step"
             :adaptive="false"
@@ -33,6 +39,12 @@
             :clickToClose="false"
           >
             <form-wizard :name="selectedProfessional.name" :article="this.$route.params.id" />
+          </modal>
+        </div>
+
+        <div class="col-md-6">
+          <modal name="suggestions">
+            <suggestions />
           </modal>
         </div>
       </div>
@@ -47,6 +59,7 @@ import Vue from "vue";
 const parser = require("node-html-parser");
 import MediumEditor from "medium-editor";
 import FormWizard from "../../step/FormWizard";
+import Suggestions from "../../suggestions/Suggestions";
 
 import rangy from "rangy";
 import "rangy/lib/rangy-classapplier";
@@ -103,7 +116,8 @@ const createCustomButton = function(name, title, innerHTML) {
 export default {
   name: "medium-editor",
   components: {
-    FormWizard
+    FormWizard,
+    Suggestions
   },
   data() {
     return {
@@ -222,6 +236,9 @@ export default {
 
     openStepByStepModal() {
       this.$modal.show("step-by-step", { clickToClose: false });
+    },
+    openSuggestionsModal() {
+      this.$modal.show("suggestions", { clickToClose: false });
     }
   }
 };

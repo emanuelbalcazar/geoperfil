@@ -3,6 +3,7 @@
     <va-data-table
       :fields="fields"
       :data="items"
+      :no-data-label="title.noData"
       :loading="loading"
       :per-page="parseInt(perPage)"
       :totalPages="totalPages"

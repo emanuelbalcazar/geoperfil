@@ -8,6 +8,7 @@
             <va-data-table
               :fields="fields"
               :data="dataWithHeaders(header)"
+              :no-data-label="title.noData"
               :loading="loading"
               :per-page="parseInt(perPage)"
               :totalPages="totalPages"

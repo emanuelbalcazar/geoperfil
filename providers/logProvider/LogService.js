@@ -15,15 +15,15 @@ class LogService {
         await Log.create({ level: 'info', message: message, module: module });
     }
 
-    async error(message, module = '') {
+    async error(message, module = 'desconocido') {
         await Log.create({ level: 'error', message: message, module: module });
     }
 
-    async debug(message, module = '') {
+    async debug(message, module = 'desconocido') {
         await Log.create({ level: 'debug', message: message, module: module });
     }
 
-    async warn(message, module = '') {
+    async warn(message, module = 'desconocido') {
         await Log.create({ level: 'warn', message: message, module: module });
     }
 }

@@ -181,6 +181,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/logs/view',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'view-log',
+                    path: ':id',
+                    component: () => import('../components/audit/View.vue')
+                }
+            ]
+        },
         // ================================================================================== //
         {
             path: '/404',

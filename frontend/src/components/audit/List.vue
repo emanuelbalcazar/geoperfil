@@ -18,7 +18,13 @@
       @page-selected="readItems"
       api-mode
     >
-      <template slot="actions" slot-scope="props"></template>
+      <template slot="level" slot-scope="props">
+        <va-badge :color="getLevelColor(props.rowData.level)">{{ props.rowData.level }}</va-badge>
+      </template>
+
+      <template slot="actions" slot-scope="props">
+        <va-button flat small color @click="view(props.rowData)" class="ma-0">{{ title.view }}</va-button>
+      </template>
     </va-data-table>
   </va-card>
 </template>
@@ -34,7 +40,9 @@ export default {
         table: "Listado de Logs",
         perPage: "Por Páginas",
         search: "Buscar por nivel de logs",
-        noData: "No se encontraron logs"
+        noData: "No se encontraron logs",
+        view: "Ver log",
+        level: "Nivel"
       },
       perPage: 10,
       totalPages: 0,
@@ -52,12 +60,13 @@ export default {
           title: "ID"
         },
         {
-          name: "level",
+          name: "__slot:level",
           title: "Nivel"
         },
         {
           name: "message",
-          title: "Mensaje"
+          title: "Mensaje",
+          callback: this.formatMessage
         },
         {
           name: "module",
@@ -101,6 +110,22 @@ export default {
     },
     formatDate(value) {
       return moment(value).format("DD-MM-YYYY HH:mm:ss");
+    },
+    formatMessage(value = "") {
+      return value.substring(0, 80);
+    },
+    view(log) {
+      this.$router.push({ name: "view-log", params: { id: log.id } });
+    },
+    getLevelColor(level) {
+      let colors = {
+        error: "danger",
+        info: "info",
+        warn: "warning",
+        debug: "gray"
+      };
+
+      return colors[level] || "primary";
     }
   }
 };

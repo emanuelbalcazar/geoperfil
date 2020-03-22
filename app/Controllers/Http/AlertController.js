@@ -82,6 +82,10 @@ class AlertController {
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
+        let alert = request.post();
+        let record = await Alert.create(professional);
+
+        return response.json(record);
     }
 
     /**

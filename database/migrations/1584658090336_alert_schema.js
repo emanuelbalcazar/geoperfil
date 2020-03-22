@@ -11,7 +11,7 @@ class AlertSchema extends Schema {
             table.string('type', 100).notNullable();
             table.integer('priority').defaultTo(3); // 1: high, 2: medium, 3: low
             table.string('description', 500);
-            table.boolean('resolved').defaultTo(false);
+            table.enu('status', ['accepted', 'rejected', 'pending']);
             table.string('data', 500);
             table.datetime('timestamp');
         });

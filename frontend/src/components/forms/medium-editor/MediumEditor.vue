@@ -22,20 +22,16 @@
             <va-button color="success" type="submit">Completar información</va-button>
           </form>
 
-          <va-button
-            color="info"
-            type="submit"
-            @click="openSuggestionsModal"
-          >Sugerir información</va-button>
+          <va-button color="info" type="submit" @click="openSuggestionsModal">Sugerir información</va-button>
         </va-card>
 
-        <!-- MODAL -->
+        <!-- MODAL STEP BY STEP -->
         <div class="col-md-6">
           <modal
             name="step-by-step"
             :adaptive="false"
             width="50%"
-            height="65%"
+            height="60%"
             :clickToClose="false"
           >
             <form-wizard :name="selectedProfessional.name" :article="this.$route.params.id" />
@@ -43,7 +39,7 @@
         </div>
 
         <div class="col-md-6">
-          <modal name="suggestions">
+          <modal name="suggestions" width="50%" height="60%" :clickToClose="false">
             <suggestions />
           </modal>
         </div>
@@ -279,9 +275,9 @@ export default {
 
 /* modal styles */
 .v--modal-box {
-  padding: 0.7em 0.8em;
+  padding: 0.9em 0.8em;
   margin: 0 0.55em;
-  border-radius: 25px;
+  border-radius: 40px;
   border-style: outset;
 }
 </style>

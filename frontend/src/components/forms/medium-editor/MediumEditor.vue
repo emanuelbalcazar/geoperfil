@@ -39,7 +39,7 @@
         </div>
 
         <div class="col-md-6">
-          <modal name="suggestions" width="50%" height="60%" :clickToClose="false">
+          <modal name="suggestions" width="50%" height="65%" :clickToClose="false">
             <suggestions />
           </modal>
         </div>

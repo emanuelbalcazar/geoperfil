@@ -83,7 +83,7 @@ class AlertController {
      */
     async store({ request, response }) {
         let alert = request.post();
-        let record = await Alert.create(professional);
+        let record = await Alert.create(alert);
 
         return response.json(record);
     }

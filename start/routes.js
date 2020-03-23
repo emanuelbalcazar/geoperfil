@@ -64,5 +64,6 @@ Route.group(() => {
 
     Route.get('/alerts/:id/accept', 'AlertController.accept');
 
+    Route.get('/professionalDetails/:id', 'ProfessionalController.show_details');
 
 }).prefix('api');

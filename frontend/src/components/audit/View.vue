@@ -9,8 +9,7 @@
               <b>{{ log.module }}</b>
             </va-notification>ID:
             <b>{{log.id}}</b>
-            <br>
-            Fecha:
+            <br />Fecha:
             <b>{{log.timestamp}}</b>
             <br />
             <br />

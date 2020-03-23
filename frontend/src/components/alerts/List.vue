@@ -5,7 +5,7 @@
         <va-input :value="toSearch" :placeholder="title.search" @input="search">
           <va-icon name="fa fa-search" slot="prepend" />
         </va-input>
-      </div> -->
+      </div>-->
     </div>
 
     <va-data-table
@@ -25,21 +25,13 @@
       </template>
 
       <template slot="actions" slot-scope="props">
-        <va-button flat small color="info" @click="view(props.rowData)" class="ma-0">{{ title.view }}</va-button>
         <va-button
           flat
           small
-          color="success"
-          @click="accept(props.rowData)"
+          color="info"
+          @click="view(props.rowData)"
           class="ma-0"
-        >{{ title.accept }}</va-button>
-        <va-button
-          flat
-          small
-          color="danger"
-          @click="reject(props.rowData)"
-          class="ma-0"
-        >{{ title.reject }}</va-button>
+        >{{ title.view }}</va-button>
       </template>
     </va-data-table>
   </va-card>
@@ -84,6 +76,11 @@ export default {
         {
           name: "name",
           title: "Nombre",
+          callback: this.formatMessage
+        },
+        {
+          name: "data",
+          title: "Dato",
           callback: this.formatMessage
         },
         {

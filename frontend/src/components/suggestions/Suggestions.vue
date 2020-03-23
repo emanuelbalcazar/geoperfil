@@ -30,7 +30,7 @@
           </div>
 
           <div class="flex md10 sm10 xs12">
-            <va-input label="Agregue una descripción (opcional)" v-model="alert.description" />
+            <va-input label="Agregue una descripción u observación (opcional)" v-model="alert.description" />
           </div>
 
           <br />
@@ -78,18 +78,21 @@ export default {
       options: [
         {
           id: 1,
-          name: "Sugerir una nueva sede institucional",
-          type: "newCampus"
+          name: "Sugerencia de una nueva sede institucional",
+          type: "newCampus",
+          priority: 2
         },
         {
           id: 2,
-          name: "Sugerir una nueva institución",
-          type: "newInstitution"
+          name: "Sugerencia de una nueva institución",
+          type: "newInstitution",
+          priority: 2
         },
         {
           id: 3,
-          name: "Sugerir una nueva carrera",
-          type: "newCareer"
+          name: "Sugerencia de una nueva carrera",
+          type: "newCareer",
+          priority: 2
         }
       ],
       selectedOption: ""
@@ -107,6 +110,7 @@ export default {
         if (valid) {
           this.alert.name = this.selectedOption.name;
           this.alert.type = this.selectedOption.type;
+          this.alert.priority = this.selectedOption.priority;
 
           let response = await axios.post("/api/alerts", this.alert);
           this.logSuccess("Sugerencia enviada correctamente");

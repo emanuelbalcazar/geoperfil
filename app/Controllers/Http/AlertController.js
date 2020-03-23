@@ -98,6 +98,8 @@ class AlertController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
+        let alert = await Alert.query().where('id', params.id).first();
+        response.json(alert);
     }
 
     /**

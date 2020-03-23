@@ -3,27 +3,18 @@
     <div class="row">
       <div class="flex xs12">
         <va-card :title="text.title">
-          <div class>
-            <div class="flex md6 sm6 xs12">
-              <va-input label="ID" v-model="log.id" :disabled="true" />
-            </div>
-
-            <div class="flex md6 sm6 xs12">
-              <va-input label="Nivel" v-model="log.level" :disabled="true" />
-            </div>
-
-            <div class="flex md6 sm6 xs12">
-              <va-input label="Modulo" v-model="log.module" :disabled="true" />
-            </div>
-
-            <div class="flex md6 sm6 xs12">
-              <label>Mensaje</label>
-              <textarea label="Mensaje" v-model="log.message" :disabled="true" rows="15" cols="55" />
-            </div>
-
-            <div class="flex md6 sm6 xs12">
-              <va-input label="Fecha" v-model="log.timestamp" :disabled="true" />
-            </div>
+          <div class="mb-3">
+            <va-notification color="info">
+              <va-badge :color="getLevelColor(log.level)">{{ log.level }}</va-badge>En el modulo:&nbsp;
+              <b>{{ log.module }}</b>
+            </va-notification>ID:
+            <b>{{log.id}}</b>
+            <br>
+            Fecha:
+            <b>{{log.timestamp}}</b>
+            <br />
+            <br />
+            {{log.message}}
           </div>
         </va-card>
       </div>
@@ -76,6 +67,16 @@ export default {
     },
     formatDate(value) {
       return moment(value).format("DD-MM-YYYY HH:mm:ss");
+    },
+    getLevelColor(level) {
+      let colors = {
+        error: "danger",
+        info: "info",
+        warn: "warning",
+        debug: "gray"
+      };
+
+      return colors[level] || "primary";
     }
   }
 };

@@ -12,6 +12,20 @@ export const navigationRoutes = {
             }
         },
         {
+            name: 'alerts',
+            displayName: 'Alertas',
+            meta: {
+                iconClass: 'fa fa-warning',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-alerts',
+                    displayName: 'Listar Alertas Pendientes'
+                }
+            ]
+        },
+        {
             name: 'articles',
             displayName: 'Articulos',
             meta: {

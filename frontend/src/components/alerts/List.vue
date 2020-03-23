@@ -1,11 +1,11 @@
 <template>
   <va-card :title="title.table">
     <div class="row align--center">
-      <div class="flex xs12 md6">
+      <!-- <div class="flex xs12 md6">
         <va-input :value="toSearch" :placeholder="title.search" @input="search">
           <va-icon name="fa fa-search" slot="prepend" />
         </va-input>
-      </div>
+      </div> -->
     </div>
 
     <va-data-table
@@ -18,12 +18,28 @@
       @page-selected="readItems"
       api-mode
     >
-      <template slot="level" slot-scope="props">
-        <va-badge :color="getLevelColor(props.rowData.level)">{{ props.rowData.level }}</va-badge>
+      <template slot="priority" slot-scope="props">
+        <va-badge
+          :color="getPriorityColor(props.rowData.priority)"
+        >{{ getPriorityText(props.rowData.priority)}}</va-badge>
       </template>
 
       <template slot="actions" slot-scope="props">
-        <va-button flat small color @click="view(props.rowData)" class="ma-0">{{ title.view }}</va-button>
+        <va-button flat small color="info" @click="view(props.rowData)" class="ma-0">{{ title.view }}</va-button>
+        <va-button
+          flat
+          small
+          color="success"
+          @click="accept(props.rowData)"
+          class="ma-0"
+        >{{ title.accept }}</va-button>
+        <va-button
+          flat
+          small
+          color="danger"
+          @click="reject(props.rowData)"
+          class="ma-0"
+        >{{ title.reject }}</va-button>
       </template>
     </va-data-table>
   </va-card>
@@ -37,12 +53,14 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Logs",
+        table: "Listado de alertas sin resolver",
         perPage: "Por Páginas",
-        search: "Buscar por nivel de logs",
-        noData: "No se encontraron logs",
-        view: "Ver log",
-        level: "Nivel"
+        search: "Buscar",
+        noData: "No se encontraron alertas sin resolver",
+        view: "Detalles",
+        accept: "Aceptar",
+        reject: "Rechazar",
+        priority: "Prioridad"
       },
       perPage: 10,
       totalPages: 0,
@@ -60,17 +78,13 @@ export default {
           title: "ID"
         },
         {
-          name: "__slot:level",
-          title: "Nivel"
+          name: "__slot:priority",
+          title: "Prioridad"
         },
         {
-          name: "message",
-          title: "Mensaje",
+          name: "name",
+          title: "Nombre",
           callback: this.formatMessage
-        },
-        {
-          name: "module",
-          title: "Modulo"
         },
         {
           name: "timestamp",
@@ -99,10 +113,11 @@ export default {
       const params = {
         perPage: this.perPage,
         page: page,
-        columnValue: this.toSearch
+        columnName: "status",
+        columnValue: "pending"
       };
 
-      axios.get("/api/logs", { params }).then(response => {
+      axios.get("/api/alerts", { params }).then(response => {
         this.items = response.data.data;
         this.totalPages = response.data.lastPage;
         this.loading = false;
@@ -115,18 +130,17 @@ export default {
     formatMessage(value = "") {
       return value.substring(0, 100);
     },
-    view(log) {
-      this.$router.push({ name: "view-log", params: { id: log.id } });
-    },
-    getLevelColor(level) {
-      let colors = {
-        error: "danger",
-        info: "info",
-        warn: "warning",
-        debug: "gray"
-      };
+    getPriorityText(priority) {
+      if (priority == 1) return "Alta";
+      if (priority == 2) return "Media";
 
-      return colors[level] || "primary";
+      return "Baja";
+    },
+    getPriorityColor(priority) {
+      if (priority == 1) return "danger";
+      if (priority == 2) return "warning";
+
+      return "info";
     }
   }
 };

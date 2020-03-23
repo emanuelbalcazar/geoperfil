@@ -192,6 +192,17 @@ export default new Router({
                 }
             ]
         },
+        {
+            path: '/alerts',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-alerts',
+                    path: 'list',
+                    component: () => import('../components/alerts/List.vue')
+                }
+            ],
+        },
         // ================================================================================== //
         {
             path: '/404',

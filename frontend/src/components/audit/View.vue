@@ -5,7 +5,7 @@
         <va-card :title="text.title">
           <div class="mb-3">
             <va-notification color="info">
-              <va-badge :color="getLevelColor(log.level)">{{ log.level }}</va-badge><b>En el modulo:</b>&nbsp;
+              <va-badge :color="getLevelColor(log.level)">{{ log.level }}</va-badge><b>En el módulo:</b>&nbsp;
               {{ log.module }}
             </va-notification><b>ID:</b>
             {{log.id}}

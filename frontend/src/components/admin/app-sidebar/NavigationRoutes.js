@@ -21,7 +21,7 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'list-alerts',
-                    displayName: 'Listar Alertas Pendientes'
+                    displayName: 'Listar alertas pendientes'
                 }
             ]
         },
@@ -29,13 +29,13 @@ export const navigationRoutes = {
             name: 'articles',
             displayName: 'Articulos',
             meta: {
-                iconClass: 'fa fa-edit',
+                iconClass: 'fa fa-newspaper-o',
             },
             disabled: true,
             children: [
                 {
                     name: 'list-articles',
-                    displayName: 'Listar Articulos'
+                    displayName: 'Listar articulos'
                 }
             ]
         },
@@ -57,13 +57,13 @@ export const navigationRoutes = {
             name: 'careers',
             displayName: 'Carreras',
             meta: {
-                iconClass: 'fa fa-book  ',
+                iconClass: 'fa fa-mortar-board  ',
             },
             disabled: true,
             children: [
                 {
                     name: 'list-careers',
-                    displayName: 'Listar Carreras',
+                    displayName: 'Listar carreras',
                 }
             ],
         },
@@ -77,11 +77,11 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'new-equation',
-                    displayName: 'Crear Ecuación'
+                    displayName: 'Crear ecuación'
                 },
                 {
                     name: 'list-equations',
-                    displayName: 'Listar Ecuaciones',
+                    displayName: 'Listar ecuaciones',
                 }
             ],
         },
@@ -95,7 +95,7 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'list-institutions',
-                    displayName: 'Listar Instituciones',
+                    displayName: 'Listar instituciones',
                 }
             ],
         },
@@ -109,7 +109,7 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'leaflet-maps',
-                    displayName: 'Ver Mapa'
+                    displayName: 'Ver mapa'
                 }
             ]
         },
@@ -123,7 +123,7 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'list-professionals',
-                    displayName: 'Listar Profesionales'
+                    displayName: 'Listar profesionales'
                 }
             ]
         },
@@ -137,11 +137,11 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'new-site',
-                    displayName: 'Crear Sitio'
+                    displayName: 'Crear sitio'
                 },
                 {
                     name: 'list-sites',
-                    displayName: 'Listar Sitios'
+                    displayName: 'Listar sitios'
                 }
             ]
         },

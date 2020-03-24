@@ -127,6 +127,9 @@ export default {
     formatMessage(value = "") {
       return value.substring(0, 100);
     },
+    view(alert) {
+      this.$router.push({ name: "view-alert", params: { id: alert.id } });
+    },
     getPriorityText(priority) {
       if (priority == 1) return "Alta";
       if (priority == 2) return "Media";

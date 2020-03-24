@@ -203,6 +203,17 @@ export default new Router({
                 }
             ],
         },
+        {
+            path: '/alerts/view',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'view-alert',
+                    path: ':id',
+                    component: () => import('../components/alerts/View.vue')
+                }
+            ]
+        },
         // ================================================================================== //
         {
             path: '/404',

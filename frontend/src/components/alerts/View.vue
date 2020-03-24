@@ -13,24 +13,49 @@
             <b>ID:</b>
             {{alert.id}}
             <br />
+            <br />
             <b>Fecha:</b>
             {{alert.timestamp}}
+            <br />
             <br />
             <b>Descripción:</b>
             {{alert.description}}
             <br />
-            <b>Dato:</b>
-            {{alert.data}}
             <br />
+            <div class="md6 sm6 xs12">
+              <va-input label="Dato" v-model="alert.data" />
+            </div>
           </div>
 
           <div class="row">
             <div class="flex">
-              <va-button color="success">{{ text.accept }}</va-button>
-              <va-button color="danger">{{ text.reject }}</va-button>
+              <va-button @click="showAcceptModal" color="success">{{ text.accept }}</va-button>
+              <va-button @click="showRejectModal" color="danger">{{ text.reject }}</va-button>
             </div>
           </div>
         </va-card>
+
+        <va-modal
+          v-model="modal.accept.show"
+          size="large"
+          :okText="'Aceptar'"
+          :cancelText="'Cancelar'"
+          title="¿Desea aceptar la alerta?"
+          :message="modal.message"
+          :noOutsideDismiss="true"
+          @ok="accept"
+        />
+
+        <va-modal
+          v-model="modal.reject.show"
+          size="large"
+          :okText="'Aceptar'"
+          :cancelText="'Cancelar'"
+          title="¿Desea rechazar la alerta?"
+          :message="modal.message"
+          :noOutsideDismiss="true"
+          @ok="reject"
+        />
       </div>
     </div>
   </div>
@@ -59,6 +84,15 @@ export default {
         status: "",
         data: "",
         timestamp: ""
+      },
+      modal: {
+        accept: {
+          show: false
+        },
+        reject: {
+          show: false
+        },
+        message: ""
       }
     };
   },
@@ -98,6 +132,32 @@ export default {
       if (priority == 2) return "warning";
 
       return "info";
+    },
+    showAcceptModal() {
+      this.modal.message = this.getModalMessage(this.alert.type);
+      this.modal.accept.show = true;
+    },
+    accept() {
+      alert("aceptada alerta");
+    },
+    showRejectModal() {
+      this.modal.message = "La alerta pasará a estar rechazada.";
+      this.modal.reject.show = true;
+    },
+    reject() {
+      alert("alerta rechazada");
+    },
+    getModalMessage(type) {
+      if (type == "newCareer")
+        return "Se creara la nueva carrera automaticamente";
+
+      if (type == "newCampus")
+        return "Se creara la nueva sede institucional automaticamente";
+
+      if (type == "newInstitution")
+        return "Se creara la nueva institución automaticamente";
+
+      return "No hay información sobre el tipo de sugerencia solicitado";
     }
   }
 };

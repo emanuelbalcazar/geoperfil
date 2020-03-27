@@ -30,7 +30,7 @@ class AlertService {
      */
     async accept(alert) {
         let resolver = this.getResolver(alert.type);
-        await resolver.accept();
+        await resolver.accept(alert);
         return;
     }
 
@@ -40,7 +40,7 @@ class AlertService {
      */
     async reject(alert) {
         let resolver = this.getResolver(alert.type);
-        await resolver.reject();
+        await resolver.reject(alert);
         return;
     }
 }

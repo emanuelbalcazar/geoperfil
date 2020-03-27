@@ -246,13 +246,13 @@ export default {
     },
     async getCareers() {
       let response = await axios.get("/api/careers", {
-        params: { page: 1, perPage: 500 }
+        params: { page: "all" }
       });
       this.careers = response.data.data;
     },
     async getCampuses() {
       let response = await axios.get("/api/campuses", {
-        params: { page: 1, perPage: 500 }
+        params: { page: "all" }
       });
       this.campuses = response.data.data;
     }

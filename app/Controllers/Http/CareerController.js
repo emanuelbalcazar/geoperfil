@@ -25,6 +25,9 @@ class CareerController {
         params.columnName = params.columnName || 'name';
         params.columnValue = params.columnValue || '';
 
+        if (params.page == "all")
+            return await Career.all();
+
         let careers = await Career.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
         return response.json(careers);
     }

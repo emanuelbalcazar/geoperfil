@@ -10,27 +10,29 @@
               >{{ getPriorityText(alert.priority) }}</va-badge>&nbsp;
               <b>{{ alert.name }}</b>
             </va-notification>
+            <br />
             <b>ID:</b>
             {{alert.id}}
             <br />
-            <br />
             <b>Fecha:</b>
             {{alert.timestamp}}
-            <br />
             <br />
             <b>Descripción:</b>
             {{alert.description}}
             <br />
             <br />
+            <b>Aviso: asegúrese de que el dato sea correcto</b>
+            <br />
+            <br />
             <div class="md6 sm6 xs12">
-              <va-input label="Dato" v-model="alert.data" />
+              <va-input label="Dato ingresado" v-model="alert.data" />
             </div>
           </div>
 
           <div class="row">
             <div class="flex">
-              <va-button @click="showAcceptModal" color="success">{{ text.accept }}</va-button>
               <va-button @click="showRejectModal" color="danger">{{ text.reject }}</va-button>
+              <va-button @click="showAcceptModal" color="success">{{ text.accept }}</va-button>
             </div>
           </div>
         </va-card>
@@ -73,8 +75,27 @@ export default {
       text: {
         title: "Detalle de alerta",
         accept: "Aceptar",
-        reject: "Rechazar"
+        reject: "Rechazar",
+        priority: {
+          "1": "Alta",
+          "2": "Media",
+          "3": "Baja"
+        },
+        color: {
+          "1": "danger",
+          "2": "warning",
+          "3": "info"
+        },
+        modal: {
+          reject:
+            "La alerta pasará a estar rechazada y el dato no se guardará.",
+          newCareer: "Se creará la nueva carrera automaticamente.",
+          newCampus: "Se creará la nueva sede institucional automaticamente.",
+          newInstitution: "Se creará la nueva institución automaticamente."
+        }
       },
+      institutions: [],
+      selectedInstitution: "",
       alert: {
         id: 0,
         name: "",
@@ -98,6 +119,12 @@ export default {
   },
   created() {
     this.findById(this.$route.params.id);
+    this.findInstitutions();
+  },
+  watch: {
+    selectedInstitution: function(institution) {
+      this.alert.data.institution_id = institution.id;
+    }
   },
   methods: {
     findById(id) {
@@ -118,46 +145,38 @@ export default {
           this.$router.push({ name: "list-alerts" });
         });
     },
+    async findInstitutions() {
+      const params = { page: "all" };
+      let response = await axios.get("/api/institutions", { params });
+      this.institutions = response.data;
+    },
     formatDate(value) {
       return moment(value).format("DD-MM-YYYY HH:mm:ss");
     },
     getPriorityText(priority) {
-      if (priority == 1) return "Alta";
-      if (priority == 2) return "Media";
-
-      return "Baja";
+      return this.text.priority[String(priority)];
     },
     getPriorityColor(priority) {
-      if (priority == 1) return "danger";
-      if (priority == 2) return "warning";
-
-      return "info";
+      return this.text.color[String(priority)];
     },
     showAcceptModal() {
       this.modal.message = this.getModalMessage(this.alert.type);
       this.modal.accept.show = true;
     },
-    accept() {
-      alert("aceptada alerta");
-    },
     showRejectModal() {
-      this.modal.message = "La alerta pasará a estar rechazada.";
+      this.modal.message = this.text.modal.reject;
       this.modal.reject.show = true;
     },
-    reject() {
-      alert("alerta rechazada");
+    async accept() {
+      let id = this.$route.params.id;
+      let response = await axios.get(`/api/alerts/${id}/accept`);
+    },
+    async reject() {
+      let id = this.$route.params.id;
+      let response = await axios.get(`/api/alerts/${id}/reject`);
     },
     getModalMessage(type) {
-      if (type == "newCareer")
-        return "Se creara la nueva carrera automaticamente";
-
-      if (type == "newCampus")
-        return "Se creara la nueva sede institucional automaticamente";
-
-      if (type == "newInstitution")
-        return "Se creara la nueva institución automaticamente";
-
-      return "No hay información sobre el tipo de sugerencia solicitado";
+      return this.text.modal[String(type)];
     }
   }
 };

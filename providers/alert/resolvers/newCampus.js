@@ -1,4 +1,5 @@
 const AlertResolver = require('./AlertResolver');
+const Alert = use('App/Models/Alert');
 
 class NewCampusResolver extends AlertResolver {
 
@@ -6,11 +7,11 @@ class NewCampusResolver extends AlertResolver {
         super();
     }
 
-    async accept() {
+    async accept(alert) {
 
     }
 
-    async reject() {
+    async reject(alert) {
 
     }
 }

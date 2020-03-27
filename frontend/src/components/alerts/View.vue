@@ -171,7 +171,7 @@ export default {
       let id = this.$route.params.id;
       let response = await axios.get(`/api/alerts/${id}/accept`);
 
-      if (response.data > 0) {
+      if (response.data.success) {
         this.logSuccess("La alerta se acepto correctamente");
       } else {
         this.logError("La alerta no pudo ser aceptada");
@@ -183,7 +183,7 @@ export default {
       let id = this.$route.params.id;
       let response = await axios.get(`/api/alerts/${id}/reject`);
 
-      if (response.data > 0) {
+      if (response.data.success) {
         this.logSuccess("La alerta se rechazo correctamente");
       } else {
         this.logError("La alerta no pudo ser rechazada");

@@ -1,3 +1,5 @@
+const Alert = use('App/Models/Alert');
+
 /**
  * Alert resolver interface.
  * @class AlertResolver
@@ -11,11 +13,13 @@ class AlertResolver {
     constructor() { }
 
     async accept(alert) {
-        throw new Error('Accept must be implemented');
+        let updated = await Alert.query().where('id', alert.id).update({ status: 'accepted' });
+        return { alert: alert, updated: updated, success: true };
     }
 
     async reject(alert) {
-        throw new Error('Reject must be implemented');
+        let updated = await Alert.query().where('id', alert.id).update({ status: 'rejected' });
+        return { alert: alert, updated: updated, success: true };
     }
 }
 

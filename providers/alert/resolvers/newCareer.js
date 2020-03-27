@@ -9,14 +9,12 @@ class NewCaareerResolver extends AlertResolver {
     }
 
     async accept(alert) {
-        let career = await Career.create({ name: alert.data });
-        let updated = await Alert.query().where('id', alert.id).update({ status: 'accepted' });
-        return updated;
+        let career = await Career.findOrCreate({ name: alert.data }, { name: alert.data });
+        return await super.accept(alert);
     }
 
     async reject(alert) {
-        let updated = await Alert.query().where('id', alert.id).update({ status: 'rejected' });
-        return updated;
+        return await super.reject(alert);
     }
 }
 

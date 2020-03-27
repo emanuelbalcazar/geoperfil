@@ -15,11 +15,11 @@ class DefaultResolver extends AlertResolver {
     }
 
     async accept(alert) {
-        console.log('Metodo de aceptar por defecto');
+        return { alert: alert, updated: 0, success: false };
     }
 
     async reject(alert) {
-        console.log('Metodo de rechazar por defecto');
+        return { alert: alert, updated: 0, success: false };
     }
 }
 

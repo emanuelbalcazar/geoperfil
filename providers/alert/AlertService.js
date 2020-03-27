@@ -10,8 +10,8 @@ class AlertService {
     constructor() { }
 
     /**
-     * @param {String} type of alert
-     * @returns resolver
+     * @param {String} type of the alert
+     * @returns the necessary resolver for the alert
      * @memberof AlertService
      */
     getResolver(type = 'defaultResolver') {
@@ -29,8 +29,6 @@ class AlertService {
      * @memberof AlertService
      */
     async accept(alert) {
-        console.log('>', alert.type);
-
         let resolver = this.getResolver(alert.type);
         return await resolver.accept(alert);
     }

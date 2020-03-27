@@ -170,10 +170,26 @@ export default {
     async accept() {
       let id = this.$route.params.id;
       let response = await axios.get(`/api/alerts/${id}/accept`);
+
+      if (response.data > 0) {
+        this.logSuccess("La alerta se acepto correctamente");
+      } else {
+        this.logError("La alerta no pudo ser aceptada");
+      }
+
+      this.$router.push({ name: "list-alerts" });
     },
     async reject() {
       let id = this.$route.params.id;
       let response = await axios.get(`/api/alerts/${id}/reject`);
+
+      if (response.data > 0) {
+        this.logSuccess("La alerta se rechazo correctamente");
+      } else {
+        this.logError("La alerta no pudo ser rechazada");
+      }
+
+      this.$router.push({ name: "list-alerts" });
     },
     getModalMessage(type) {
       return this.text.modal[String(type)];

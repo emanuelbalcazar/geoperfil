@@ -42,8 +42,7 @@ class AlertController {
      */
     async accept({ params, request, response, view }) {
         let alert = await Alert.query().where('id', params.id).first();
-        await AlertService.accept(alert);
-        return response.json(alert);
+        return await AlertService.accept(alert);
     }
 
     /**
@@ -57,8 +56,7 @@ class AlertController {
      */
     async reject({ params, request, response, view }) {
         let alert = await Alert.query().where('id', params.id).first();
-        await AlertService.reject(alert);
-        return response.json(alert);
+        return await AlertService.reject(alert);
     }
 
     /**

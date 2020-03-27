@@ -16,7 +16,7 @@ class AlertService {
      */
     getResolver(type = 'defaultResolver') {
         try {
-            let resolver = require('./' + type);
+            let resolver = require('./resolvers/' + type);
             return resolver;
         } catch (e) {
             let defaultResolver = require('./resolvers/defaultResolver');
@@ -29,9 +29,10 @@ class AlertService {
      * @memberof AlertService
      */
     async accept(alert) {
+        console.log('>', alert.type);
+
         let resolver = this.getResolver(alert.type);
-        await resolver.accept(alert);
-        return;
+        return await resolver.accept(alert);
     }
 
     /**
@@ -40,8 +41,7 @@ class AlertService {
      */
     async reject(alert) {
         let resolver = this.getResolver(alert.type);
-        await resolver.reject(alert);
-        return;
+        return await resolver.reject(alert);
     }
 }
 

@@ -169,7 +169,7 @@ export default {
     },
     async accept() {
       let id = this.$route.params.id;
-      let response = await axios.get(`/api/alerts/${id}/accept`);
+      let response = await axios.post("/api/alerts/accept", this.alert);
 
       if (response.data.success) {
         this.logSuccess("La alerta se acepto correctamente");
@@ -181,7 +181,7 @@ export default {
     },
     async reject() {
       let id = this.$route.params.id;
-      let response = await axios.get(`/api/alerts/${id}/reject`);
+      let response = await axios.get("/api/alerts/reject", this.alert);
 
       if (response.data.success) {
         this.logSuccess("La alerta se rechazo correctamente");

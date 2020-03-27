@@ -62,9 +62,9 @@ Route.group(() => {
 
     Route.post('/auth/reset', 'ForgotPasswordController.update');
 
-    Route.get('/alerts/:id/accept', 'AlertController.accept');
+    Route.post('/alerts/accept', 'AlertController.accept');
 
-    Route.get('/alerts/:id/reject', 'AlertController.reject');
+    Route.post('/alerts/reject', 'AlertController.reject');
 
     Route.get('/professionalDetails/:id', 'ProfessionalController.show_details');
 

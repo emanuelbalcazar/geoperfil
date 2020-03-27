@@ -41,7 +41,7 @@ class AlertController {
      * @param {View} ctx.view
      */
     async accept({ params, request, response, view }) {
-        let alert = await Alert.query().where('id', params.id).first();
+        let alert = request.post();
         return await AlertService.accept(alert);
     }
 
@@ -55,7 +55,7 @@ class AlertController {
      * @param {View} ctx.view
      */
     async reject({ params, request, response, view }) {
-        let alert = await Alert.query().where('id', params.id).first();
+        let alert = request.post();
         return await AlertService.reject(alert);
     }
 

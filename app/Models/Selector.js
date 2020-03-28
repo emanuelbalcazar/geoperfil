@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Selector extends Model {
 
-    static get createdAtColumn () {
+    static get createdAtColumn() {
         return null;
     }
 
-    static get updatedAtColumn () {
+    static get updatedAtColumn() {
         return null;
     }
 }

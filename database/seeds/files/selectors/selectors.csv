@@ -1,11 +1,11 @@
-selector,equation_id
-.td-post-content p,1
-.post-content p,2
-#bloque_superior p,3
-.notapage_cuerpo p,4
-.news-amp-body,4
-.interiorCopete,5
-.cuerpo.clearfix,5
-.article-body p,6
-.post-single p,7
-.tm-article-content p,8
+selector,site
+.td-post-content p,http://diariocronica.com.ar
+.post-content p,https://www.eldiariodemadryn.com
+#bloque_superior p,https://www.diariojornada.com.ar/
+.notapage_cuerpo p,https://www.elchubut.com.ar
+.news-amp-body,https://www.elchubut.com.ar
+.interiorCopete,https://www.elpatagonico.com
+.cuerpo.clearfix,https://www.elpatagonico.com
+.article-body p,http://www.madryn.unp.edu.ar/
+.post-single p,http://udc.edu.ar
+.tm-article-content p,http://www.unp.edu.ar/

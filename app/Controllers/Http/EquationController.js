@@ -5,10 +5,11 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Equation = use('App/Models/Equation');
-const Selector = use('App/Models/Selector')
+const EquationStatus = use('App/Models/EquationStatus');
 
 /**
  * Resourceful controller for interacting with equations
+ * @deprecated
  */
 class EquationController {
     /**
@@ -22,10 +23,12 @@ class EquationController {
      */
     async index({ request, response, view }) {
         let params = request.all();
-        params.columnName = params.columnName || 'siteSearch';
+        params.columnName = params.columnName || 'q';
         params.columnValue = params.columnValue || '';
 
-        let equations = await Equation.query().with('selectors').where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        let equations = await Equation.query()
+            .where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+
         return response.json(equations);
     }
 
@@ -52,7 +55,7 @@ class EquationController {
      */
     async store({ request, response }) {
         let equation = request.post();
-        let eq = await Equation.query().where({ q: equation.q, siteSearch: equation.siteSearch }).fetch()
+        let eq = await Equation.query().where({ q: equation.q }).fetch();
 
         if (eq.rows.length > 0) {
             response.conflict({ code: 409, message: 'Ecuacion ya existe' })
@@ -73,7 +76,7 @@ class EquationController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
-        let equation = await Equation.query().where('id', params.id).with('selectors').first();
+        let equation = await Equation.query().where('id', params.id).first();
         return response.json(equation);
     }
 
@@ -111,9 +114,7 @@ class EquationController {
      * @param {Response} ctx.response
      */
     async destroy({ params, request, response }) {
-        let selectors = await Selector.query().where('equation_id', params.id).delete();
-        let equation = await Equation.query().where('id', params.id).delete();
-        return response.json(equation);
+
     }
 }
 

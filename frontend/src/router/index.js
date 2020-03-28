@@ -36,30 +36,46 @@ export default new Router({
                     component: () => import('../components/auth/recover-password/RecoverPassword.vue'),
                 },
                 {
+                    name: 'new-password',
+                    path: 'new-password',
+                    component: () => import('../components/auth/new-password/NewPassword.vue'),
+                },
+                {
                     path: '',
                     redirect: { name: 'login' },
                 },
             ],
         },
         {
-            path: '/selectors',
+            path: '/sites',
             component: AppLayout,
             children: [
                 {
-                    name: 'list-selectors',
+                    name: 'list-sites',
                     path: 'list',
-                    component: () => import('../components/selectors/List.vue')
+                    component: () => import('../components/sites/List.vue')
                 }
             ],
         },
         {
-            path: '/selectors',
+            path: '/sites/edit',
             component: AppLayout,
             children: [
                 {
-                    name: 'edit-selector',
+                    name: 'edit-site',
                     path: ':id',
-                    component: () => import('../components/selectors/Edit.vue')
+                    component: () => import('../components/sites/Edit.vue')
+                }
+            ]
+        },
+        {
+            path: '/sites',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'new-site',
+                    path: 'new',
+                    component: () => import('../components/sites/New.vue')
                 }
             ]
         },
@@ -75,13 +91,24 @@ export default new Router({
             ],
         },
         {
-            path: '/equations',
+            path: '/equations/edit',
             component: AppLayout,
             children: [
                 {
                     name: 'edit-equation',
                     path: ':id',
                     component: () => import('../components/equations/Edit.vue')
+                }
+            ]
+        },
+        {
+            path: '/equations',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'new-equation',
+                    path: 'new',
+                    component: () => import('../components/equations/New.vue')
                 }
             ]
         },
@@ -106,6 +133,86 @@ export default new Router({
                     component: () => import('../components/institutions/List.vue')
                 }
             ],
+        },
+        {
+            path: '/editor',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'medium-editor',
+                    path: ':id',
+                    component: () => import('../components/forms/medium-editor/MediumEditor.vue'),
+                    meta: {
+                        wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Medium-Editor',
+                    },
+                }
+            ],
+        },
+        {
+            path: '/articles',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-articles',
+                    path: 'list',
+                    component: () => import('../components/articles/List.vue')
+                }
+            ],
+        },
+        {
+            path: '/professionals',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-professionals',
+                    path: 'list',
+                    component: () => import('../components/professionals/List.vue')
+                }
+            ],
+        },
+        {
+            path: '/logs',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-logs',
+                    path: 'list',
+                    component: () => import('../components/audit/List.vue')
+                }
+            ],
+        },
+        {
+            path: '/logs/view',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'view-log',
+                    path: ':id',
+                    component: () => import('../components/audit/View.vue')
+                }
+            ]
+        },
+        {
+            path: '/alerts',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'list-alerts',
+                    path: 'list',
+                    component: () => import('../components/alerts/List.vue')
+                }
+            ],
+        },
+        {
+            path: '/alerts/view',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'view-alert',
+                    path: ':id',
+                    component: () => import('../components/alerts/View.vue')
+                }
+            ]
         },
         // ================================================================================== //
         {
@@ -168,29 +275,7 @@ export default new Router({
                         },
                     ],
                 },
-                {
-                    name: 'forms',
-                    path: 'forms',
-                    component: EmptyParentComponent,
-                    children: [
-                        {
-                            name: 'form-elements',
-                            path: 'form-elements',
-                            component: () => import('../components/forms/form-elements/FormElements.vue'),
-                            meta: {
-                                wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/inputs',
-                            },
-                        },
-                        {
-                            name: 'medium-editor',
-                            path: 'medium-editor',
-                            component: () => import('../components/forms/medium-editor/MediumEditor.vue'),
-                            meta: {
-                                wikiLink: 'https://github.com/epicmaxco/vuestic-admin/wiki/Medium-Editor',
-                            },
-                        },
-                    ],
-                },
+
                 {
                     name: 'tables',
                     path: 'tables',

@@ -1,12 +1,11 @@
 <template>
-  <div class="dashboard">Bienvenido a GeoPerfil</div>
+  <div class="dashboard"><h1>Bienvenido a <b>GeoPerfil</b></h1></div>
 </template>
 
 <script>
 export default {
   name: "dashboard",
   components: {},
-
   methods: {}
 };
 </script>

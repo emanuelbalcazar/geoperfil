@@ -24,15 +24,31 @@ Route.get('/', async ({ response }) => {
 // routes with prefix 'api'
 Route.group(() => {
 
-    Route.resource('/equations', 'EquationController');
+    Route.resource('/alerts', 'AlertController');
 
-    Route.resource('/selectors', 'SelectorController');
-
-    Route.resource('/institutions', 'InstitutionController');
+    Route.resource('/articles', 'ArticleController');
 
     Route.resource('/campuses', 'CampusController');
 
     Route.resource('/careers', 'CareerController');
+
+    Route.resource('/equations', 'EquationStatusController');
+
+    Route.resource('/institutions', 'InstitutionController');
+
+    Route.resource('/logs', 'LogController');
+
+    Route.resource('/professionals', 'ProfessionalController');
+
+    Route.resource('/queries', 'QueryController');
+
+    Route.resource('/selectors', 'SelectorController');
+
+    Route.resource('/sites', 'SiteController');
+
+    Route.resource('/provinces', 'ProvinceController');
+
+    Route.resource('/cities', 'CityController');
 
     Route.post('/extractors/run', 'ExtractorController.extract');
 
@@ -41,5 +57,15 @@ Route.group(() => {
     Route.post('/auth/register', 'AuthController.register');
 
     Route.post('/auth/login', 'AuthController.login');
+
+    Route.post('/auth/recover', 'AuthController.recover');
+
+    Route.post('/auth/reset', 'ForgotPasswordController.update');
+
+    Route.post('/alerts/accept', 'AlertController.accept');
+
+    Route.post('/alerts/reject', 'AlertController.reject');
+
+    Route.get('/professionalDetails/:id', 'ProfessionalController.show_details');
 
 }).prefix('api');

@@ -1,31 +1,17 @@
 <template>
   <va-card :title="title.table">
-    <div class="row align--center">
-      <div class="flex xs12 md6">
-        <va-input :value="toSearch" :placeholder="title.search" @input="search">
-          <va-icon name="fa fa-search" slot="prepend" />
-        </va-input>
-      </div>
-    </div>
-
     <va-data-table
       :fields="fields"
       :data="items"
-      :loading="loading"
-      :per-page="perPage"
-      :totalPages="totalPages"
       :no-data-label="title.noData"
+      :loading="loading"
+      :per-page="parseInt(perPage)"
+      :totalPages="totalPages"
       @page-selected="readItems"
       api-mode
     >
       <template slot="actions" slot-scope="props">
-        <va-button
-          flat
-          small
-          color
-          @click="edit(props.rowData)"
-          class="ma-0"
-        >{{ $t('tables.edit') }}</va-button>
+        <va-button flat small color @click="toEdit(props.rowData)" class="ma-0">Ver editor</va-button>
       </template>
     </va-data-table>
   </va-card>
@@ -38,10 +24,10 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Selectores",
+        table: "Listado de Articulos",
         perPage: "Por Páginas",
-        search: "Buscar por texto de selector",
-        noData: "No se encontraron selectores"
+        search: "Buscar por sitio",
+        noData: "No se encontraron articulos."
       },
       perPage: 10,
       totalPages: 0,
@@ -55,20 +41,23 @@ export default {
       return [
         {
           name: "id",
-          title: "ID",
-          width: "20%"
+          title: "ID"
         },
         {
-          name: "selector",
-          title: "Selector"
+          name: "title",
+          title: "Titulo"
         },
         {
-          name: "equation_id",
-          title: "Ecuación"
+          name: "snippet",
+          title: "Resumen"
+        },
+        {
+          name: "link",
+          title: "URL"
         },
         {
           name: "__slot:actions",
-          dataClass: "text-right"
+          dataClass: "text-center"
         }
       ];
     }
@@ -86,19 +75,18 @@ export default {
 
       const params = {
         perPage: this.perPage,
-        page: page,
-        columnValue: this.toSearch
+        page: page
       };
 
-      axios.get("/api/selectors", { params }).then(response => {
+      axios.get("/api/articles", { params }).then(response => {
         this.items = response.data.data;
         this.totalPages = response.data.lastPage;
         this.loading = false;
         this.perPage = response.data.perPage;
       });
     },
-    edit(selector) {
-      this.$router.push({ name: "edit-selector", params: {id: selector.id} });
+    toEdit(article) {
+      this.$router.push({ name: "medium-editor", params: { id: article.id } });
     }
   }
 };

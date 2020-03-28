@@ -1,32 +1,34 @@
 <template>
   <va-card :title="title.table">
-    <div class="row align--center">
-      <div class="flex xs12 md6">
-        <va-input :value="toSearch" :placeholder="title.search" @input="search">
-          <va-icon name="fa fa-search" slot="prepend" />
-        </va-input>
-      </div>
+    <div v-for="header in headers">
+      <va-accordion>
+        <va-collapse>
+          <span slot="header">{{header}}</span>
+          <div slot="body">
+            <va-data-table
+              :fields="fields"
+              :data="dataWithHeaders(header)"
+              :no-data-label="title.noData"
+              :loading="loading"
+              :per-page="parseInt(perPage)"
+              :totalPages="totalPages"
+              @page-selected="readItems"
+              api-mode
+            >
+              <template slot="actions" slot-scope="props">
+                <va-button
+                  flat
+                  small
+                  color
+                  @click="edit(props.rowData)"
+                  class="ma-0"
+                >{{ $t('tables.edit') }}</va-button>
+              </template>
+            </va-data-table>
+          </div>
+        </va-collapse>
+      </va-accordion>
     </div>
-
-    <va-data-table
-      :fields="fields"
-      :data="items"
-      :loading="loading"
-      :per-page="parseInt(perPage)"
-      :totalPages="totalPages"
-      @page-selected="readItems"
-      api-mode
-    >
-      <template slot="actions" slot-scope="props">
-        <va-button
-          flat
-          small
-          color
-          @click="edit(props.rowData)"
-          class="ma-0"
-        >{{ $t('tables.edit') }}</va-button>
-      </template>
-    </va-data-table>
   </va-card>
 </template>
 
@@ -37,7 +39,7 @@ export default {
   data() {
     return {
       title: {
-        table: "Listado de Ecuaciones",
+        table: "Listado de Ecuaciones (Agrupadas por consulta)",
         perPage: "Por Páginas",
         search: "Buscar por sitio",
         noData: "No se encontraron ecuaciones."
@@ -46,7 +48,8 @@ export default {
       totalPages: 0,
       items: [],
       loading: false,
-      toSearch: null
+      toSearch: null,
+      headers: []
     };
   },
   computed: {
@@ -54,15 +57,14 @@ export default {
       return [
         {
           name: "id",
-          title: "ID",
-          width: "20%"
+          title: "ID"
         },
-        {
-          name: "q",
+        /* {
+          name: "equation.q",
           title: "Terminos"
-        },
+        }, */
         {
-          name: "siteSearch",
+          name: "site.site",
           title: "Sitio"
         },
         {
@@ -75,7 +77,7 @@ export default {
         },
         {
           name: "__slot:actions",
-          dataClass: "text-right"
+          dataClass: "text-center"
         }
       ];
     }
@@ -88,14 +90,17 @@ export default {
       this.toSearch = toSearch;
       this.readItems();
     },
+    dataWithHeaders(header) {
+        return this.items.filter(eq => {
+            return (eq.equation.q === header);
+        });
+    },
     readItems(page = 1) {
       this.loading = true;
 
       const params = {
         perPage: this.perPage,
-        page: page,
-        columnValue: this.toSearch,
-        columnName: "siteSearch"
+        page: page
       };
 
       axios.get("/api/equations", { params }).then(response => {
@@ -103,10 +108,16 @@ export default {
         this.totalPages = response.data.lastPage;
         this.loading = false;
         this.perPage = response.data.perPage;
+
+        let queries = this.items.map(eq => {
+          return eq.equation.q;
+        });
+
+        this.headers = [...new Set(queries)]; // obtengo las cabeceras de los desplegables
       });
     },
     edit(equation) {
-      this.$router.push({ name: "edit-equation", params: {id: equation.id} });
+      this.$router.push({ name: "edit-equation", params: { id: equation.id } });
     }
   }
 };

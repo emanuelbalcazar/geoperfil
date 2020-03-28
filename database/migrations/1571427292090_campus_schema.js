@@ -9,11 +9,12 @@ class CampusSchema extends Schema {
             table.increments()
             table.string('name', 250)
             table.string('address', 250)
-            table.string('city',100 )
+            //table.string('city',100 )
             table.enu('modality', ['classroom', 'virtual'])
             table.decimal('latitude', 10,8)
             table.decimal('longitude', 10,8)
             table.integer('institution_id').references('id').inTable('institutions')
+            table.integer('city_id').references('id').inTable('cities')
         });
     }
 

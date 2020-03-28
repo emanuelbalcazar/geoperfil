@@ -1,6 +1,7 @@
 'use strict'
 
-const BaseExceptionHandler = use('BaseExceptionHandler')
+const BaseExceptionHandler = use('BaseExceptionHandler');
+const Logger = use('Logger');
 
 /**
  * This class handles all exceptions thrown during
@@ -20,7 +21,7 @@ class ExceptionHandler extends BaseExceptionHandler {
      *
      * @return {Mixed}
      */
-    handle(error, { request, response }) {
+    async handle(error, { request, response }) {
         let errorObject = {
             name: error.name,
             message: error.message,
@@ -28,6 +29,7 @@ class ExceptionHandler extends BaseExceptionHandler {
             stack: error.stack
         };
 
+        await Logger.error(error.stack);
         response.status(error.status).json(errorObject);
     }
 

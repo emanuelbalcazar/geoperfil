@@ -1,5 +1,5 @@
-id,name,address,city,modality,latitude,longitude
-14,UNPSJB Comodoro Rivadavia, Ciudad Universitaria Km 4,Comodoro Rivadavia,classroom,0,0
-15,UNPSJB Esquel,Ruta Nacional 259 Km 16 ,Esquel,classroom,0,0
-16,UNPSJB Puerto Madryn,Boulevard Almirante Guillermo Brown 3051, Puerto Madryn,classroom,0,0
-17,UNPSJB Trelew,9 de Julio 25,Trelew,classroom,0,0
+name,address,city,modality,latitude,longitude
+UNPSJB Comodoro Rivadavia, Ciudad Universitaria Km 4,Comodoro Rivadavia,classroom,0,0
+UNPSJB Esquel,Ruta Nacional 259 Km 16 ,Esquel,classroom,0,0
+UNPSJB Puerto Madryn,Boulevard Almirante Guillermo Brown 3051, Puerto Madryn,classroom,0,0
+UNPSJB Trelew,9 de Julio 25,Trelew,classroom,0,0

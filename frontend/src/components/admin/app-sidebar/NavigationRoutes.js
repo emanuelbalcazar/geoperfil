@@ -6,38 +6,66 @@ export const navigationRoutes = {
     routes: [
         {
             name: 'dashboard',
-            displayName: 'menu.dashboard',
+            displayName: 'Dashboard',
             meta: {
                 iconClass: 'fa fa-home'
             }
         },
         {
-            name: 'maps',
-            displayName: 'menu.maps',
+            name: 'alerts',
+            displayName: 'Alertas',
             meta: {
-                iconClass: 'fa fa-map'
+                iconClass: 'fa fa-warning',
             },
             disabled: true,
             children: [
                 {
-                    name: 'leaflet-maps',
-                    displayName: 'Ver Mapa'
+                    name: 'list-alerts',
+                    displayName: 'Listar alertas pendientes'
                 }
             ]
         },
         {
-            name: 'selectors',
-            displayName: 'Selectores',
+            name: 'articles',
+            displayName: 'Articulos',
             meta: {
-                iconClass: 'fa fa-scissors',
+                iconClass: 'fa fa-newspaper-o',
             },
             disabled: true,
             children: [
                 {
-                    name: 'list-selectors',
-                    displayName: 'Listar Selectores'
+                    name: 'list-articles',
+                    displayName: 'Listar articulos'
                 }
             ]
+        },
+        {
+            name: 'logs',
+            displayName: 'Auditoria',
+            meta: {
+                iconClass: 'fa fa-server',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-logs',
+                    displayName: 'Ver registros de logs',
+                }
+            ],
+        },
+        {
+            name: 'careers',
+            displayName: 'Carreras',
+            meta: {
+                iconClass: 'fa fa-mortar-board  ',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-careers',
+                    displayName: 'Listar carreras',
+                }
+            ],
         },
         {
             name: 'equations',
@@ -48,22 +76,12 @@ export const navigationRoutes = {
             disabled: true,
             children: [
                 {
-                    name: 'list-equations',
-                    displayName: 'Listar Ecuaciones',
-                }
-            ],
-        },
-        {
-            name: 'careers',
-            displayName: 'Carreras',
-            meta: {
-                iconClass: 'fa fa-book  ',
-            },
-            disabled: true,
-            children: [
+                    name: 'new-equation',
+                    displayName: 'Crear ecuación'
+                },
                 {
-                    name: 'list-careers',
-                    displayName: 'Listar Carreras',
+                    name: 'list-equations',
+                    displayName: 'Listar ecuaciones',
                 }
             ],
         },
@@ -77,10 +95,57 @@ export const navigationRoutes = {
             children: [
                 {
                     name: 'list-institutions',
-                    displayName: 'Listar Instituciones',
+                    displayName: 'Listar instituciones',
                 }
             ],
         },
+        {
+            name: 'maps',
+            displayName: 'menu.maps',
+            meta: {
+                iconClass: 'fa fa-map'
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'leaflet-maps',
+                    displayName: 'Ver mapa'
+                }
+            ]
+        },
+        {
+            name: 'professionals',
+            displayName: 'Profesionales',
+            meta: {
+                iconClass: 'fa fa-address-card',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'list-professionals',
+                    displayName: 'Listar profesionales'
+                }
+            ]
+        },
+        {
+            name: 'sites',
+            displayName: 'Sitios',
+            meta: {
+                iconClass: 'fa fa-wpforms',
+            },
+            disabled: true,
+            children: [
+                {
+                    name: 'new-site',
+                    displayName: 'Crear sitio'
+                },
+                {
+                    name: 'list-sites',
+                    displayName: 'Listar sitios'
+                }
+            ]
+        },
+
         /* {
             name: 'statistics',
             displayName: 'menu.statistics',

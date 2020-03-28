@@ -6,14 +6,15 @@ const Schema = use('Schema')
 class SelectorSchema extends Schema {
     up() {
         this.create('selectors', (table) => {
-            table.increments()
-            table.string('selector', 100).notNullable()
-            table.integer('equation_id').references('id').inTable('equations')
-        })
+            table.increments();
+            table.string('selector').notNullable();
+            table.string('description').defaultTo('');
+            table.integer('site_id').references('id').inTable('sites');
+        });
     }
 
     down() {
-        this.drop('selectors')
+        this.drop('selectors');
     }
 }
 

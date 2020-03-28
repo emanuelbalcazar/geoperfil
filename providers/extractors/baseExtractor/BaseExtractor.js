@@ -5,6 +5,8 @@ const querystring = require('querystring');
 const Article = use('App/Models/Article');
 const EquationArticle = use('App/Models/EquationArticle');
 
+const Logger = use('Logger');
+
 /**
  * Base extractor, all extractors must extend from this.
  */
@@ -28,6 +30,9 @@ class BaseExtractor {
     async search(equation) {
         let googleResults = { items: [], totalResults: 0, nextIndex: 1, lastPage: 0 };
         let URL = config.options.uri + querystring.stringify(config.options.credentials) + '&' + querystring.stringify(equation);
+
+        Logger.debug(`Iniciando busqueda en: ${URL}`, 'BaseExtractor.search');
+
         let result = await getData(URL);
 
         googleResults.items = googleResults.items.concat(result.items);
@@ -46,7 +51,7 @@ class BaseExtractor {
                 title: item.title || 'no title',
                 link: item.link,
                 displayLink: item.displayLink,
-                snippet: item.snippet,
+                snippet: item.snippet
                 //datepublished: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datepublished) : new Date(),
                 //datemodified: (item.pagemap && item.pagemap.article) ? new Date(item.pagemap.article[0].datemodified) : new Date()
             }
@@ -77,6 +82,13 @@ class BaseExtractor {
             }
         }
 
+        // remove links with /tag/*
+        records = records.filter(article => {
+            return (!article.link.includes('tag') || !article.link.includes('tags'));
+        });
+
+        Logger.debug(`Cantidad de articulos luego de filtrarlos: ${records.length}`, 'BaseExtractor.filter');
+
         googleResults.items = records;
 
         return googleResults;
@@ -92,6 +104,7 @@ class BaseExtractor {
 
         for (const item of googleResults.items) {
             let newItem = item;
+            Logger.debug(`Iniciando crawl en: ${item.link}`, 'BaseExtractor.crawl');
             newItem.html = await getData(item.link);
             allHtml.push(newItem);
         }
@@ -116,8 +129,11 @@ class BaseExtractor {
             delete newItem.html; // I delete the attribute because it is no longer necessary.
             newItem.text = '';
 
+            Logger.debug(`Iniciando scraping en: ${data.link}`, 'BaseExtractor.scraping');
+
             for (const selector of selectors) {
                 let elements = root.querySelectorAll(selector);
+
                 // if there are elements, I get the text.
                 if (elements.length > 0) {
                     let text = elements.map(elem => {
@@ -147,7 +163,7 @@ class BaseExtractor {
 
         for (const article of googleResults.items) {
             let record = await Article.create(article);
-            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id });
+            let relation = await EquationArticle.create({ equation_id: equation.id, article_id: record.id }).catch(er => console.log(er));
             result.push(record);
         }
 

@@ -8,3 +8,14 @@ notifications:
     slack:
         rooms:
             - proyecto-geoperfil:IvuMxA5RM4Bv7bTKfbprMqIA#repositorio
+
+before_install:
+    - touch .env
+    - echo $HOST >> .env
+    - echo $PORT >> .env
+    - echo $APP_ENV >> .env
+    - echo $APP_NAME >> .env
+    - echo $APP_URL >> .env
+    - echo $APP_KEY >> .env
+    - echo $CACHE_VIEWS >> .env
+    - echo $HASH_DRIVER >> .env

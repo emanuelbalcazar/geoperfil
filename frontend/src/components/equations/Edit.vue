@@ -6,15 +6,15 @@
           <form @submit.prevent="update">
             <div class>
               <div class="flex md6 sm6 xs12">
-                <va-input label="Consulta" v-model="equation.q" :disabled="true" />
+                <va-input label="Consulta" v-model="equation.equation.q" :disabled="true" />
               </div>
 
               <div class="flex md6 sm6 xs12">
-                <va-input label="Sitio" v-model="equation.siteSearch" :disabled="true" />
+                <va-input label="Sitio" v-model="equation.site.site" :disabled="true" />
               </div>
 
               <div class="flex md6 sm6 xs12">
-                <va-input label="Inicio" v-model="equation.start" />
+                <va-input label="Inicio" v-model="equation.start" :disabled="true" />
               </div>
 
               <div class="flex md6 sm6 xs12">
@@ -25,7 +25,9 @@
                 />
               </div>
 
-              <va-toggle v-model="equation.active" label="¿Activo?" small />
+              <div class="flex md6 sm6 xs6">
+                <va-toggle v-model="equation.active" label="¿Activo?" small />
+              </div>
             </div>
 
             <va-button color="success" type="submit">Actualizar</va-button>
@@ -48,13 +50,14 @@ export default {
         title: "Ecuación de busqueda"
       },
       equation: {
+        active: false,
+        equation: {},
+        equation_id: 0,
         id: 0,
-        q: "",
-        siteSearch: "",
-        siteSearchFilter: "",
-        start: 1,
         lastExecution: 0,
-        active: true
+        site: {},
+        site_id: 0,
+        start: 1
       }
     };
   },
@@ -81,7 +84,9 @@ export default {
     },
     update(event) {
       axios
-        .put("/api/equations/" + this.equation.id, { active: this.equation.active })
+        .put("/api/equations/" + this.equation.id, {
+          active: this.equation.active
+        })
         .then(response => {
           if (response.data) {
             this.logSuccess("Ecuación actualizada correctamente");

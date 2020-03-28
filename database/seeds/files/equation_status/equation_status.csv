@@ -1,0 +1,9 @@
+equation,site,start,lastExecution,active
+graduados OR colacion,http://diariocronica.com.ar,1,0,true
+graduados OR colacion,https://www.eldiariodemadryn.com,1,0,true
+graduados OR colacion,https://www.diariojornada.com.ar/,1,0,true
+graduados OR colacion,https://www.elchubut.com.ar,1,0,true
+graduados OR colacion,https://www.elpatagonico.com,1,0,true
+colacion,http://www.madryn.unp.edu.ar/,1,0,true
+graduados OR colacion,http://udc.edu.ar,1,0,true
+graduados OR colacion,http://www.unp.edu.ar/,1,0,true

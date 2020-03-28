@@ -25,6 +25,9 @@ class CampusController {
         params.columnName = params.columnName || 'name';
         params.columnValue = params.columnValue || '';
 
+        if (params.page = "all")
+            return await Campus.all();
+
         let campuses = await Campus.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
         return campuses;
     }

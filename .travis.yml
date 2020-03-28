@@ -8,3 +8,7 @@ notifications:
     slack:
         rooms:
             - proyecto-geoperfil:IvuMxA5RM4Bv7bTKfbprMqIA#repositorio
+
+build:
+    ci:
+        - echo $APP_NAME

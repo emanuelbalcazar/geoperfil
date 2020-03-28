@@ -1,10 +1,12 @@
 'use strict'
 
 const User = use('App/Models/User');
-const Mail = use('Mail')/**/
-const crypto = require('crypto') // crypto
+const Mail = use('Mail');
+const Hash = use('Hash');
 
-
+/**
+ * @class AuthController
+ */
 class AuthController {
 
     async register({ request, auth, response }) {
@@ -37,41 +39,32 @@ class AuthController {
         }
     }
 
-    async recover({request, auth, response }) {
+    async recover({ request, auth, response }) {
         const email = request.input("email");
         const user = await User.findByOrFail('email', email);
-         // generating token
-         const token = crypto.randomBytes(10).toString('hex');
-    
-         // registering when token was created and saving token
-         user.token_created_at = new Date();
-         user.token = token;
-         // persisting data (saving)
-         await user.save();
+        const newPassword = this.getRandomNumber();
 
-        if(user){
-            await Mail.send('emails.recover', { user, token }, (message) => {
-                message
-                .to(email)
-                .from('<from-email>')
-                .subject('Welcome to GeoPerfil')
-            })
-            
-            return user;
-        }
-        else{
+        if (!user)
             return response.unauthorized('Usuario o contraseña invalidos.');
-        }    
-        
+
+        let emailStatus = await Mail.send('emails.recover', { user, newPassword }, (message) => {
+            message.to(email).from('geoperfilg@mailgun.org').subject('Solicitud de restablecimiento de la contraseña');
+        });
+
+        if (emailStatus.accepted.length > 0) {
+            user.password = await Hash.make(newPassword.toString());
+            user.save();
+        } else {
+            return response.internalServerError('El email no pudo ser enviado a: ' + email);
+        }
+
+        return { id: user.id, email: user.email };
     }
 
-
-    
-
-
-    
-
-
+    getRandomNumber() {
+        let random = Math.round(Math.random() * 999999);
+        return random;
+    }
 }
 
 module.exports = AuthController

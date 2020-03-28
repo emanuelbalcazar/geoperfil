@@ -1,10 +1,11 @@
 <template>
   <form @submit.prevent="onsubmit" class="login">
+    <br />
     <div class="row mb-2">
       <va-input
         v-model="email"
         type="email"
-        :label="$t('auth.email')"
+        label="Ingrese su email"
         :error="!!emailErrors.length"
         :error-messages="emailErrors"
       />
@@ -30,10 +31,11 @@ export default {
     async onsubmit() {
       this.emailErrors = this.email ? [] : ["Email es requerido"];
 
+      if (this.emailErrors.length)
+        return this.logError("Ingrese su correo electronico");
+
       let response = await axios
-        .post("/api/auth/recover", {
-          email: this.email
-        })
+        .post("/api/auth/recover", { email: this.email })
         .catch(error => {
           this.logError("Usuario o contraseña invalidos", {
             text: "¿No esta registrado?",
@@ -44,6 +46,9 @@ export default {
       // this.$cookies.set("token", response.data.access_token.token);
       // this.$cookies.set("userId", response.data.user.id);
       this.$cookies.set("email", response.data.user.email);
+      this.logSuccess(
+        "Revise su correo electronico para recibir su nueva contraseña"
+      );
     }
   }
 };

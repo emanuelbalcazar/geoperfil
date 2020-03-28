@@ -1,16 +1,18 @@
-<h1>Solicitud de recuperación de la contraseña</h1>
+<h3>Solicitud de restablecimiento de la contraseña</h3>
 <p>
-  Hola {{ user.name }}, parece que has solicitado una recuperación de la contraseña
-  para su cuenta de correo electrónico registrada con el correo {{ user.email }}, tu
-  nuevo password es {{ user.password }}.
+  Hola {{ user.name }}, parece que has solicitado reestablecer tu contraseña
+  para su cuenta de la aplicación Geoperfil registrada con el correo: {{ user.email }}, tu
+  nueva contraseña es <b>{{ newPassword }}</b>.
 </p>
 
 <p>
-    Si fuiste tú, solo haz clic en el siguiente enlace
-    <a href="http://127.0.0.1:8080/api/auth/reset">link</a>
+    Le recomendamos ingresar a su cuenta y cambiar su contraseña lo antes posible.
 </p>
 
 <p>
-    Si no fue usted, le recomendamos que cambie su contraseña. Alguien puede
-    lo han robado 🕵️‍🕵️‍🕵️‍🕵️‍🕵️‍🕵️‍🕵️
+    Si no fue usted, le recomendamos que cambie su contraseña.
+</p>
+
+<p>
+    Atentamente, el equipo de desarrollo de Geoperfil Profesional.
 </p>

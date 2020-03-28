@@ -43,12 +43,11 @@ export default {
           });
         });
 
-      // this.$cookies.set("token", response.data.access_token.token);
-      // this.$cookies.set("userId", response.data.user.id);
-      this.$cookies.set("email", response.data.user.email);
       this.logSuccess(
         "Revise su correo electronico para recibir su nueva contraseña"
       );
+
+      this.$router.push({ name: "login" });
     }
   }
 };

@@ -27,6 +27,13 @@ const port = 3333;
 axios.defaults.baseURL = location.protocol + '//' + location.hostname + ':' + port;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'true';
 
+// set token on header authorization
+axios.interceptors.request.use(config => {
+    config.headers.Authorization = "Bearer " + VueCookies.get("token");
+    return config;
+}, error => Promise.reject(error)
+);
+
 // VUE IMPORTS...
 Vue.use(VeeValidate, { fieldsBagName: 'formFields' });
 Vue.use(VuesticPlugin);

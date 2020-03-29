@@ -24,7 +24,7 @@ class ArticleController {
         params.columnName = params.columnName || 'text';
         params.columnValue = params.columnValue || '';
 
-        let articles = await Article.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        let articles = await Article.query().where(params.columnName, params.columnValue).paginate(params.page, params.perPage);
 
         return response.json(articles);
     }
@@ -87,6 +87,8 @@ class ArticleController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let updated = await Article.query().where('id', params.id).update(request.all());
+        return updated;
     }
 
     /**

@@ -139,6 +139,7 @@ export default {
 
           this.alert = response.data;
           this.alert.timestamp = this.formatDate(this.alert.timestamp);
+          this.alert.id = Number(this.alert.id);
         })
         .catch(err => {
           this.logError(err);

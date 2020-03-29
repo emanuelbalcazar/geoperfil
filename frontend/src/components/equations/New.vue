@@ -79,7 +79,7 @@ export default {
     },
     async save() {
       this.equationStatus.site_id = this.selectedSite.id;
-      this.equationStatus.equation_id = this.selectedQuery.id;
+      this.equationStatus.query_id = this.selectedQuery.id;
 
       axios
         .post("/api/equations", this.equationStatus)

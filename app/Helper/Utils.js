@@ -8,9 +8,9 @@ exports.convertToEquations = (equations) => {
     let records = equations.map(equation => {
         return {
             id: equation.id,
-            q: equation.equation.q,
+            q: equation.query.q,
             siteSearch: equation.site.site,
-            siteSearchFilter: equation.equation.siteSearchFilter,
+            siteSearchFilter: equation.query.siteSearchFilter,
             start: equation.start,
             selectors: equation.site.selectors.map(selector => { return selector.selector })
         }

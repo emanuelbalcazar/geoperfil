@@ -15,14 +15,18 @@
 
       <!-- CARD LATERAL -->
       <div class="flex md4">
+        <!-- save artcle -->
+        <va-card :title="text.operations">
+          <va-button @click="openSupervisedModal" color="success">Guardar como supervisado</va-button>
+          <va-button color="info" @click="openSuggestionsModal">Sugerir información</va-button>
+        </va-card>
+        <br />
         <!-- professional -->
         <va-card :title="text.title" v-if="renderProfessionalCard">
           <form @submit.prevent="openStepByStepModal">
             <va-input label="Nombre" v-model="selectedProfessional.name" :disabled="true" />
             <va-button color="success" type="submit">Completar información</va-button>
           </form>
-
-          <va-button color="info" type="submit" @click="openSuggestionsModal">Sugerir información</va-button>
         </va-card>
 
         <!-- MODAL STEP BY STEP -->
@@ -43,6 +47,17 @@
             <suggestions />
           </modal>
         </div>
+
+         <va-modal
+          v-model="modal.supervised"
+          size="small"
+          :okText="'Aceptar'"
+          :cancelText="'Cancelar'"
+          title="¿Desea marcar el articulo?"
+          :message="modal.message"
+          :noOutsideDismiss="true"
+          @ok="markAsSupervised"
+        />
       </div>
     </div>
   </div>
@@ -143,7 +158,12 @@ export default {
         noData: "Vacio",
         title: "Profesional Seleccionado",
         editorTitle: "Editor de entidades",
-        career: "Carrera"
+        career: "Carrera",
+        operations: "Operaciones"
+      },
+      modal: {
+          supervised: false,
+          message: "El articulo se marcará como supervisado y no aparecera en el listado general de articulos."
       },
       article: { text: "", html: "", article_id: 0 },
       selectedProfessional: {
@@ -235,6 +255,25 @@ export default {
     },
     openSuggestionsModal() {
       this.$modal.show("suggestions", { clickToClose: false });
+    },
+    openSupervisedModal() {
+        this.modal.supervised = true;
+    },
+    markAsSupervised() {
+        axios
+        .put("/api/articles/" + this.$route.params.id, {
+          is_supervised: true
+        })
+        .then(response => {
+          if (response.data) {
+            this.logSuccess("El articulo se marco correctamente");
+            this.$router.push({ name: "list-articles" });
+          }
+        })
+        .catch(err => {
+          this.logError(err);
+          this.$router.push({ name: "list-articles" });
+        });
     }
   }
 };

@@ -75,7 +75,9 @@ export default {
 
       const params = {
         perPage: this.perPage,
-        page: page
+        page: page,
+        columnName: 'is_supervised',
+        columnValue: false
       };
 
       axios.get("/api/articles", { params }).then(response => {

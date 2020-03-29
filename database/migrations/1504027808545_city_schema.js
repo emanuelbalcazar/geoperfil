@@ -11,7 +11,7 @@ class CitySchema extends Schema {
       table.string('postal_code', 10)
       table.decimal('centroid_lat', 10,8 )
       table.decimal('centroid_lon', 10,8 )
-      table.integer( 'province_id').references('id').inTable('provinces')
+      table.integer('province_id').references('id').inTable('provinces')
     })
   }
 

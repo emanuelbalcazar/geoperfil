@@ -7,7 +7,7 @@ class EquationStatusSchema extends Schema {
     up() {
         this.create('equation_statuses', (table) => {
             table.increments();
-            table.integer('equation_id').references('id').inTable('equations');
+            table.integer('query_id').references('id').inTable('queries');
             table.integer('site_id').references('id').inTable('sites');
             table.integer('start').defaultTo(1);
             table.integer('lastExecution').defaultTo(0);

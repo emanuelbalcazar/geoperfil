@@ -65,16 +65,14 @@ export default {
   methods: {
     async allQueries() {
       let response = await axios.get("/api/queries", {
-        page: 1,
-        perPage: 20
+        page: "all"
       });
 
       this.queries = response.data.data;
     },
     async allSites() {
       let response = await axios.get("/api/sites", {
-        page: 1,
-        perPage: 20
+        page: "all"
       });
 
       this.sites = response.data.data;

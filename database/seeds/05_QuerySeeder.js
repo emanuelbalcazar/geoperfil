@@ -9,21 +9,21 @@
 | make use of Lucid models directly.
 |
 */
-const Equation = use('App/Models/Equation');
+const Query = use('App/Models/Query');
 const csv = require('csvtojson');
 const Logger = use('Logger');
 
-const EQUATION_FILES = __dirname + '/files/equations/equations.csv';
+const QUERY_FILES = __dirname + '/files/queries/queries.csv';
 
 class EquationSeeder {
     async run() {
-        let equations = await csv().fromFile(EQUATION_FILES);
+        let queries = await csv().fromFile(QUERY_FILES);
 
-        for (const equation of equations) {
-            await Equation.findOrCreate(equation, equation);
+        for (const query of queries) {
+            await Query.findOrCreate(query, query);
         }
 
-        Logger.info('Se cargaron las ecuaciones de busqueda correctamente', 'Seeder');
+        Logger.info('Se cargaron las consultas de busqueda correctamente', 'Seeder');
     }
 }
 

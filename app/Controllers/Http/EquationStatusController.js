@@ -22,7 +22,7 @@ class EquationStatusController {
      */
     async index({ request, response, view }) {
         let params = request.all();
-        let equations = await EquationStatus.query().with('equation').with('site').paginate(params.page, params.perPage);
+        let equations = await EquationStatus.query().with('query').with('site').paginate(params.page, params.perPage);
 
         return response.json(equations);
     }
@@ -37,8 +37,7 @@ class EquationStatusController {
      * @param {View} ctx.view
      */
     async create({ request, response, view }) {
-        let equation = request.post();
-        console.log(equation);
+
     }
 
     /**
@@ -72,7 +71,7 @@ class EquationStatusController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
-        let equation = await EquationStatus.query().with('equation').with('site').where('id', params.id).first();
+        let equation = await EquationStatus.query().with('query').with('site').where('id', params.id).first();
         return response.json(equation);
     }
 

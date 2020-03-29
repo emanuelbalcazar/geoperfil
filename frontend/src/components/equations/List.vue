@@ -91,9 +91,9 @@ export default {
       this.readItems();
     },
     dataWithHeaders(header) {
-        return this.items.filter(eq => {
-            return (eq.equation.q === header);
-        });
+      return this.items.filter(eq => {
+        return eq.query.q === header;
+      });
     },
     readItems(page = 1) {
       this.loading = true;
@@ -110,7 +110,7 @@ export default {
         this.perPage = response.data.perPage;
 
         let queries = this.items.map(eq => {
-          return eq.equation.q;
+          return eq.query.q;
         });
 
         this.headers = [...new Set(queries)]; // obtengo las cabeceras de los desplegables

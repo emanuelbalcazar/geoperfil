@@ -1,4 +1,4 @@
-equation,site,start,lastExecution,active
+query,site,start,lastExecution,active
 graduados OR colacion,http://diariocronica.com.ar,1,0,true
 graduados OR colacion,https://www.eldiariodemadryn.com,1,0,true
 graduados OR colacion,https://www.diariojornada.com.ar/,1,0,true

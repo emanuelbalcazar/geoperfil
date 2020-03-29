@@ -3,9 +3,9 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class EquationSchema extends Schema {
+class QuerySchema extends Schema {
     up() {
-        this.create('equations', (table) => {
+        this.create('queries', (table) => {
             table.increments();
             table.string('q', 200).notNullable();
             table.string('siteSearchFilter', 200).notNullable().defaultTo('i');
@@ -13,8 +13,8 @@ class EquationSchema extends Schema {
     }
 
     down() {
-        this.drop('equations');
+        this.drop('queries');
     }
 }
 
-module.exports = EquationSchema
+module.exports = QuerySchema

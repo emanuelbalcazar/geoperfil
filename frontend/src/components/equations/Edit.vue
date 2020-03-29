@@ -6,7 +6,7 @@
           <form @submit.prevent="update">
             <div class>
               <div class="flex md6 sm6 xs12">
-                <va-input label="Consulta" v-model="equation.equation.q" :disabled="true" />
+                <va-input label="Consulta" v-model="equation.query.q" :disabled="true" />
               </div>
 
               <div class="flex md6 sm6 xs12">
@@ -51,7 +51,7 @@ export default {
       },
       equation: {
         active: false,
-        equation: {},
+        query: {},
         equation_id: 0,
         id: 0,
         lastExecution: 0,

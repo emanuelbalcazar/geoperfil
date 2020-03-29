@@ -12,7 +12,7 @@
 
 const EquationStatus = use('App/Models/EquationStatus');
 const Site = use('App/Models/Site');
-const Equation = use('App/Models/Equation');
+const Query = use('App/Models/Query');
 
 const csv = require('csvtojson');
 const Logger = use('Logger');
@@ -25,10 +25,10 @@ class EquationStatusSeeder {
         let equationStatus = await csv().fromFile(EQUATION_STATUS_FILE);
 
         for (const status of equationStatus) {
-            let equation = await Equation.query().where({ q: status.equation }).first();
+            let query = await Query.query().where({ q: status.query }).first();
             let site = await Site.query().where({ site: status.site }).first();
 
-            await EquationStatus.findOrCreate({ equation_id: equation.id, site_id: site.id }, { equation_id: equation.id, site_id: site.id, start: status.start, lastExecution: status.lastExecution, active: status.active });
+            await EquationStatus.findOrCreate({ query_id: query.id, site_id: site.id }, { query_id: query.id, site_id: site.id, start: status.start, lastExecution: status.lastExecution, active: status.active });
         }
 
         Logger.info('Se cargaron los estados de las ecuaciones correctamente', 'Seeder');

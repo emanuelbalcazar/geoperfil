@@ -25,6 +25,9 @@ class SiteController {
         params.columnName = params.columnName || 'site';
         params.columnValue = params.columnValue || '';
 
+        if (params.page == "all")
+            return await Site.all();
+
         let sites = await Site.query().with('selectors')
             .where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
 

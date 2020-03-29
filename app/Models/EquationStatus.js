@@ -13,8 +13,8 @@ class EquationStatus extends Model {
         return null;
     }
 
-    equation() {
-        return this.hasOne('App/Models/Equation', 'equation_id', 'id');
+    query() {
+        return this.hasOne('App/Models/Query', 'query_id', 'id');
     }
 
     site() {
@@ -22,7 +22,7 @@ class EquationStatus extends Model {
     }
 
     static async getNotCurrentlyExecuted() {
-        let equations = await this.query().with('equation')
+        let equations = await this.query().with('query')
             .with('site', (builder) => { builder.with('selectors') })
             .where({ active: true })
             .whereNot({ lastExecution: new Date().getMonth() + 1 }).fetch();

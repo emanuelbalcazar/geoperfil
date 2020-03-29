@@ -3,7 +3,13 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class EquationArticle extends Model {
+/**
+ *
+ * TODO change to Query model
+ * @class Equation
+ * @extends {Model}
+ */
+class Query extends Model {
 
     static get createdAtColumn() {
         return null;
@@ -13,13 +19,9 @@ class EquationArticle extends Model {
         return null;
     }
 
-    equation() {
-        return this.hasOne('App/Models/EquationStatus');
-    }
-
-    article() {
-        return this.hasOne('App/Models/Article');
+    equations() {
+        return this.hasMany('App/Models/EquationStatus');
     }
 }
 
-module.exports = EquationArticle
+module.exports = Query;

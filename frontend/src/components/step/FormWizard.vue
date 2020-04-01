@@ -248,7 +248,8 @@ export default {
       let response = await axios.get("/api/careers", {
         params: { page: "all" }
       });
-      this.careers = response.data.data;
+
+      this.careers = response.data;
     },
     async getCampuses() {
       let response = await axios.get("/api/campuses", {

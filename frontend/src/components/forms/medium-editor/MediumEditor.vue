@@ -34,8 +34,8 @@
           <modal
             name="step-by-step"
             :adaptive="true"
-            width="60%"
-            height="65%"
+            width="55%"
+            height="70%"
             :clickToClose="false"
           >
             <form-wizard :name="selectedProfessional.name" :article="this.$route.params.id" />

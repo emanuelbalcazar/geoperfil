@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <label>
+      Completando información de: <b>{{formData.name}}</b>
+    </label>
+    <br />
+    <br />
     <ul class="steps has-content-centered">
       <li
         class="steps-segment"
@@ -62,7 +67,7 @@
             <div class="field">
               <label class="label">Seleccione la carrera</label>
               <div class="control">
-                <div class="flex md10 xs12">
+                <div class="flex md10 xs10">
                   <va-select
                     :label="text.career"
                     v-model="selectedCareerFromStep"
@@ -89,7 +94,7 @@
             <div class="field">
               <label class="label">Seleccione la sede</label>
               <div class="control">
-                <div class="flex md10 xs12">
+                <div class="flex md10 xs10">
                   <va-select
                     :label="text.campus"
                     v-model="selectedCampusFromStep"
@@ -255,7 +260,8 @@ export default {
       let response = await axios.get("/api/campuses", {
         params: { page: "all" }
       });
-      this.campuses = response.data.data;
+
+      this.campuses = response.data;
     }
   }
 };

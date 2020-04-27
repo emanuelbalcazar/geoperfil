@@ -1,64 +1,27 @@
 <template>
-  <div class="form-elements">
-    <div class="row">
-      <div class="flex xs12">
-        <va-card :title="text.title">
-          <div class="mb-3">
-            <va-notification color="info">
-              <va-badge
-                :color="getPriorityColor(alert.priority)"
-              >{{ getPriorityText(alert.priority) }}</va-badge>&nbsp;
-              <b>{{ alert.name }}</b>
-            </va-notification>
-            <br />
-            <b>ID:</b>
-            {{alert.id}}
-            <br />
-            <b>Fecha:</b>
-            {{alert.timestamp}}
-            <br />
-            <b>Descripción:</b>
-            {{alert.description}}
-            <br />
-            <br />
-            <b>Aviso: asegúrese de que el dato sea correcto</b>
-            <br />
-            <br />
-            <div class="md6 sm6 xs12">
-              <va-input label="Dato ingresado" v-model="alert.data" />
-            </div>
-          </div>
-
+  <div class="grid row">
+    <div class="flex xs12 md12">
+      <va-card title="Alertas y sugerencias" style="overflow-x: auto;">
+        <div>
           <div class="row">
-            <div class="flex">
-              <va-button @click="showRejectModal" color="danger">{{ text.reject }}</va-button>
-              <va-button @click="showAcceptModal" color="success">{{ text.accept }}</va-button>
+            <div class="flex xs12">
+              <alert-detail :alert="alert" />
+              <br />
+
+              <!-- TABS -->
+              <va-tabs grow v-model="tabValue">
+                <va-tab v-for="title in tabTitles" :key="title">{{title}}</va-tab>
+              </va-tabs>
+              <br />
+
+              <!-- ALERT DETAILS -->
+              <div v-if="tabValue == 0">
+                <new-institution v-if="alert.type == 'newInstitution'" :alert="alert" />
+              </div>
             </div>
           </div>
-        </va-card>
-
-        <va-modal
-          v-model="modal.accept.show"
-          size="large"
-          :okText="'Aceptar'"
-          :cancelText="'Cancelar'"
-          title="¿Desea aceptar la alerta?"
-          :message="modal.message"
-          :noOutsideDismiss="true"
-          @ok="accept"
-        />
-
-        <va-modal
-          v-model="modal.reject.show"
-          size="large"
-          :okText="'Aceptar'"
-          :cancelText="'Cancelar'"
-          title="¿Desea rechazar la alerta?"
-          :message="modal.message"
-          :noOutsideDismiss="true"
-          @ok="reject"
-        />
-      </div>
+        </div>
+      </va-card>
     </div>
   </div>
 </template>
@@ -67,11 +30,19 @@
 import axios from "axios";
 import moment from "moment";
 
+import AlertDetail from "./partials/Details";
+import NewInstitution from "./partials/NewInstitution";
+
 export default {
   name: "view-alert",
-  components: {},
+  components: {
+    AlertDetail,
+    NewInstitution
+  },
   data() {
     return {
+      tabTitles: ["Resolver", "Prueba"],
+      tabValue: 0,
       text: {
         title: "Detalle de alerta",
         accept: "Aceptar",
@@ -121,9 +92,12 @@ export default {
     this.findById(this.$route.params.id);
     this.findInstitutions();
   },
-  watch: {
-    selectedInstitution: function(institution) {
-      this.alert.data.institution_id = institution.id;
+  watch: {},
+  computed: {
+    computedStyle() {
+      return {
+        backgroundColor: this.$themes.primary
+      };
     }
   },
   methods: {
@@ -194,13 +168,21 @@ export default {
     },
     getModalMessage(type) {
       return this.text.modal[String(type)];
+    },
+    addTab() {
+      this.tabTitles.push("Nueva");
+      this.tabValue++;
     }
   }
 };
 </script>
 
-<style>
-.row.row-inside {
-  max-width: none;
+<style lang="scss">
+.grid {
+  &__container {
+    min-height: 3rem;
+    color: $white;
+    border-radius: 0.5rem;
+  }
 }
 </style>

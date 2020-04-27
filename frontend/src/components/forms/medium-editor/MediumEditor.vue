@@ -24,31 +24,33 @@
         <!-- professional -->
         <va-card :title="text.title" v-if="renderProfessionalCard">
           <form @submit.prevent="openStepByStepModal">
-            <va-input label="Nombre" v-model="selectedProfessional.name" :disabled="true" />
+            <va-input label="Nombre/Apellido" v-model="selectedProfessional.name" :disabled="true" />
             <va-button color="success" type="submit">Completar información</va-button>
           </form>
         </va-card>
 
         <!-- MODAL STEP BY STEP -->
-        <div class="col-md-6">
+        <div class="steper">
           <modal
             name="step-by-step"
-            :adaptive="false"
-            width="50%"
-            height="60%"
+            :adaptive="true"
+            width="60%"
+            height="65%"
             :clickToClose="false"
           >
             <form-wizard :name="selectedProfessional.name" :article="this.$route.params.id" />
           </modal>
         </div>
 
-        <div class="col-md-6">
-          <modal name="suggestions" width="50%" height="65%" :clickToClose="false">
+        <!-- MODAL SUGGESTIONS -->
+        <div class="">
+          <modal name="suggestions" width="45%" height="70%" :clickToClose="false">
             <suggestions />
           </modal>
         </div>
 
-         <va-modal
+        <!-- MODAL MARK AS SUPERVISED -->
+        <va-modal
           v-model="modal.supervised"
           size="small"
           :okText="'Aceptar'"
@@ -162,8 +164,9 @@ export default {
         operations: "Operaciones"
       },
       modal: {
-          supervised: false,
-          message: "El articulo se marcará como supervisado y no aparecera en el listado general de articulos."
+        supervised: false,
+        message:
+          "El articulo se marcará como supervisado y no aparecera en el listado general de articulos."
       },
       article: { text: "", html: "", article_id: 0 },
       selectedProfessional: {
@@ -257,10 +260,10 @@ export default {
       this.$modal.show("suggestions", { clickToClose: false });
     },
     openSupervisedModal() {
-        this.modal.supervised = true;
+      this.modal.supervised = true;
     },
     markAsSupervised() {
-        axios
+      axios
         .put("/api/articles/" + this.$route.params.id, {
           is_supervised: true
         })
@@ -314,9 +317,9 @@ export default {
 
 /* modal styles */
 .v--modal-box {
-  padding: 0.9em 0.8em;
-  margin: 0 0.55em;
-  border-radius: 40px;
+  padding: 1.5em 1.5em;
+  margin: 0.0 0.0em;
+  border-radius: 15px;
   border-style: outset;
 }
 </style>

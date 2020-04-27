@@ -3,47 +3,51 @@
   <div class="form-elements">
     <div class="container">
       <div class="flex xs12">
-        <va-card :title="text.title">
-          <div class="flex md10 xs12">
-            <va-select
-              :label="text.selectLabel"
-              v-model="selectedOption"
-              textBy="name"
-              name="suggestionType"
-              :options="options"
-              v-validate="'required'"
-            />
-            <p
-              class="help is-danger"
-              v-show="errors.has('suggestionType')"
-            >{{ errorsText.suggestionType }}</p>
+          <label style="color: blue">Sugerir nueva información:</label>
+          <hr>
+        <div class="flex md10 xs12">
+          <va-select
+            :label="text.selectLabel"
+            v-model="selectedOption"
+            textBy="name"
+            name="suggestionType"
+            :options="options"
+            v-validate="'required'"
+          />
+          <p
+            class="help is-danger"
+            v-show="errors.has('suggestionType')"
+          >{{ errorsText.suggestionType }}</p>
+        </div>
+
+        <div class="flex md10 sm10 xs12">
+          <va-input
+            label="Escriba el nuevo dato"
+            v-model="alert.data"
+            v-validate="'required'"
+            name="data"
+          />
+          <p class="help is-danger" v-show="errors.has('data')">{{ errorsText.data }}</p>
+        </div>
+
+        <div class="flex md10 sm10 xs12">
+          <va-input
+            label="Agregue una descripción u observación (opcional)"
+            v-model="alert.description"
+          />
+        </div>
+
+        <br />
+        <div class="field is-grouped">
+          <div class="control">
+            <button @click="exit()" class="button is-danger">Salir</button>
           </div>
 
-          <div class="flex md10 sm10 xs12">
-            <va-input
-              label="Escriba el nuevo dato"
-              v-model="alert.data"
-              v-validate="'required'"
-              name="data"
-            />
-            <p class="help is-danger" v-show="errors.has('data')">{{ errorsText.data }}</p>
+          <div class="control">
+            <button @click="send()" class="button is-success">Enviar</button>
           </div>
-
-          <div class="flex md10 sm10 xs12">
-            <va-input label="Agregue una descripción u observación (opcional)" v-model="alert.description" />
-          </div>
-
-          <br />
-          <div class="field is-grouped">
-            <div class="control">
-              <button @click="exit()" class="button is-danger">Salir</button>
-            </div>
-
-            <div class="control">
-              <button @click="send()" class="button is-success">Enviar</button>
-            </div>
-          </div>
-        </va-card>
+        </div>
+        <!--  </va-card> -->
       </div>
     </div>
   </div>
@@ -78,19 +82,19 @@ export default {
       options: [
         {
           id: 1,
-          name: "Sugerencia de una nueva sede institucional",
-          type: "newCampus",
-          priority: 2
-        },
-        {
-          id: 2,
-          name: "Sugerencia de una nueva institución",
+          name: "Sugerir una nueva institución",
           type: "newInstitution",
           priority: 2
         },
         {
+          id: 2,
+          name: "Sugerir una nueva sede",
+          type: "newCampus",
+          priority: 2
+        },
+        {
           id: 3,
-          name: "Sugerencia de una nueva carrera",
+          name: "Sugerir una nueva carrera",
           type: "newCareer",
           priority: 2
         }

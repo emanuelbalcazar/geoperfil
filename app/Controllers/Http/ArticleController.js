@@ -63,7 +63,7 @@ class ArticleController {
      */
     async show({ params, request, response, view }) {
         let article = await Article.query().where('id', params.id).first();
-        response.json(article);
+        return response.json(article);
     }
 
     /**

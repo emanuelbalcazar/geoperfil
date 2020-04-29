@@ -117,6 +117,11 @@ export default new Router({
             component: AppLayout,
             children: [
                 {
+                    name: 'new-career',
+                    path: 'new',
+                    component: () => import('../components/careers/New.vue')
+                },
+                {
                     name: 'list-careers',
                     path: 'list',
                     component: () => import('../components/careers/List.vue')

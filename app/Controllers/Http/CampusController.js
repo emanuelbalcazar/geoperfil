@@ -47,6 +47,7 @@ class CampusController {
     /**
      * Create/save a new campus.
      * POST campuses
+     * TODO: revisar
      *
      * @param {object} ctx
      * @param {Request} ctx.request

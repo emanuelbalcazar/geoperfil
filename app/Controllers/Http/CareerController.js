@@ -53,6 +53,15 @@ class CareerController {
      * @param {Response} ctx.response
      */
     async store({ request, response }) {
+        let career = request.post();
+
+        let count = await Career.query().where({ name: career.name }).getCount();
+
+        if (count > 0)
+            return response.conflict({ code: 409, message: 'La carrera ya existe' });
+
+        let instance = await Career.create(career);
+        return response.json(instance);
     }
 
     /**
@@ -65,6 +74,8 @@ class CareerController {
      * @param {View} ctx.view
      */
     async show({ params, request, response, view }) {
+        let career = await Career.query().where('id', params.id).first();
+        return response.json(career);
     }
 
     /**
@@ -88,6 +99,8 @@ class CareerController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let updated = await Career.query().where('id', params.id).update(request.all());
+        return response.json(updated);
     }
 
     /**

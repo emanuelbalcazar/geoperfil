@@ -97,7 +97,7 @@ class AlertController {
      */
     async show({ params, request, response, view }) {
         let alert = await Alert.query().where('id', params.id).first();
-        response.json(alert);
+        return response.json(alert);
     }
 
     /**

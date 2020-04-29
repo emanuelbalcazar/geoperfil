@@ -62,6 +62,10 @@ export const navigationRoutes = {
             disabled: true,
             children: [
                 {
+                    name: 'new-career',
+                    displayName: 'Nueva carrera',
+                },
+                {
                     name: 'list-careers',
                     displayName: 'Listar carreras',
                 }

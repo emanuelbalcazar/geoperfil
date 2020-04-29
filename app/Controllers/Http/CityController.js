@@ -17,8 +17,8 @@ class CityController {
         params.columnName = params.columnName || 'name';
         params.columnValue = params.columnValue || '';
 
-        let cities = await City.query().where( params.columnName,'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
-        return response.json( cities );
+        let cities = await City.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        return response.json(cities);
     }
 
     /**
@@ -44,7 +44,7 @@ class CityController {
     async store({ request, response }) {
         let city = request.post();
 
-        let cityInstance = await City.create( city );
+        let cityInstance = await City.create(city);
         response.json(cityInstance);
     }
 
@@ -84,7 +84,7 @@ class CityController {
      */
     async update({ params, request, response }) {
         let cityUpdated = await City.query().where('id', params.id).update(request.all());
-        return response.json( cityUpdated );
+        return response.json(cityUpdated);
     }
 
     /**
@@ -97,7 +97,7 @@ class CityController {
      */
     async destroy({ params, request, response }) {
         let city = await City.query().where('id', params.id).delete();
-        return response.json( city );
+        return response.json(city);
     }
 }
 

@@ -17,7 +17,7 @@
               <p
                 class="help is-danger"
                 v-show="errors.has('new-career.query')"
-              >{{ errorsText.query }}</p>
+              >{{ errorsText.selectedQuery }}</p>
             </div>
 
             <!-- site -->
@@ -33,7 +33,7 @@
               <p
                 class="help is-danger"
                 v-show="errors.has('new-career.website')"
-              >{{ errorsText.site }}</p>
+              >{{ errorsText.selectedSite }}</p>
             </div>
 
             <va-button color="dark" type="button" @click="$router.go(-1)">Volver</va-button>
@@ -53,7 +53,7 @@
               data-vv-scope="query"
               name="q"
             />
-            <p class="help is-danger" v-show="errors.has('query.q')">{{ errorsText.query }}</p>
+            <p class="help is-danger" style="color:red" v-show="errors.has('query.q')">{{ errorsText.query }}</p>
           </div>
 
           <va-button color="info" @click="saveQuery">Guardar consulta</va-button>
@@ -159,8 +159,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .row.row-inside {
   max-width: none;
 }
+
+.help.is-danger {
+    color: red
+}
+
 </style>

@@ -89,5 +89,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.help.is-danger {
+    color: red
+}
 </style>

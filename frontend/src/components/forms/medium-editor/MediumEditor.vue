@@ -283,7 +283,7 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="scss">
 .entity {
   background: color(#ffff00);
   padding: 0.45em 0.6em;

@@ -125,6 +125,11 @@ export default new Router({
                     name: 'list-careers',
                     path: 'list',
                     component: () => import('../components/careers/List.vue')
+                },
+                {
+                    name: 'edit-career',
+                    path: ':id',
+                    component: () => import('../components/careers/Edit.vue')
                 }
             ],
         },

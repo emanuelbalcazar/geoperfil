@@ -45,11 +45,13 @@ export default {
         },
         {
           name: "title",
-          title: "Titulo"
+          title: "Titulo",
+          callback: this.formatMessage
         },
         {
           name: "snippet",
-          title: "Resumen"
+          title: "Resumen",
+          callback: this.formatMessage
         },
         {
           name: "link",
@@ -76,7 +78,7 @@ export default {
       const params = {
         perPage: this.perPage,
         page: page,
-        columnName: 'is_supervised',
+        columnName: "is_supervised",
         columnValue: false
       };
 
@@ -89,6 +91,9 @@ export default {
     },
     toEdit(article) {
       this.$router.push({ name: "medium-editor", params: { id: article.id } });
+    },
+    formatMessage(value = "") {
+      return value.substring(0, 50);
     }
   }
 };

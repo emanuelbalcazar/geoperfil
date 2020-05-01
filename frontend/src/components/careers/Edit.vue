@@ -4,7 +4,7 @@
       <div class="flex xs12">
         <!-- card -->
         <va-card :title="text.title">
-          <form @submit.prevent="save">
+          <form @submit.prevent="update">
             <div class="row">
               <div class="flex md6 sm6 xs12">
                 <va-input
@@ -34,9 +34,7 @@
               </div>
             </div>
 
-            <va-button color="dark" @click="$router.go(-1)">Volver</va-button>
-
-            <va-button color="success" type="submit">Guardar</va-button>
+            <va-button color="success" type="submit">Actualizar</va-button>
           </form>
         </va-card>
       </div>
@@ -50,12 +48,12 @@ import axios from "axios";
 import VeeValidate from "vee-validate";
 
 export default {
-  name: "new-career",
+  name: "edit-career",
   components: {},
   data() {
     return {
       text: {
-        title: "Creando una carrera"
+        title: "Editando una carrera"
       },
       errorsText: {
         duration: "La duración es requerida",
@@ -67,15 +65,35 @@ export default {
       }
     };
   },
+  created() {
+    this.findById(this.$route.params.id);
+  },
   methods: {
-    save(event) {
+    findById(id) {
+      axios
+        .get("/api/careers/" + id)
+        .then(response => {
+          if (!response.data) {
+            this.logError("No existe la carrera con id: " + id);
+            this.$router.push({ name: "list-sites" });
+            return;
+          }
+
+          this.career = response.data;
+        })
+        .catch(err => {
+          this.logError(err);
+          this.$router.push({ name: "list-sites" });
+        });
+    },
+    update(event) {
       this.$validator.validate().then(async valid => {
         if (valid) {
           axios
-            .post("/api/careers", this.career)
+            .put("/api/careers/" + this.career.id)
             .then(response => {
               if (response.data) {
-                this.logSuccess("Carrera guardada correctamente");
+                this.logSuccess("Carrera actualizada correctamente");
                 this.$router.push({ name: "list-careers" });
               }
             })

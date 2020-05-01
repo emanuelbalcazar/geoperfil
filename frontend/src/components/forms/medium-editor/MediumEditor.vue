@@ -19,6 +19,7 @@
         <va-card :title="text.operations">
           <va-button @click="openSupervisedModal" color="success">Guardar como supervisado</va-button>
           <va-button color="info" @click="openSuggestionsModal">Sugerir información</va-button>
+          <va-button color="dark" @click="$router.go(-1)">Volver</va-button>
         </va-card>
         <br />
         <!-- professional -->
@@ -43,7 +44,7 @@
         </div>
 
         <!-- MODAL SUGGESTIONS -->
-        <div class="">
+        <div class>
           <modal name="suggestions" width="45%" height="70%" :clickToClose="false">
             <suggestions />
           </modal>
@@ -318,7 +319,7 @@ export default {
 /* modal styles */
 .v--modal-box {
   padding: 1.5em 1.5em;
-  margin: 0.0 0.0em;
+  margin: 0 0em;
   border-radius: 15px;
   border-style: outset;
 }

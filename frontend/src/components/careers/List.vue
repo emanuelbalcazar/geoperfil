@@ -17,7 +17,17 @@
       :no-data-label="title.noData"
       @page-selected="readItems"
       api-mode
-    ></va-data-table>
+    >
+      <template slot="actions" slot-scope="props">
+        <va-button
+          flat
+          small
+          color
+          @click="edit(props.rowData)"
+          class="ma-0"
+        >{{ $t('tables.edit') }}</va-button>
+      </template>
+    </va-data-table>
   </va-card>
 </template>
 
@@ -54,6 +64,10 @@ export default {
         {
           name: "duration",
           title: "Duración"
+        },
+        {
+          name: "__slot:actions",
+          dataClass: "text-right"
         }
       ];
     }
@@ -81,6 +95,9 @@ export default {
         this.loading = false;
         this.perPage = response.data.perPage;
       });
+    },
+    edit(career) {
+      this.$router.push({ name: "edit-career", params: { id: career.id } });
     }
   }
 };

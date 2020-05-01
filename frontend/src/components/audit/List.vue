@@ -75,6 +75,7 @@ export default {
         {
           name: "timestamp",
           title: "Fecha",
+          width: "15%",
           callback: this.formatDate
         },
         {

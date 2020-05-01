@@ -5,16 +5,22 @@
         <va-card :title="text.title">
           <div class="mb-3">
             <va-notification color="info">
-              <va-badge :color="getLevelColor(log.level)">{{ log.level }}</va-badge><b>En el módulo:</b>&nbsp;
+              <va-badge :color="getLevelColor(log.level)">{{ log.level }}</va-badge>
+              <b>En el módulo:</b>
+              &nbsp;
               {{ log.module }}
-            </va-notification><b>ID:</b>
+            </va-notification>
+            <b>ID:</b>
             {{log.id}}
-            <br /><b>Fecha:</b>
+            <br />
+            <b>Fecha:</b>
             {{log.timestamp}}
             <br />
             <br />
             {{log.message}}
           </div>
+
+          <va-button color="dark" @click="$router.go(-1)">Volver</va-button>
         </va-card>
       </div>
     </div>

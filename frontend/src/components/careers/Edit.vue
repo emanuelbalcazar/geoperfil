@@ -34,6 +34,7 @@
               </div>
             </div>
 
+            <va-button color="dark" type="button" @click="$router.go(-1)">Volver</va-button>
             <va-button color="success" type="submit">Actualizar</va-button>
           </form>
         </va-card>
@@ -90,7 +91,7 @@ export default {
       this.$validator.validate().then(async valid => {
         if (valid) {
           axios
-            .put("/api/careers/" + this.career.id)
+            .put("/api/careers/" + this.career.id, this.career)
             .then(response => {
               if (response.data) {
                 this.logSuccess("Carrera actualizada correctamente");

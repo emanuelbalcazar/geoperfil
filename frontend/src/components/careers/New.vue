@@ -34,7 +34,7 @@
               </div>
             </div>
 
-            <va-button color="dark" @click="$router.go(-1)">Volver</va-button>
+            <va-button color="dark" type="button" @click="$router.go(-1)">Volver</va-button>
 
             <va-button color="success" type="submit">Guardar</va-button>
           </form>

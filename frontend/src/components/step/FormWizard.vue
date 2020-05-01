@@ -108,7 +108,7 @@
                 </div>
                 <p
                   class="help is-danger"
-                  v-show="errors.has('step2.campus')"
+                  v-show="errors.has('step3.campus')"
                 >{{ errorsText.campus }}</p>
               </div>
             </div>

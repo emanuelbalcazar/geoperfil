@@ -94,6 +94,14 @@ export default {
       this.toSearch = toSearch;
       this.readItems();
     },
+    getSortParam(sortOrder) {
+      console.log(sortOrder);
+      return sortOrder
+        .map(function(sort) {
+          return (sort.direction === "desc" ? "-" : "") + sort.field;
+        })
+        .join(",");
+    },
     readItems(page = 1) {
       this.loading = true;
 

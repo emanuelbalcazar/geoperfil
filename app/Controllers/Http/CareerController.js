@@ -28,7 +28,7 @@ class CareerController {
         if (params.page == "all")
             return await Career.all();
 
-        let careers = await Career.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).paginate(params.page, params.perPage);
+        let careers = await Career.query().where(params.columnName, 'ILIKE', `%${params.columnValue}%`).orderBy('name', 'ASC').paginate(params.page, params.perPage);
         return response.json(careers);
     }
 

@@ -51,13 +51,13 @@ class QueryController {
      */
     async store({ request, response }) {
         let query = request.post();
-        let count = await Query().query().where({ q: query.q }).getCount();
+        let count = await Query.query().where({ q: query.q }).getCount();
 
         if (count > 0)
             return response.conflict({ code: 409, message: 'La consultá de búsqueda ya existe' })
 
-        let record = await Query.create(selector);
-        response.json(record);
+        let record = await Query.create(query);
+        return response.json(record);
     }
 
     /**

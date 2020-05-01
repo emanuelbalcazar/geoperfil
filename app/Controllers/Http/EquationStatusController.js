@@ -50,10 +50,10 @@ class EquationStatusController {
      */
     async store({ request, response }) {
         let equation = request.post();
-        let count = await EquationStatus.query().where({ equation_id: equation.equation_id, site_id: equation.site_id }).getCount();
+        let count = await EquationStatus.query().where({ query_id: equation.query_id, site_id: equation.site_id }).getCount();
 
         if (count > 0) {
-            response.conflict({ code: 409, message: 'La ecuación ya existe' });
+            response.conflict({ code: 409, message: 'La ecuación con su consulta y sitio ya existe' });
             return;
         }
 

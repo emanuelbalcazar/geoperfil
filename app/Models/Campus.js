@@ -22,6 +22,7 @@ class Campus extends Model {
 
         /**
          * A hook
+         * TODO revisar, en el seeder no los carga bien!
          */
         this.addHook('beforeSave', async (campusInstance) => {
             let URL = uri + '&street="' + campusInstance.address + '"&city="' + campusInstance.city + '"';

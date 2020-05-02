@@ -15,6 +15,9 @@ const Logger = use('Logger');
 const Helper = use('App/Helper/Utils')
 const City = use('App/Models/City');
 
+const axios = require('axios')
+const uri = "https://nominatim.openstreetmap.org/search?format=jsonv2";
+
 const INSTITUTIONS_FILES = __dirname + '/files/institutions/';
 const CAMPUS_FILES = __dirname + '/files/campus/';
 
@@ -38,7 +41,17 @@ class InstitutionSeeder {
                     let arrayCampus = [];
 
                     for (let camp of campus) {
-                        let city = City.query().where({ name: camp.city });
+                        let city = await City.query().where({ name: String(camp.city).toUpperCase() }).first();
+
+                        // get lat and lon
+                        let URL = uri + '&street="' + camp.address + '"&city="' + camp.city + '"';
+                        const response = await axios.get(URL);
+                        const data = response.data;
+
+                        if (data[0]) {
+                            camp.latitude = data[0].lat;
+                            camp.longitude = data[0].lon;
+                        }
 
                         arrayCampus.push({
                             name: camp.name,
@@ -50,7 +63,7 @@ class InstitutionSeeder {
                         });
                     }
                     // creo las sedes de esa institucion
-                    await instance.campus().createMany(arrayCampus);
+                    await instance.campuses().createMany(arrayCampus);
                 }
             }
 

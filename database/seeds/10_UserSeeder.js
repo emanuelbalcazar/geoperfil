@@ -26,6 +26,8 @@ class UserSeeder {
         }
 
         Logger.info('Se cargaron los usuarios correctamente', 'Seeder');
+
+        return;
     }
 }
 

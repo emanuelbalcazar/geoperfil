@@ -39,7 +39,6 @@ class Campus extends Model {
     careers() {
         return this.belongsToMany('App/Models/Career').pivotTable('campus_careers')
     }
-
 }
 
 module.exports = Campus

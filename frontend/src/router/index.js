@@ -141,6 +141,11 @@ export default new Router({
                     name: 'list-institutions',
                     path: 'list',
                     component: () => import('../components/institutions/List.vue')
+                },
+                {
+                    name: 'edit-institution',
+                    path: ':id',
+                    component: () => import('../components/institutions/Edit.vue')
                 }
             ],
         },

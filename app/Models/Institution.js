@@ -13,10 +13,9 @@ class Institution extends Model {
         return null;
     }
 
-    campus() {
+    campuses() {
         return this.hasMany('App/Models/Campus')
     }
-
 }
 
 module.exports = Institution

@@ -94,31 +94,6 @@ class UserController {
      */
     async destroy({ params, request, response }) {
     }
-
-
-    /**
-     * Send mail for user
-     * @param {*} param0 
-     */
-    async store ({ request }) {
-        //const data = request.only(['email', 'username', 'password'])
-       // const data = request.only(['name', 'surname', 'email', 'password'])
-       // const user = await User.create(data)
-        let user = await User.findBy('id', 1);
-        await Mail.send('emails.recover', user.toJSON(), (message) => {
-          message
-            .to(user.email)
-            .from('<from-email>')
-            .subject('Welcome to GeoPerfil')
-        })
-    
-        return 'Confirmacion de correo'
-      }
-
-
-
-      
-
 }
 
 module.exports = UserController

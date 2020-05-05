@@ -6,7 +6,17 @@
           <form @submit.prevent="update">
             <div class>
               <div class="flex md6 sm6 xs12">
-                <va-input label="Nombre" v-model="institution.name" />
+                <va-input
+                  label="Nombre"
+                  v-model="institution.name"
+                  v-validate="'required'"
+                  name="name"
+                />
+                <p
+                  class="help is-danger"
+                  style="color:red"
+                  v-show="errors.has('name')"
+                >{{ errorsText.name }}</p>
               </div>
 
               <div class="flex md6 sm6 xs12">
@@ -103,7 +113,8 @@ export default {
         noOptionsText: "No se encontraron sedes"
       },
       errorsText: {
-        hasCampus: "Seleccione una sede"
+        hasCampus: "Seleccione una sede",
+        name: "El nombre es requerido"
       },
       modal: {
         showAddCampusModal: false
@@ -169,20 +180,24 @@ export default {
       );
     },
     update(event) {
-      delete this.institution.campuses;
-      
-      axios
-        .put("/api/institutions/" + this.institution.id, this.institution)
-        .then(response => {
-          if (response.data) {
-            this.logSuccess("Institución actualizada correctamente");
-            this.$router.push({ name: "list-institutions" });
-          }
-        })
-        .catch(err => {
-          this.logError(err.response.data.message);
-          this.$router.push({ name: "list-institutions" });
-        });
+      this.$validator.validate("name").then(async valid => {
+        if (valid) {
+          delete this.institution.campuses;
+
+          axios
+            .put("/api/institutions/" + this.institution.id, this.institution)
+            .then(response => {
+              if (response.data) {
+                this.logSuccess("Institución actualizada correctamente");
+                this.$router.push({ name: "list-institutions" });
+              }
+            })
+            .catch(err => {
+              this.logError(err.response.data.message);
+              this.$router.push({ name: "list-institutions" });
+            });
+        }
+      });
     },
     showAddCampusModal() {
       this.modal.showAddCampusModal = true;
@@ -197,6 +212,9 @@ export default {
             this.selectedCampus
           );
 
+          this.logSuccess("Sede agregada correctamente");
+
+          this.institution.campuses.push(this.selectedCampus);
           this.findById(this.$route.params.id);
         }
       });

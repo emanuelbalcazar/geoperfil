@@ -21,6 +21,8 @@
             <va-button color="dark" type="button" @click="$router.go(-1)">Volver</va-button>
 
             <va-button color="success" type="submit">Actualizar</va-button>
+
+            <va-button color="info" type="button" @click="showAddCampusModal">Agregar sede</va-button>
           </form>
         </va-card>
         <br />
@@ -34,11 +36,6 @@
                   :fields="fields"
                   :data="institution.campuses"
                   :no-data-label="text.noData"
-                  :loading="loading"
-                  :per-page="parseInt(perPage)"
-                  :totalPages="totalPages"
-                  @page-selected="readItems"
-                  api-mode
                 >
                   <template slot="actions" slot-scope="props">
                     <va-button
@@ -54,6 +51,36 @@
             </va-collapse>
           </va-accordion>
         </va-card>
+
+        <!-- Add campus modal -->
+        <va-modal
+          v-model="modal.showAddCampusModal"
+          size="large"
+          :okText="'Agregar'"
+          :cancelText="'Cancelar'"
+          title="Agregando una nueva sede"
+          :noOutsideDismiss="true"
+          @ok="addCampus"
+        >
+          <div class="flex xs12">
+            <va-select
+              searchable
+              :label="text.selectCampus"
+              v-model="selectedCampus"
+              textBy="name"
+              :options="campuses"
+              :noOptionsText="text.noOptionsText"
+              v-validate="'required'"
+              name="hasCampus"
+            />
+
+            <p
+              class="help is-danger"
+              style="color:red"
+              v-show="errors.has('hasCampus')"
+            >{{ errorsText.hasCampus }}</p>
+          </div>
+        </va-modal>
       </div>
     </div>
   </div>
@@ -61,6 +88,7 @@
 
 <script>
 import axios from "axios";
+import VeeValidate from "vee-validate";
 
 export default {
   name: "edit-institution",
@@ -70,14 +98,24 @@ export default {
       text: {
         title: "Editando una institución",
         table: "Sedes de la institución",
-        noData: "No se encontraron sedes"
+        noData: "No se encontraron sedes",
+        selectCampus: "Seleccione la sede",
+        noOptionsText: "No se encontraron sedes"
       },
+      errorsText: {
+        hasCampus: "Seleccione una sede"
+      },
+      modal: {
+        showAddCampusModal: false
+      },
+      selectedCampus: "",
       institution: {
         acronym: "",
         name: "",
         site: "",
         campuses: []
-      }
+      },
+      campuses: []
     };
   },
   computed: {
@@ -100,9 +138,10 @@ export default {
   },
   created() {
     this.findById(this.$route.params.id);
+    this.findAllCampus();
   },
   methods: {
-    findById(id) {
+    async findById(id) {
       axios
         .get("/api/institutions/" + id)
         .then(response => {
@@ -119,6 +158,12 @@ export default {
           this.$router.push({ name: "list-institutions" });
         });
     },
+    async findAllCampus() {
+      const params = { page: "all" };
+
+      let response = await axios.get("/api/campuses", params);
+      this.campuses = response.data;
+    },
     update(event) {
       axios
         .put("/api/institutions/" + this.institution.id, this.institution)
@@ -132,13 +177,34 @@ export default {
           this.logError(err.response.data.message);
           this.$router.push({ name: "list-institutions" });
         });
+    },
+    showAddCampusModal() {
+      this.modal.showAddCampusModal = true;
+    },
+    addCampus() {
+      this.$validator.validate("hasCampus").then(async valid => {
+        if (valid) {
+          this.selectedCampus.institution_id = this.institution.id;
+
+          let response = await axios.put(
+            "/api/campuses/" + this.selectedCampus.id,
+            this.selectedCampus
+          );
+          
+          this.findById(this.$route.params.id);
+        }
+      });
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 .row.row-inside {
   max-width: none;
+}
+
+.va-modal {
+  width: 400px;
 }
 </style>

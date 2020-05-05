@@ -105,8 +105,8 @@ class CampusController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
-        let campusUpdated = await Campus.query().where('id', params.id).update(request.all());
-        return response.json(campusUpdated);
+        let updated = await Campus.query().where('id', params.id).update(request.all());
+        return response.json(updated);
     }
 
     /**

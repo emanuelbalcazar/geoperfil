@@ -101,6 +101,8 @@ class InstitutionController {
      * @param {Response} ctx.response
      */
     async update({ params, request, response }) {
+        let updated = await Institution.query().where('id', params.id).update(request.all());
+        return response.json(updated);
     }
 
     /**

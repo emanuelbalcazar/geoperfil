@@ -59,10 +59,6 @@ export default {
           name: "id",
           title: "ID"
         },
-        /* {
-          name: "equation.q",
-          title: "Terminos"
-        }, */
         {
           name: "site.site",
           title: "Sitio"

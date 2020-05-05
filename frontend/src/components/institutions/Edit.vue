@@ -138,7 +138,6 @@ export default {
   },
   created() {
     this.findById(this.$route.params.id);
-    this.findAllCampus();
   },
   methods: {
     async findById(id) {
@@ -152,6 +151,7 @@ export default {
           }
 
           this.institution = response.data;
+          this.findAllCampus();
         })
         .catch(err => {
           this.logError(err.response.data.message);
@@ -162,9 +162,15 @@ export default {
       const params = { page: "all" };
 
       let response = await axios.get("/api/campuses", params);
-      this.campuses = response.data;
+      let options = response.data || [];
+
+      this.campuses = options.filter(
+        x => !this.institution.campuses.filter(y => y.id === x.id).length
+      );
     },
     update(event) {
+      delete this.institution.campuses;
+      
       axios
         .put("/api/institutions/" + this.institution.id, this.institution)
         .then(response => {
@@ -190,7 +196,7 @@ export default {
             "/api/campuses/" + this.selectedCampus.id,
             this.selectedCampus
           );
-          
+
           this.findById(this.$route.params.id);
         }
       });
@@ -205,6 +211,6 @@ export default {
 }
 
 .va-modal {
-  width: 400px;
+  width: 500px;
 }
 </style>

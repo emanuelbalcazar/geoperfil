@@ -4,18 +4,18 @@
 const Schema = use('Schema')
 
 class CitySchema extends Schema {
-  up () {
+  up() {
     this.create('cities', (table) => {
       table.increments()
-      table.string('name',300)
+      table.string('name', 300)
       table.string('postal_code', 10)
-      table.decimal('centroid_lat', 10,8 )
-      table.decimal('centroid_lon', 10,8 )
+      table.decimal('centroid_lat', 10, 8)
+      table.decimal('centroid_lon', 10, 8)
       table.integer('province_id').references('id').inTable('provinces')
     })
   }
 
-  down () {
+  down() {
     this.drop('cities')
   }
 }

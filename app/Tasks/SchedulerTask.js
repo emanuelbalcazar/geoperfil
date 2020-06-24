@@ -80,8 +80,6 @@ class SchedulerTask {
                 records = await ExtractorManager.execute('default', currentEquation, currentEquation.selectors);
                 this.requestCount++;
 
-                Logger.info(`[${this.currentSchedule}] - Termino la ecuacion: ${currentEquation.id} desde la pagina ${currentEquation.start}`, 'SchedulerTask');
-
                 // si llegue a la ultima pagina, actualizo la ultima ejecucion de la ecuacion y reinicio el start
                 // sino avanzo de pagina e incremento el indice para arrancar en la sig pagina
                 if (currentPage == records.lastPage) {

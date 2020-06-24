@@ -30,7 +30,8 @@ class ExceptionHandler extends BaseExceptionHandler {
         };
 
         await Logger.error(error.stack);
-        response.status(error.status).json(errorObject);
+
+        return response.status(error.status).json(errorObject);
     }
 
     /**

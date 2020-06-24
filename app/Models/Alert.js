@@ -3,6 +3,10 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
+/**
+ * @class Alert
+ * @extends Model
+ */
 class Alert extends Model {
 
     static get createdAtColumn() {

@@ -84,7 +84,8 @@ class BaseExtractor {
 
         // remove links with /tag/*
         records = records.filter(article => {
-            return (!article.link.includes('tag') || !article.link.includes('tags'));
+            let hasExcludedWords = config.excludedWords.every(word => article.link.includes(word));
+            return !hasExcludedWords;
         });
 
         Logger.debug(`Cantidad de articulos luego de filtrarlos: ${records.length}`, 'BaseExtractor.filter');

@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class ProfessionalSchema extends Schema {
-  up () {
+  up() {
     this.create('professionals', (table) => {
       table.increments();
       table.string('name');
@@ -17,7 +17,7 @@ class ProfessionalSchema extends Schema {
     })
   }
 
-  down () {
+  down() {
     this.drop('professionals')
   }
 }

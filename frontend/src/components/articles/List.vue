@@ -55,11 +55,13 @@ export default {
         },
         {
           name: "link",
-          title: "URL"
+          title: "URL",
+          callback: this.formatMessage
         },
         {
           name: "__slot:actions",
-          dataClass: "text-center"
+          dataClass: "text-center",
+          width: "5%"
         }
       ];
     }
@@ -78,8 +80,8 @@ export default {
       const params = {
         perPage: this.perPage,
         page: page,
-        columnName: "is_supervised",
-        columnValue: false
+        columnName: "is_processed",
+        columnValue: true
       };
 
       axios.get("/api/articles", { params }).then(response => {
